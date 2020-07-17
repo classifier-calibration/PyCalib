@@ -4,13 +4,7 @@ python:
 cache: apt
 addons:
 before_install:
-  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda update --yes conda
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION pip numpy scipy nose
-  - pip install pep8 python-coveralls
   # Build/test dependencies
   - pip install -r requirements.txt
   # Get fab to test fab
