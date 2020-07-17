@@ -1,5 +1,6 @@
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import log_loss
+import numpy as np
 
 def cross_entropy(y, y_pred):
     '''
