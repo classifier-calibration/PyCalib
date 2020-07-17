@@ -19,7 +19,7 @@ mkdir lib
 Then add this package as a submodule
 
 ```
-git submodule add git submodule add git@github.com:perellonieto/PyCalib.git lib/PyCalib
+git submodule add git@github.com:perellonieto/PyCalib.git lib/PyCalib
 ```
 
 then install into your virtual environment
