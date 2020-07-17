@@ -1,0 +1,4 @@
+MANIFEST
+dist/
+pycalib/__pycache__/
+pycalib/tests/__pycache__/
