@@ -101,11 +101,31 @@ def plot_reliability_diagram(score, labels, linspace, scores_set, legend_set,
 
     return fig
 
-def plot_multiclass_reliability_diagram(y_true, p_pred, n_bins=15, title=None,
-                                        fig=None, ax=None, legend=True):
+def plot_multiclass_reliability_discrepancy_diagram(y_true, p_pred, n_bins=15,
+                                                    title=None, fig=None,
+                                                    ax=None, legend=True):
     '''
-        y_true needs to be (n_samples, n_classes)
-            - where n_classes may be 1, for a two class problem
+    Parameters
+    ==========
+    y_true : binary matrix shape (n_samples, n_classes)
+        Labels corresponding to the scores
+    p_pred : binary matrix shape (n_samples, n_classes)
+        Output probability scores
+    n_bins : integer
+        Number of bins to divide the scores
+    title : string
+        Title for the plot
+    fig : matplotlib.pyplot.figure
+        Plots the axis in the given figure
+    ax : matplotlib.pyplot.Axis
+        Axis where to draw the plot
+    legend : boolean
+        If True the function will draw a legend
+
+    Regurns
+    =======
+    fig : matplotlib.pyplot.figure
+        Figure with the reliability diagram
     '''
     if fig is None and ax is None:
         fig = plt.figure()
@@ -134,10 +154,12 @@ def plot_multiclass_reliability_diagram(y_true, p_pred, n_bins=15, title=None,
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
            color="blue", label='True class prop.')
-    ax.bar(centers[not_nan], (true_proportion - centers)[not_nan],
-           bottom=centers[not_nan], width=bin_size/2.0, edgecolor="red",
+    ax.bar(pred_mean[not_nan], (true_proportion - pred_mean)[not_nan],
+           bottom=pred_mean[not_nan], width=bin_size/4.0, edgecolor="red",
            color="#ffc8c6",
            label='Gap pred. mean')
+    ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
+               marker=".", zorder=10)
 
     if legend:
         ax.legend()
