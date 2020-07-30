@@ -1,7 +1,9 @@
 import numpy as np
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import log_loss
-import numpy as np
+from sklearn.preprocessing import label_binarize
+from scipy.stats import percentileofscore
+
 
 def cross_entropy(y, y_pred):
     '''
@@ -20,45 +22,61 @@ def brier_score(y, y_pred):
     print('Warning: The order of parameters y y_pred has recently chagned')
     return mean_squared_error(y, y_pred)
 
-# Markus functions
-from sklearn.preprocessing import label_binarize
 
 # FIXME Follow scikit-learn convention of y_true as first argument
 def guo_ECE(probs, y_true, bins=15):
     """
     Calculate ECE score based on model output probabilities and true labels
 
-    Params:
-        probs: a list containing probabilities for all the classes with a shape of (samples, classes)
-        y_true: - a list containing the actual class labels
-                - ndarray shape (n_samples) with a list containing actual class
-                labels
-                - ndarray shape (n_samples, n_classes) with largest value in
-                each row for the correct column class.
-        bins: (int) - into how many bins are probabilities divided (default = 15)
+    Parameters
+    ==========
+    probs:
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
+    y_true:
+        - a list containing the actual class labels
+        - ndarray shape (n_samples) with a list containing actual class
+          labels
+        - ndarray shape (n_samples, n_classes) with largest value in
+          each row for the correct column class.
+    bins: (int)
+        - into how many bins are probabilities divided (default = 15)
 
-    Returns:
-        ece - expected calibration error
+    Returns
+    =======
+    ece : float
+        expected calibration error
     """
     return ECE(probs, y_true, normalize=False, bins=bins, ece_full=False)
 
-def ECE(probs, y_true, normalize = False, bins = 15, ece_full = True):
+
+def ECE(probs, y_true, normalize=False, bins=15, ece_full=True):
     """
     Calculate ECE score based on model output probabilities and true labels
 
-    Params:
-        probs: a list containing probabilities for all the classes with a shape of (samples, classes)
-        y_true: - a list containing the actual class labels
-                - ndarray shape (n_samples) with a list containing actual class
-                labels
-                - ndarray shape (n_samples, n_classes) with largest value in
-                each row for the correct column class.
-        normalize: (bool) in case of 1-vs-K calibration, the probabilities need to be normalized. (default = False)
-        bins: (int) - into how many bins are probabilities divided (default = 15)
-        ece_full: (bool) - whether to use ECE-full or ECE-max.
+    Parameters
+    ==========
+    probs : list
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
+    y_true : list
+        a list containing the actual class labels
+        ndarray shape (n_samples) with a list containing actual class
+          labels
+        ndarray shape (n_samples, n_classes) with largest value in
+          each row for the correct column class.
+    normalize: (bool)
+        in case of 1-vs-K calibration, the probabilities need to be
+        normalized. (default = False)
+    bins: (int)
+        into how many bins are probabilities divided (default = 15)
+    ece_full: (bool)
+        whether to use ECE-full or ECE-max.
 
-    Returns:
-        ece - expected calibration error
+    Returns
+    =======
+    ece : float
+        expected calibration error
     """
 
     probs = np.array(probs)
@@ -68,10 +86,11 @@ def ECE(probs, y_true, normalize = False, bins = 15, ece_full = True):
 
     # Prepare predictions, confidences and true labels for ECE calculation
     if ece_full:
-        preds, confs, y_true = get_preds_all(probs, y_true, normalize=normalize, flatten=True)
+        preds, confs, y_true = get_preds_all(probs, y_true,
+                                             normalize=normalize, flatten=True)
 
     else:
-        preds = np.argmax(probs, axis=1)  # Take maximum confidence as prediction
+        preds = np.argmax(probs, axis=1)  # Maximum confidence as prediction
 
         if normalize:
             confs = np.max(probs, axis=1)/np.sum(probs, axis=1)
@@ -79,34 +98,41 @@ def ECE(probs, y_true, normalize = False, bins = 15, ece_full = True):
         else:
             confs = np.max(probs, axis=1)  # Take only maximum confidence
 
-
     # Calculate ECE and ECE2
-    ece = ECE_helper(confs, preds, y_true, bin_size = 1/bins, ece_full = ece_full)
+    ece = ECE_helper(confs, preds, y_true, bin_size=1/bins, ece_full=ece_full)
 
     return ece
 
 
-
-def get_preds_all(y_probs, y_true, axis = 1, normalize = False, flatten = True):
+def get_preds_all(y_probs, y_true, axis=1, normalize=False, flatten=True):
     """
     Method to get predictions in right format for ECE-full.
 
-    Params:
-        y_probs: a list containing probabilities for all the classes with a shape of (samples, classes)
-        y_true: a list containing the actual class labels
-        axis: (int) dimension of set to calculate probabilities on
-        normalize: (bool) in case of 1-vs-K calibration, the probabilities need to be normalized. (default = False)
-        flatten: (bool) - flatten all the arrays
+    Parameters
+    ==========
+    y_probs: list (samples, classes)
+        containing probabilities for all the classes
+    y_true: list
+        containing the actual class labels
+    axis: (int)
+        dimension of set to calculate probabilities on
+    normalize: (bool)
+        in case of 1-vs-K calibration, the probabilities need to be
+        normalized. (default = False)
+    flatten: (bool)
+        flatten all the arrays
 
-    Returns:
-        (y_preds, y_probs, y_true) - predictions, probabilities and true labels
+    Returns
+    =======
+    (y_preds, y_probs, y_true)
+        predictions, probabilities and true labels
     """
     if len(y_true.shape) == 1:
         y_true = y_true.reshape(-1, 1)
     elif len(y_true.shape) == 2 and y_true.shape[1] > 1:
         y_true = y_true.argmax(axis=1).reshape(-1, 1)
 
-    y_preds = np.argmax(y_probs, axis=axis)  # Take maximum confidence as prediction
+    y_preds = np.argmax(y_probs, axis=axis)  # Maximum confidence as prediction
     y_preds = y_preds.reshape(-1, 1)
 
     if normalize:
@@ -124,28 +150,36 @@ def get_preds_all(y_probs, y_true, axis = 1, normalize = False, flatten = True):
     return y_preds, y_probs, y_true
 
 
-def ECE_helper(conf, pred, true, bin_size = 0.1, ece_full = False):
+def ECE_helper(conf, pred, true, bin_size=0.1, ece_full=False):
 
     """
     Expected Calibration Error
 
-    Args:
-        conf (numpy.ndarray): list of confidences
-        pred (numpy.ndarray): list of predictions
-        true (numpy.ndarray): list of true labels
-        bin_size: (float): size of one bin (0,1)  # TODO should convert to number of bins?
+    Parameters
+    ==========
+    conf (numpy.ndarray):
+        list of confidences
+    pred (numpy.ndarray):
+        list of predictions
+    true (numpy.ndarray):
+        list of true labels
+    bin_size: (float):
+        size of one bin (0,1)  # TODO should convert to number of bins?
 
-    Returns:
-        ece: expected calibration error
+    Returns
+    =======
+    ece: expected calibration error
     """
 
-    upper_bounds = np.arange(bin_size, 1+bin_size, bin_size)  # Get bounds of bins
+    upper_bounds = np.arange(bin_size, 1+bin_size, bin_size)  # Bounds of bins
 
     n = len(conf)
     ece = 0  # Starting error
 
-    for conf_thresh in upper_bounds:  # Go through bounds and find accuracies and confidences
-        acc, avg_conf, len_bin = compute_acc_bin(conf_thresh-bin_size, conf_thresh, conf, pred, true, ece_full)
+    for conf_thresh in upper_bounds:  # Find accur. and confidences per bin
+        acc, avg_conf, len_bin = compute_acc_bin(conf_thresh-bin_size,
+                                                 conf_thresh, conf, pred, true,
+                                                 ece_full)
         ece += np.abs(acc-avg_conf)*len_bin/n  # Add weigthed difference to ECE
 
     return ece
@@ -156,48 +190,70 @@ def compute_acc_bin(conf_thresh_lower, conf_thresh_upper, conf, pred, true,
     """
     # Computes accuracy and average confidence for bin
 
-    Args:
-        conf_thresh_lower (float): Lower Threshold of confidence interval
-        conf_thresh_upper (float): Upper Threshold of confidence interval
-        conf (numpy.ndarray): list of confidences
-        pred (numpy.ndarray): list of predictions
-        true (numpy.ndarray): list of true labels
-        pred_thresh (float) : float in range (0,1), indicating the prediction threshold
+    Parameters
+    ==========
+    conf_thresh_lower (float):
+        Lower Threshold of confidence interval
+    conf_thresh_upper (float):
+        Upper Threshold of confidence interval
+    conf (numpy.ndarray):
+        list of confidences
+    pred (numpy.ndarray):
+        list of predictions
+    true (numpy.ndarray):
+        list of true labels
+    pred_thresh (float) :
+        float in range (0,1), indicating the prediction threshold
 
-    Returns:
-        (accuracy, avg_conf, len_bin): accuracy of bin, confidence of bin and number of elements in bin.
+    Returns
+    =======
+    (accuracy, avg_conf, len_bin) :
+        accuracy of bin, confidence of bin and number of elements in bin.
     """
-    filtered_tuples = [x for x in zip(pred, true, conf) if  (x[2] > conf_thresh_lower or conf_thresh_lower == 0)  and x[2] <= conf_thresh_upper]
+    filtered_tuples = [x for x in zip(pred, true, conf)
+                       if (x[2] > conf_thresh_lower or conf_thresh_lower == 0)
+                       and (x[2] <= conf_thresh_upper)]
 
     if len(filtered_tuples) < 1:
         return 0.0, 0.0, 0
     else:
         if ece_full:
-            len_bin = len(filtered_tuples)  # How many elements falls into given bin
-            avg_conf = sum([x[2] for x in filtered_tuples])/len_bin  # Avg confidence of BIN
-            accuracy = np.mean([x[1] for x in filtered_tuples])  # Mean difference from actual class
+            # How many elements falls into given bin
+            len_bin = len(filtered_tuples)
+            # Avg confidence of BIN
+            avg_conf = sum([x[2] for x in filtered_tuples])/len_bin
+            # Mean difference from actual class
+            accuracy = np.mean([x[1] for x in filtered_tuples])
         else:
-            correct = len([x for x in filtered_tuples if x[0] == x[1]])  # How many correct labels
-            len_bin = len(filtered_tuples)  # How many elements falls into given bin
-            avg_conf = sum([x[2] for x in filtered_tuples]) / len_bin  # Avg confidence of BIN
-            accuracy = float(correct)/len_bin  # accuracy of BIN
+            # How many correct labels
+            correct = len([x for x in filtered_tuples if x[0] == x[1]])
+            # How many elements falls into given bin
+            len_bin = len(filtered_tuples)
+            # Avg confidence of BIN
+            avg_conf = sum([x[2] for x in filtered_tuples]) / len_bin
+            # accuracy of BIN
+            accuracy = float(correct)/len_bin
 
     return accuracy, avg_conf, len_bin
 
 
-def MCE_helper(conf, pred, true, bin_size = 0.1, mce_full = True):
+def MCE_helper(conf, pred, true, bin_size=0.1, mce_full=True):
 
     """
     Maximal Calibration Error
 
-    Args:
-        conf (numpy.ndarray): list of confidences
-        pred (numpy.ndarray): list of predictions
-        true (numpy.ndarray): list of true labels
-        bin_size: (float): size of one bin (0,1)  # TODO should convert to number of bins?
-        mce_full: (bool) - whether to use ECE-full or ECE-max for bin calculation
+    Parameters
+    ==========
+    conf (numpy.ndarray): list of confidences
+    pred (numpy.ndarray): list of predictions
+    true (numpy.ndarray): list of true labels
+    bin_size: (float):
+        size of one bin (0,1)  # TODO should convert to number of bins?
+    mce_full: (bool)
+        whether to use ECE-full or ECE-max for bin calculation
 
-    Returns:
+    Returns
+    =======
         mce: maximum calibration error
     """
 
@@ -219,15 +275,25 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
     """
     Calculate MCE score based on model output probabilities and true labels
 
-    Params:
-        probs: a list containing probabilities for all the classes with a shape of (samples, classes)
-        y_true: a list containing the actual class labels
-        normalize: (bool) in case of 1-vs-K calibration, the probabilities need to be normalized. (default = False)
-        bins: (int) - into how many bins are probabilities divided (default = 15)
-        mce_full: (bool) - whether to use ECE-full or ECE-max for calculation MCE.
+    Parameters
+    ==========
+    probs : list
+        containing probabilities for all the classes with a shape of (samples,
+        classes)
+    y_true : list
+        containing the actual class labels
+    normalize : bool
+        in case of 1-vs-K calibration, the probabilities need to be normalized.
+        (default = False)
+    bins : int
+        into how many bins are probabilities divided (default = 15)
+    mce_full : boolean
+        whether to use ECE-full or ECE-max for calculation MCE.
 
-    Returns:
-        mce: maximum calibration error
+    Returns
+    =======
+    mce : float
+        maximum calibration error
     """
 
     probs = np.array(probs)
@@ -241,7 +307,7 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
                                              normalize=normalize, flatten=True)
 
     else:
-        preds = np.argmax(probs, axis=1)  # Take maximum confidence as prediction
+        preds = np.argmax(probs, axis=1)  # Maximum confidence as prediction
 
         if normalize:
             confs = np.max(probs, axis=1)/np.sum(probs, axis=1)
@@ -255,38 +321,43 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
     return mce
 
 
-def binary_ECE(probs, y_true, power = 1, bins = 15):
+def binary_ECE(probs, y_true, power=1, bins=15):
 
     idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
-    bin_func = lambda p, y, idx: (np.abs(np.mean(p[idx]) - np.mean(y[idx])) ** power) * np.sum(idx) / len(probs)
+
+    def bin_func(p, y, idx):
+        return (np.abs(np.mean(p[idx]) - np.mean(y[idx])) ** power) * \
+                np.sum(idx) / len(probs)
 
     ece = 0
     for i in np.unique(idx):
         ece += bin_func(probs, y_true, idx == i)
     return ece
 
-def classwise_ECE(probs, y_true, power = 1, bins = 15):
 
+def classwise_ECE(probs, y_true, power=1, bins=15):
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
-        y_true = label_binarize(np.array(y_true), classes=range(probs.shape[1]))
+        y_true = label_binarize(np.array(y_true),
+                                classes=range(probs.shape[1]))
 
     n_classes = probs.shape[1]
 
     return np.sum(
         [
             binary_ECE(
-                probs[:, c], y_true[:, c].astype(float), power = power, bins = bins
+                probs[:, c], y_true[:, c].astype(float), power=power, bins=bins
             ) for c in range(n_classes)
         ]
     )
 
 
-def simplex_binning(probs, y_true, bins = 15):
+def simplex_binning(probs, y_true, bins=15):
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
-        y_true = label_binarize(np.array(y_true), classes=range(probs.shape[1]))
+        y_true = label_binarize(np.array(y_true),
+                                classes=range(probs.shape[1]))
 
     idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
 
@@ -295,11 +366,11 @@ def simplex_binning(probs, y_true, bins = 15):
 
     for i, row in enumerate(idx):
         try:
-           prob_bins[','.join([str(r) for r in row])].append(probs[i])
-           label_bins[','.join([str(r) for r in row])].append(y_true[i])
+            prob_bins[','.join([str(r) for r in row])].append(probs[i])
+            label_bins[','.join([str(r) for r in row])].append(y_true[i])
         except KeyError:
-           prob_bins[','.join([str(r) for r in row])] = [probs[i]]
-           label_bins[','.join([str(r) for r in row])] = [y_true[i]]
+            prob_bins[','.join([str(r) for r in row])] = [probs[i]]
+            label_bins[','.join([str(r) for r in row])] = [y_true[i]]
 
     bins = []
     for key in prob_bins:
@@ -314,12 +385,13 @@ def simplex_binning(probs, y_true, bins = 15):
     return bins
 
 
-def full_ECE(probs, y_true, bins = 15, power = 1):
+def full_ECE(probs, y_true, bins=15, power=1):
     n = len(probs)
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
-        y_true = label_binarize(np.array(y_true), classes=range(probs.shape[1]))
+        y_true = label_binarize(np.array(y_true),
+                                classes=range(probs.shape[1]))
 
     idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
 
@@ -329,7 +401,8 @@ def full_ECE(probs, y_true, bins = 15, power = 1):
     for bin in filled_bins:
         i = np.where((idx == bin).all(axis=1))[0]
         s += (len(i)/n) * (
-            np.abs(np.mean(probs[i], axis=0) - np.mean(y_true[i], axis=0))**power
+            np.abs(np.mean(probs[i], axis=0) - np.mean(y_true[i],
+                                                       axis=0))**power
         ).sum()
 
     return s
@@ -344,22 +417,24 @@ def label_resampling(probs):
     return y
 
 
-def score_sampling(probs, samples = 10000, ece_function = None):
+def score_sampling(probs, samples=10000, ece_function=None):
 
     probs = np.array(probs)
 
     return np.array(
         [
-            ece_function(probs, label_resampling(probs)) for sample in range(samples)
+            ece_function(probs, label_resampling(probs)) for sample in
+            range(samples)
         ]
     )
 
 
-def pECE(probs, y_true, samples = 10000, ece_function = full_ECE):
+def pECE(probs, y_true, samples=10000, ece_function=full_ECE):
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
-        y_true = label_binarize(np.array(y_true), classes=range(probs.shape[1]))
+        y_true = label_binarize(np.array(y_true),
+                                classes=range(probs.shape[1]))
 
     return 1 - (
         percentileofscore(

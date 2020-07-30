@@ -15,11 +15,6 @@ from sklearn.metrics import log_loss
 
 from betacal import BetaCalibration
 
-from .utils.functions import fit_beta_nll
-from .utils.functions import fit_beta_moments
-from .utils.functions import fit_beta_midpoint
-from .utils.functions import beta_test
-
 from .utils.multiclass import OneVsRestCalibrator
 
 from dirichletcal import DirichletCalibrator
@@ -191,79 +186,6 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
             scores = scores[:,1]
         s_binned = np.digitize(scores, self.bins) - 1
         return self.predictions[s_binned]
-
-
-l2_list = [1e3, 1e2, 1e1, 1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
-l2_odir = [1e3, 1e1, 1e-1, 1e-3, 1e-5, 1e-7]
-#l2_list = [1e1, 1e0, 1e-1, 1e-2, 1e-3]
-C_list = list(np.true_divide(1, l2_list, where=l2_list!=0))
-n_bins = [5, 10, 15, 20, 25, 30]
-
-MAP_CALIBRATORS = {
-    'ovr_logistic_log': LogisticCalibration(C=C_list,
-                                            log_transform=True,
-                                            multi_class='ovr'),
-    'ovr_logistic_logit': LogisticCalibration(C=C_list,
-                                              log_transform=False,
-                                              multi_class='ovr'),
-    'logistic_log': LogisticCalibration(C=C_list,
-                                        log_transform=True,
-                                        multi_class='multinomial'),
-    'logistic_logit': LogisticCalibration(C=C_list,
-                                          log_transform=False,
-                                          multi_class='multinomial'),
-    'binning_width' :OneVsRestCalibrator(BinningCalibration(strategy='uniform',
-                                                           n_bins=n_bins)),
-    'binning_freq' :OneVsRestCalibrator(BinningCalibration(strategy='quantile',
-                                                           n_bins=n_bins)),
-    'binning_kmeans' :OneVsRestCalibrator(BinningCalibration(strategy='kmeans')), # Not working yet
-    'uncalibrated': _DummyCalibration(),
-    'isotonic': OneVsRestCalibrator(IsotonicCalibration(out_of_bounds='clip')),
-    'sigmoid': OneVsRestCalibrator(SigmoidCalibration()),
-    'beta': OneVsRestCalibrator(BetaCalibration(parameters="abm")),
-    'beta_am': OneVsRestCalibrator(BetaCalibration(parameters="am")),
-    'beta_ab': OneVsRestCalibrator(BetaCalibration(parameters="ab")),
-    'ovr_dir_full': OneVsRestCalibrator(DirichletCalibrator(matrix_type='full')),
-    'ovr_dir_full_l2': OneVsRestCalibrator(DirichletCalibrator(matrix_type='full',
-                                             l2=l2_list)),
-    'ovr_dir_diag': OneVsRestCalibrator(DirichletCalibrator(matrix_type='diagonal')),
-    'ovr_dir_fixd': OneVsRestCalibrator(DirichletCalibrator(matrix_type='fixed_diagonal')),
-    'dirichlet_keras': Dirichlet_NN(l2=10, mu=0.0001),
-    'dirichlet_full': DirichletCalibrator(matrix_type='full'),
-    'dirichlet_full_gen': GenerativeDirichletCalibrator(),
-    'dirichlet_full_prefixdiag': DirichletCalibrator(matrix_type='full',
-                                                     initializer='preFixDiag'),
-    'dirichlet_full_comp_l2': DirichletCalibrator(matrix_type='full',
-                                                  comp_l2=True,
-                                             l2=l2_list),
-    'dirichlet_full_prefixdiag_l2': DirichletCalibrator(matrix_type='full',
-                                                        l2=l2_list,
-                                                        initializer='preFixDiag'),
-    'dirichlet_full_prefixdiag_comp_l2': DirichletCalibrator(matrix_type='full',
-                                                             comp_l2=True,
-                                                             l2=l2_list,
-                                                             initializer='preFixDiag'),
-    'dirichlet_full_l2_01': DirichletCalibrator(matrix_type='full', l2=0.1),
-    'dirichlet_full_l2_001': DirichletCalibrator(matrix_type='full', l2=0.01),
-    'dirichlet_full_l2_0001': DirichletCalibrator(matrix_type='full', l2=0.001),
-    'dirichlet_full_l2_00001': DirichletCalibrator(matrix_type='full', l2=0.0001),
-    'dirichlet_diag': DirichletCalibrator(matrix_type='diagonal'),
-    #'dirichlet_fix_diag': DirichletCalibrator(matrix_type='fixed_diagonal'),
-    'dirichlet_fix_diag': FixedDiagonalDirichletCalibrator(),
-    #'dirichlet_full_t2': TypeIIDirichletCalibrator(),
-    'temperature_scaling': TemperatureScaling(logit_constant=0.0),
-    'vector_scaling': VectorScaling(logit_constant=0.0),
-    #'matrix_scaling': MatrixScaling(reg_lambda_list=l2_list),
-    #                                reg_mu_list=l2_list),
-    'dirichlet_full_l2': FullDirichletCalibrator(reg_lambda_list=l2_list),
-    #'dirichlet_full_l2': DirichletCalibrator(matrix_type='full',
-    #                                         comp_l2=False,
-    #                                         l2=l2_list),
-    'dirichlet_odir_l2': FullDirichletCalibrator(reg_lambda_list=l2_odir,
-                                                 reg_mu_list=l2_odir,
-                                                 reg_norm=True)
-#    'dirichlet_mixture': MixDir()
-}
 
 
 class CalibratedModel(BaseEstimator, ClassifierMixin):
