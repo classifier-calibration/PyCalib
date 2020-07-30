@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.6"
+cache: apt
+addons:
+before_install:
+install:
+  # Build/test dependencies
+  - pip install -r requirements.txt
+  # Get fab to test fab
+  - pip install -e .
+# Command to run tests
+script:
+  - python -m unittest discover pycalib
+after_success:
+  - coveralls
