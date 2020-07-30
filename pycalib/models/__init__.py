@@ -15,22 +15,22 @@ from sklearn.metrics import log_loss
 
 from betacal import BetaCalibration
 
-from calib.utils.functions import fit_beta_nll
-from calib.utils.functions import fit_beta_moments
-from calib.utils.functions import fit_beta_midpoint
-from calib.utils.functions import beta_test
+from .utils.functions import fit_beta_nll
+from .utils.functions import fit_beta_moments
+from .utils.functions import fit_beta_midpoint
+from .utils.functions import beta_test
 
-from calib.utils.multiclass import OneVsRestCalibrator
+from .utils.multiclass import OneVsRestCalibrator
 
-from dirichlet import DirichletCalibrator
-from dirichlet.calib.gendirichlet import GenerativeDirichletCalibrator
-from dirichlet.calib.multinomial import MultinomialRegression
-from dirichlet.calib.fixeddirichlet import FixedDiagonalDirichletCalibrator
+from dirichletcal import DirichletCalibrator
+from dirichletcal.calib.gendirichlet import GenerativeDirichletCalibrator
+from dirichletcal.calib.multinomial import MultinomialRegression
+from dirichletcal.calib.fixeddirichlet import FixedDiagonalDirichletCalibrator
 #from dirichlet.calib.typeiidirichlet import TypeIIDirichletCalibrator
-from dirichlet.calib.vectorscaling import VectorScaling
-from dirichlet.calib.tempscaling import TemperatureScaling
-from dirichlet.calib.matrixscaling import MatrixScaling
-from dirichlet.calib.fulldirichlet import FullDirichletCalibrator
+from dirichletcal.calib.vectorscaling import VectorScaling
+from dirichletcal.calib.tempscaling import TemperatureScaling
+from dirichletcal.calib.matrixscaling import MatrixScaling
+from dirichletcal.calib.fulldirichlet import FullDirichletCalibrator
 
 # from mixture_of_dirichlet import MixDir
 
