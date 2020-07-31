@@ -186,15 +186,16 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
 
 
 class CalibratedModel(BaseEstimator, ClassifierMixin):
-    def __init__(self, base_estimator=None, method=None, score_type=None):
+    def __init__(self, base_estimator=None, method=None, score_type=None,
+                 fit_estimator=True):
         ''' Initialize a Calibrated model (classifier + calibrator)
 
         Parameters
         ----------
-        base_estimator : string
-            Name of the classifier
-        method : string
-            Name of the calibrator
+        base_estimator : estimator
+            Classifier instance
+        method : estimator
+            Calibrator instance
         score_type : string
             String indicating the function to call to obtain predicted
             probabilities from the classifier.
@@ -202,6 +203,7 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
         self.method = method
         self.base_estimator = base_estimator
         self.score_type = score_type
+        self.fit_estimator = fit_estimator
 
     def fit(self, X, y, X_val=None, y_val=None, *args, **kwargs):
         """Fit the calibrated model
@@ -224,6 +226,9 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
                          multi_output=True)
         X, y = indexable(X, y)
 
+        if self.fit_estimator:
+            self.base_estimator.fit(X, y)
+
         scores = self.base_estimator.predict_proba(X)
 
         if X_val is not None:
@@ -235,15 +240,8 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
         else:
             scores_val = None
 
-        self.calibrator = clone(MAP_CALIBRATORS[self.method])
-        # TODO isotonic with binary y = (n_samples, ) fails, needs one-hot-enc.
+        self.calibrator = clone(self.method)
         self.calibrator.fit(scores, y, X_val=scores_val, y_val=y_val, *args, **kwargs)
-        #print(self.method)
-        #print('scores.shape(X) ' + str(scores.shape))
-        #print('prob.shape(S) ' + str(self.calibrator.predict_proba(scores).shape))
-        #print('prob.shape(X) ' + str(self.predict_proba(X).shape))
-        #if self.method == 'isotonic':
-        #    from IPython import embed; embed()
         return self
 
     def predict_proba(self, X):
