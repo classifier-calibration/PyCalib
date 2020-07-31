@@ -102,9 +102,9 @@ def plot_reliability_diagram(score, labels, linspace, scores_set, legend_set,
     return fig
 
 
-def plot_multiclass_reliability_discrepancy_diagram(y_true, p_pred, n_bins=15,
-                                                    title=None, fig=None,
-                                                    ax=None, legend=True):
+def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
+                                             title=None, fig=None, ax=None,
+                                             legend=True):
     '''
     Parameters
     ==========
