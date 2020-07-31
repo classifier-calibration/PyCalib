@@ -67,7 +67,6 @@ def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None,
     ax.triplot(triangle, c='k', lw=0.5)
 
 
-
 def get_func_mesh_values(func, subdiv=8):
     '''
     Gets the values returned by the function func in a triangular mesh grid

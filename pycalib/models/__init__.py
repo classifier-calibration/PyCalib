@@ -13,23 +13,7 @@ from sklearn.isotonic import IsotonicRegression
 from sklearn.calibration import _SigmoidCalibration
 from sklearn.metrics import log_loss
 
-from betacal import BetaCalibration
-
-from .utils.multiclass import OneVsRestCalibrator
-
-from dirichletcal import DirichletCalibrator
-from dirichletcal.calib.gendirichlet import GenerativeDirichletCalibrator
-from dirichletcal.calib.multinomial import MultinomialRegression
-from dirichletcal.calib.fixeddirichlet import FixedDiagonalDirichletCalibrator
-#from dirichlet.calib.typeiidirichlet import TypeIIDirichletCalibrator
-from dirichletcal.calib.vectorscaling import VectorScaling
-from dirichletcal.calib.tempscaling import TemperatureScaling
-from dirichletcal.calib.matrixscaling import MatrixScaling
-from dirichletcal.calib.fulldirichlet import FullDirichletCalibrator
-
-# from mixture_of_dirichlet import MixDir
-
-from .dirichlet_keras import Dirichlet_NN
+from .multiclass import OneVsRestCalibrator
 
 
 class _DummyCalibration(BaseEstimator, RegressorMixin):
