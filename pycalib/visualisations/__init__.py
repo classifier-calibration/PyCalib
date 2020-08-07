@@ -10,7 +10,7 @@ from sklearn.calibration import calibration_curve
 
 
 def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
-                             n_bins=10):
+                             n_bins=10, class_names=None, fig=None):
     '''
     Parameters
     ==========
@@ -36,18 +36,20 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
     classes = np.unique(labels)
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
-    print(labels.shape)
 
+    if fig is None:
+        fig = plt.figure()
 
     if n_classes == 2:
         scores = [score[:, 1].reshape(-1, 1) for score in scores]
-        fig = plt.figure(figsize=(5, 5))
-    else:
-        fig = plt.figure(figsize=(15, 5))
+
+    if class_names is None:
+        class_names = [str(i) for i in range(n_classes)]
 
     n_columns = labels.shape[1]
     for i in range(n_columns):
         ax1 = fig.add_subplot(1, n_columns, i+1)
+        ax1.set_title('Class {}'.format(class_names[i]))
         for score, name in zip(scores, legend):
             fraction_of_positives, mean_predicted_value = calibration_curve(labels[:, i], score[:, i],
                                                                             n_bins=n_bins)
@@ -115,6 +117,10 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     if title is not None:
         ax.set_title(title)
 
+    if len(y_true.shape) < 2 or y_true.shape[1] == 1:
+        classes = np.unique(y_true)
+        y_true = label_binarize(y_true, classes=classes)
+
     if hasattr(y_true, 'flatten'):
         y_true = y_true.flatten()
     if hasattr(p_pred, 'flatten'):
@@ -165,7 +171,7 @@ def plot_multiclass_reliability_diagram_gaps_per_class(y_true, p_pred,
     if fig is None and ax is None:
         fig = plt.figure()
 
-    if len(y_true.shape) == 1:
+    if len(y_true.shape) < 2 or y_true.shape[1] == 1:
         ohe = OneHotEncoder(categories='auto')
         ohe.fit(y_true.reshape(-1, 1))
         y_true = ohe.transform(y_true.reshape(-1,1))

@@ -231,17 +231,8 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
 
         scores = self.base_estimator.predict_proba(X)
 
-        if X_val is not None:
-            X_val, y_val = check_X_y(X_val, y_val, accept_sparse=['csc', 'csr', 'coo'],
-                             multi_output=True)
-            X_val, y_val = indexable(X_val, y_val)
-            # TODO add scores of validation
-            scores_val = self.base_estimator.predict_proba(X_val)
-        else:
-            scores_val = None
-
         self.calibrator = clone(self.method)
-        self.calibrator.fit(scores, y, X_val=scores_val, y_val=y_val, *args, **kwargs)
+        self.calibrator.fit(scores, y, *args, **kwargs)
         return self
 
     def predict_proba(self, X):
