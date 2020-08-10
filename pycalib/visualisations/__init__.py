@@ -83,16 +83,18 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
     return fig
 
 
-def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
-                                             title=None, fig=None, ax=None,
-                                             legend=True):
-    '''
+def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
+                                         fig=None, ax=None, legend=True):
+    '''Plot binary reliability diagram gaps
+
     Parameters
     ==========
-    y_true : binary matrix shape (n_samples, n_classes)
-        Labels corresponding to the scores
-    p_pred : binary matrix shape (n_samples, n_classes)
-        Output probability scores
+    y_true : np.array shape (n_samples, 2) or (n_samples, )
+        Labels corresponding to the scores as a binary indicator matrix or as a
+        vector of integers indicating the class.
+    p_pred : binary matrix shape (n_samples, 2) or (n_samples, )
+        Output probability scores for each class as a matrix, or for the
+        positive class
     n_bins : integer
         Number of bins to divide the scores
     title : string
@@ -117,14 +119,15 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     if title is not None:
         ax.set_title(title)
 
-    if len(y_true.shape) < 2 or y_true.shape[1] == 1:
-        classes = np.unique(y_true)
-        y_true = label_binarize(y_true, classes=classes)
+    if (len(y_true.shape) == 2) and (y_true.shape[1] == 2):
+        y_true = y_true[:, 1]
+    if (len(y_true.shape) == 2) and (y_true.shape[1] > 2):
+        raise ValueError('y_true wrong dimensions {}'.format(y_true.shape))
 
-    if hasattr(y_true, 'flatten'):
-        y_true = y_true.flatten()
-    if hasattr(p_pred, 'flatten'):
-        p_pred = p_pred.flatten()
+    if (len(p_pred.shape) == 2) and (p_pred.shape[1] == 2):
+        p_pred = p_pred[:, 1]
+    if (len(p_pred.shape) == 2) and (p_pred.shape[1] > 2):
+        raise ValueError('p_pred wrong dimensions {}'.format(p_pred.shape))
 
     bin_size = 1.0/n_bins
     centers = np.linspace(bin_size/2.0, 1.0 - bin_size/2.0, n_bins)
@@ -151,7 +154,7 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
            color="#ffc8c6",
            label='Gap pred. mean')
     ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
-               marker=".", zorder=10)
+               marker="+", zorder=10)
 
     if legend:
         ax.legend()
@@ -160,14 +163,16 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     ax.set_xlim([0, 1])
     ax.set_xlabel('Predicted probability')
     ax.set_ylim([0, 1])
-    ax.set_ylabel('Frequency')
+    ax.set_ylabel('Proportion of positives')
     ax.grid(True)
     ax.set_axisbelow(True)
-    return fig
+    fig.tight_layout()
 
-def plot_multiclass_reliability_diagram_gaps_per_class(y_true, p_pred,
-                                                       fig=None, ax=None,
-                                                       **kwargs):
+    return fig, ax
+
+
+def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
+                                             per_class=True, **kwargs):
     if fig is None and ax is None:
         fig = plt.figure()
 
@@ -176,13 +181,27 @@ def plot_multiclass_reliability_diagram_gaps_per_class(y_true, p_pred,
         ohe.fit(y_true.reshape(-1, 1))
         y_true = ohe.transform(y_true.reshape(-1,1))
 
-    n_classes = y_true.shape[1]
-    if ax is None:
-        ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
-    for i in range(n_classes):
-        plot_multiclass_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
-                                            title=r'$C_{}$'.format(i+1),
-                                            fig=fig, ax=ax[i], **kwargs)
+    if per_class:
+        n_classes = y_true.shape[1]
+        if ax is None:
+            ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
+        for i in range(n_classes):
+            plot_binary_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
+                                                title=r'$C_{}$'.format(i+1),
+                                                fig=fig, ax=ax[i], **kwargs)
+            if i > 0:
+                ax[i].set_ylabel('')
+    else:
+        mask = p_pred.argmax(axis=1)
+        indices = np.arange(p_pred.shape[0])
+        y_true = y_true[indices, mask].T
+        p_pred = p_pred[indices, mask].T
+        ax = fig.add_subplot(1, 1, 1)
+        plot_binary_reliability_diagram_gaps(y_true, p_pred,
+                                             title=r'$C_1$',
+                                             fig=fig, ax=ax, **kwargs)
+        ax.set_title('')
+
     return fig
 
 def plot_confusion_matrix(cm, classes,
