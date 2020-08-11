@@ -37,7 +37,7 @@ def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None, **kwargs):
     return fig, ax
 
 
-def draw_func_contours(func, labels=None, nlevels=200, subdiv=8, fig=None,
+def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
 					   ax=None, **kwargs):
     '''
     Parameters:

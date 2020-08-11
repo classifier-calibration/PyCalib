@@ -144,7 +144,10 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
                                                   p_pred <= center +
                                                   bin_size/2))
         true_proportion[i] = np.mean(y_true[bin_indices])
-        pred_mean[i] = np.nanmean(p_pred[bin_indices])
+        if len(bin_indices[0]) == 0:
+            pred_mean[i] = np.nan
+        else:
+            pred_mean[i] = np.nanmean(p_pred[bin_indices])
 
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
