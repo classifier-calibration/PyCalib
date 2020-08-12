@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.tri as tri
 from matplotlib import ticker
+import matplotlib.lines as mlines
 from .barycentric import bc2xy, xy2bc
 
 
@@ -38,7 +39,7 @@ def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None, **kwargs):
 
 
 def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
-					   ax=None, **kwargs):
+					   ax=None, draw_lines=None, class_index=0, **kwargs):
     '''
     Parameters:
     -----------
@@ -87,6 +88,16 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
             ax.text(text_x, text_y, labels[i], verticalalignment='center',
                     horizontalalignment='center')
 
+    if draw_lines is not None:
+        lines = get_converging_lines(num_lines=draw_lines, mesh_precision=2,
+                                     class_index=class_index)
+        corners = np.array([[0, 0], [1, 0], [0.5, 0.75**0.5]])
+        for line in lines:
+            line = bc2xy(line, corners).T
+            ax.plot(line[0], line[1])
+            #l = mlines.Line2D()
+            #ax.add_line(l)
+
     # Axes options
     ax.set_xlim(xmin=0, xmax=1)
     ax.set_ylim(ymin=0, ymax=0.75**0.5)
@@ -111,9 +122,8 @@ def plot_converging_lines_pvalues(func, lines, i, ax):
     for j, line in enumerate(lines):
         pvalues = np.array([func(p) for p in line]).flatten()
         ax.plot(line[:,i], pvalues,
-                label=r'$C_{} = {}/{}, C_{} = {}/{}$'.format(
-                    classes[1]+1, j, len(lines)-1,
-                    classes[2]+1, len(lines)-j-1, len(lines)-1))
+                label=r'$C_{}/C_{} = {}/{}$'.format(
+                    classes[1]+1, classes[2]+1, j, len(lines)-j-1))
     ax.legend()
 
 def get_converging_lines(num_lines, mesh_precision=10, class_index=0, tol=1e-9):
