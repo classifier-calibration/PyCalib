@@ -168,6 +168,9 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
             self.bins = np.hstack([self.bins, scores[-1]])
         elif self.strategy == 'uniform':
             self.bins = np.linspace(scores.min(), scores.max(), self.n_bins+1)
+        else:
+            raise ValueError('Strategy {} not implemented'.format(
+                                 self.strategy))
         self.bins[0] = - np.inf
         self.bins[-1] = np.inf
         s_binned = np.digitize(scores, self.bins) -1

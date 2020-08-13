@@ -49,19 +49,25 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
     n_columns = labels.shape[1]
     for i in range(n_columns):
         ax1 = fig.add_subplot(1, n_columns, i+1)
-        ax1.set_title('Class {}'.format(class_names[i]))
         for score, name in zip(scores, legend):
             fraction_of_positives, mean_predicted_value = calibration_curve(labels[:, i], score[:, i],
                                                                             n_bins=n_bins)
             ax1.plot(mean_predicted_value, fraction_of_positives, "s-",
                              label=name)
         ax1.plot([0, 1], [0, 1], "k--")
-        ax1.legend()
         ax1.set_xlim([0, 1])
         ax1.set_ylim([0, 1])
-        ax1.set_xlabel('Mean predicted value')
-        ax1.set_ylabel('Fraction of positives')
+        #ax1.set_title('Class {}'.format(class_names[i]))
+        ax1.set_xlabel('Mean predicted value (Class {})'.format(
+            class_names[i]))
+        if i == 0:
+            ax1.set_ylabel('Fraction of positives')
         ax1.grid()
+
+    lines, labels = fig.axes[-1].get_legend_handles_labels()
+    fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+               bbox_transform=fig.transFigure, ncol=6)
+
 
     if histogram:
         if n_classes == 2:
@@ -74,11 +80,15 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
             for score, name in zip(scores, legend):
                 ax.hist(score[:, i], range=(0, 1), bins=n_bins, label=name,
                          histtype="step", lw=2)
-                ax.legend()
                 ax.set_xlim([0, 1])
-                ax.set_xlabel('Mean predicted value')
-                ax.set_ylabel('Number of samples in bin')
+                ax.set_xlabel('Predicted value (Class {})'.format(
+                    class_names[i]))
+                if i == 0:
+                    ax.set_ylabel('Number of samples in bin')
                 ax.grid()
+        lines, labels = fig2.axes[-1].get_legend_handles_labels()
+        fig2.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+                   bbox_transform=fig2.transFigure, ncol=6)
         return fig, fig2
     return fig
 
@@ -189,11 +199,18 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
         if ax is None:
             ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
         for i in range(n_classes):
+            if i == 0:
+                legend=True
+            else:
+                legend=False
             plot_binary_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
-                                                title=r'$C_{}$'.format(i+1),
-                                                fig=fig, ax=ax[i], **kwargs)
+                                                 title='$C_{}$'.format(i+1),
+                                                 fig=fig, ax=ax[i],
+                                                 legend=legend,
+                                                 **kwargs)
             if i > 0:
                 ax[i].set_ylabel('')
+            ax[i].set_xlabel('Predicted probability')
     else:
         mask = p_pred.argmax(axis=1)
         indices = np.arange(p_pred.shape[0])
