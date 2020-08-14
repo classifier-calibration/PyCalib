@@ -9,14 +9,14 @@ from sklearn.preprocessing import label_binarize
 from sklearn.calibration import calibration_curve
 
 
-def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
-                             n_bins=10, class_names=None, fig=None):
+def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
+                             n_bins=10, class_names=None):
     '''
     Parameters
     ==========
     labels : array (n_samples, )
         Labels indicating the ground class
-    scores : list of matrices [(n_samples, n_classes)]
+    scores_list : list of matrices [(n_samples, n_classes)]
         Output probability scores for every method
     legend : list of strings
         Text to use for the legend
@@ -37,11 +37,11 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
 
-    if fig is None:
-        fig = plt.figure()
+    fig = plt.figure(figsize=((n_classes-1)*4, 4))
+
 
     if n_classes == 2:
-        scores = [score[:, 1].reshape(-1, 1) for score in scores]
+        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
 
     if class_names is None:
         class_names = [str(i) for i in range(n_classes)]
@@ -49,7 +49,7 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
     n_columns = labels.shape[1]
     for i in range(n_columns):
         ax1 = fig.add_subplot(1, n_columns, i+1)
-        for score, name in zip(scores, legend):
+        for score, name in zip(scores_list, legend):
             fraction_of_positives, mean_predicted_value = calibration_curve(labels[:, i], score[:, i],
                                                                             n_bins=n_bins)
             ax1.plot(mean_predicted_value, fraction_of_positives, "s-",
@@ -70,14 +70,11 @@ def plot_reliability_diagram(labels, scores, legend=None, histogram=True,
 
 
     if histogram:
-        if n_classes == 2:
-            fig2 = plt.figure(figsize=(5, 5))
-        else:
-            fig2 = plt.figure(figsize=(15, 5))
+        fig2 = plt.figure(figsize=((n_classes-1)*4, 4))
 
         for i in range(n_columns):
             ax = fig2.add_subplot(1, n_columns, i+1)
-            for score, name in zip(scores, legend):
+            for score, name in zip(scores_list, legend):
                 ax.hist(score[:, i], range=(0, 1), bins=n_bins, label=name,
                          histtype="step", lw=2)
                 ax.set_xlim([0, 1])
@@ -145,7 +142,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     pred_mean = np.zeros(n_bins)
     for i, center in enumerate(centers):
         if i == 0:
-            # First bin include lower bound
+            # First bin includes lower bound
             bin_indices = np.where(np.logical_and(p_pred >= center - bin_size/2,
                                                   p_pred <= center +
                                                   bin_size/2))
@@ -153,10 +150,11 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
             bin_indices = np.where(np.logical_and(p_pred > center - bin_size/2,
                                                   p_pred <= center +
                                                   bin_size/2))
-        true_proportion[i] = np.mean(y_true[bin_indices])
         if len(bin_indices[0]) == 0:
+            true_proportion[i] = np.nan
             pred_mean[i] = np.nan
         else:
+            true_proportion[i] = np.mean(y_true[bin_indices])
             pred_mean[i] = np.nanmean(p_pred[bin_indices])
 
     not_nan = np.isfinite(true_proportion - centers)
@@ -186,8 +184,6 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
 
 def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
                                              per_class=True, **kwargs):
-    if fig is None and ax is None:
-        fig = plt.figure()
 
     if len(y_true.shape) < 2 or y_true.shape[1] == 1:
         ohe = OneHotEncoder(categories='auto')
@@ -196,6 +192,8 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
 
     if per_class:
         n_classes = y_true.shape[1]
+        if fig is None and ax is None:
+            fig = plt.figure(figsize=((n_classes-1)*4, 4))
         if ax is None:
             ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
         for i in range(n_classes):
@@ -212,6 +210,8 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
                 ax[i].set_ylabel('')
             ax[i].set_xlabel('Predicted probability')
     else:
+        if fig is None and ax is None:
+            fig = plt.figure()
         mask = p_pred.argmax(axis=1)
         indices = np.arange(p_pred.shape[0])
         y_true = y_true[indices, mask].T
