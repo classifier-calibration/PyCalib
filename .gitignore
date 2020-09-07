@@ -1,6 +1,7 @@
 *.pyc
 MANIFEST
 dist/
+pycalib.egg-info
 pycalib/__pycache__/
 pycalib/tests/__pycache__/
 venv
