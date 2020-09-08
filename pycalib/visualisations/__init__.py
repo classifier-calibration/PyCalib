@@ -10,7 +10,8 @@ from sklearn.calibration import calibration_curve
 
 
 def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
-                             n_bins=10, class_names=None):
+                             n_bins=10, class_names=None, fig=None,
+                             fig2=None):
     '''
     Parameters
     ==========
@@ -37,8 +38,8 @@ def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
 
-    fig = plt.figure(figsize=((n_classes-1)*4, 4))
-
+    if fig is None:
+        fig = plt.figure(figsize=(n_classes*4, 4))
 
     if n_classes == 2:
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
@@ -70,7 +71,8 @@ def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
 
 
     if histogram:
-        fig2 = plt.figure(figsize=((n_classes-1)*4, 4))
+        if fig2 is None:
+            fig2 = plt.figure(figsize=(n_classes*4, 4))
 
         for i in range(n_columns):
             ax = fig2.add_subplot(1, n_columns, i+1)
