@@ -24,7 +24,7 @@ def brier_score(y, y_pred):
 
 
 # FIXME Follow scikit-learn convention of y_true as first argument
-def guo_ECE(probs, y_true, bins=15):
+def conf_ECE(probs, y_true, bins=15):
     """
     Calculate ECE score based on model output probabilities and true labels
 
@@ -319,6 +319,34 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
     mce = MCE_helper(confs, preds, y_true, bin_size=1/bins, mce_full=mce_full)
 
     return mce
+
+
+# FIXME Follow scikit-learn convention of y_true as first argument
+def conf_MCE(probs, y_true, bins=15):
+    """
+    Calculate ECE score based on model output probabilities and true labels
+
+    Parameters
+    ==========
+    probs:
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
+    y_true:
+        - a list containing the actual class labels
+        - ndarray shape (n_samples) with a list containing actual class
+          labels
+        - ndarray shape (n_samples, n_classes) with largest value in
+          each row for the correct column class.
+    bins: (int)
+        - into how many bins are probabilities divided (default = 15)
+
+    Returns
+    =======
+    mce : float
+        maximum calibration error
+    """
+    return MCE(probs, y_true, normalize=False, bins=bins, mce_full=False)
+
 
 
 def binary_ECE(probs, y_true, power=1, bins=15):
