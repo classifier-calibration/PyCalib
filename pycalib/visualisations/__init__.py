@@ -179,7 +179,6 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     ax.set_ylabel('Proportion of positives')
     ax.grid(True)
     ax.set_axisbelow(True)
-    fig.tight_layout()
 
     return fig, ax
 
@@ -271,7 +270,6 @@ def plot_confusion_matrix(cm, classes,
 
     ax.set_ylabel('True label')
     ax.set_xlabel('Predicted label')
-    fig.tight_layout()
     return fig
 
 def plot_weight_matrix(weights, bias, classes, title='Weight matrix',
@@ -314,7 +312,6 @@ def plot_weight_matrix(weights, bias, classes, title='Weight matrix',
                  color="white" if matrix[i, j] > thresh else "black")
 
     ax.set_ylabel('Class')
-    fig.tight_layout()
     return fig
 
 
