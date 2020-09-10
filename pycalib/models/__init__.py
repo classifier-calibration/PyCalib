@@ -44,6 +44,11 @@ class _DummyCalibration(BaseEstimator, RegressorMixin):
 
 
 class IsotonicCalibration(IsotonicRegression):
+    def __init__(self):
+        return super(IsotonicCalibration, self).__init__(y_min=0.0, y_max=1.0,
+                                                         increasing=True,
+                                                         out_of_bounds='clip')
+
     def fit(self, scores, y, *args, **kwargs):
         '''
         Score=0 corresponds to y=0, and score=1 to y=1
@@ -189,7 +194,7 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
 
 
 class CalibratedModel(BaseEstimator, ClassifierMixin):
-    def __init__(self, base_estimator=None, method=None, score_type=None,
+    def __init__(self, base_estimator=None, method=None,
                  fit_estimator=True):
         ''' Initialize a Calibrated model (classifier + calibrator)
 
@@ -199,14 +204,11 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
             Classifier instance
         method : estimator
             Calibrator instance
-        score_type : string
-            String indicating the function to call to obtain predicted
-            probabilities from the classifier.
         '''
-        self.method = method
-        self.base_estimator = base_estimator
-        self.score_type = score_type
+        self.calibrator = clone(method)
+        self.base_estimator = clone(base_estimator)
         self.fit_estimator = fit_estimator
+        self.binary = False
 
     def fit(self, X, y, X_val=None, y_val=None, *args, **kwargs):
         """Fit the calibrated model
@@ -234,8 +236,17 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
 
         scores = self.base_estimator.predict_proba(X)
 
-        self.calibrator = clone(self.method)
-        self.calibrator.fit(scores, y, *args, **kwargs)
+        if scores.shape[1] == 2:
+            self.binary = True
+
+        if self.binary:
+            try:
+                self.calibrator.fit(scores, y, *args, **kwargs)
+            except ValueError as e:
+                self.calibrator.fit(scores[:,1], y, *args, **kwargs)
+        else:
+            self.calibrator.fit(scores, y, *args, **kwargs)
+
         return self
 
     def predict_proba(self, X):
@@ -257,7 +268,17 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
 
         scores = self.base_estimator.predict_proba(X)
 
-        predictions = self.calibrator.predict_proba(scores)
+        if self.binary:
+            try:
+                predictions = self.calibrator.predict_proba(scores)
+            except ValueError as e:
+                predictions = self.calibrator.predict_proba(scores[:, 1])
+
+            if (len(predictions.shape) == 1) or (predictions.shape[1] == 1):
+                predictions = np.vstack((1 - predictions, predictions)).T
+                print(predictions.shape)
+        else:
+            predictions = self.calibrator.predict_proba(scores)
 
         return predictions
 
@@ -276,6 +297,7 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
             The predicted class.
         """
         check_is_fitted(self, ["calibrator"])
+
         return np.argmax(self.predict_proba(X), axis=1)
 
 
@@ -557,7 +579,7 @@ class _CalibratedClassifier(object):
     def __init__(self, base_estimator, method='beta',
                  score_type=None):
         self.base_estimator = base_estimator
-        self.method = method
+        self.calibrator = method
         self.score_type = score_type
 
     def _preproc(self, X):
