@@ -62,10 +62,17 @@ class IsotonicCalibration(IsotonicRegression):
         -------
         self
         '''
+        if len(scores.shape) > 1:
+            scores = scores[:, 1]
         return super(IsotonicCalibration, self).fit(scores, y, *args, **kwargs)
 
     def predict_proba(self, scores, *args, **kwargs):
-        return self.transform(scores, *args, **kwargs)
+        if len(scores.shape) > 1:
+            scores = scores[:, 1]
+        transformed = self.transform(scores, *args, **kwargs)
+        if len(transformed.shape) == 1:
+            transformed = np.vstack((1 - transformed, transformed)).T
+        return transformed
 
 def logit(x):
     eps = np.finfo(x.dtype).eps
