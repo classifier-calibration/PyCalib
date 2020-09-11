@@ -283,7 +283,6 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
 
             if (len(predictions.shape) == 1) or (predictions.shape[1] == 1):
                 predictions = np.vstack((1 - predictions, predictions)).T
-                print(predictions.shape)
         else:
             predictions = self.calibrator.predict_proba(scores)
 
