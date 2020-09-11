@@ -45,7 +45,10 @@ def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
 
     if class_names is None:
-        class_names = [str(i) for i in range(n_classes)]
+        if n_classes == 2:
+            class_names = ['2']
+        else:
+            class_names = [str(i+1) for i in range(n_classes)]
 
     n_columns = labels.shape[1]
     for i in range(n_columns):
