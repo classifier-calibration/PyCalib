@@ -7,8 +7,6 @@ import numpy as np
 import matplotlib.tri as tri
 from matplotlib import ticker
 
-import pandas as pd
-
 
 def xy2bc(xy, tol=1.e-3):
     '''Converts 2D Cartesian coordinates to barycentric.'''
@@ -180,18 +178,19 @@ def plot_individual_pdfs(class_dist, *args, **kwargs):
     return fig
 
 
-def plot_marginal(func, mesh, c, ax1, ax2):
-    values = np.array([func(bc) for bc in mesh]).reshape(-1, 1)
-
-    df = pd.DataFrame(np.concatenate((mesh, values), axis=1),
-                      columns=['C1', 'C2', 'C3', 'P'])
-    df.plot(kind='scatter', x=c, y='P', alpha=0.1, ax=ax1)
-
-    ax2.set_title('Class {} marginal'.format(c))
-    table = df.pivot_table(index=c, values='P')
-    table.reset_index(inplace=True)
-    table.columns = [c, 'P']
-    table.plot(kind='scatter', x=c, y='P', alpha=0.2, ax=ax2)
+# FIXME remove pandas dependency from this function
+# def plot_marginal(func, mesh, c, ax1, ax2):
+#     values = np.array([func(bc) for bc in mesh]).reshape(-1, 1)
+# 
+#     df = pd.DataFrame(np.concatenate((mesh, values), axis=1),
+#                       columns=['C1', 'C2', 'C3', 'P'])
+#     df.plot(kind='scatter', x=c, y='P', alpha=0.1, ax=ax1)
+# 
+#     ax2.set_title('Class {} marginal'.format(c))
+#     table = df.pivot_table(index=c, values='P')
+#     table.reset_index(inplace=True)
+#     table.columns = [c, 'P']
+#     table.plot(kind='scatter', x=c, y='P', alpha=0.2, ax=ax2)
 
 
 def plot_converging_lines_pvalues(func, lines, i, ax):

@@ -5,113 +5,108 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import label_binarize
+from sklearn.calibration import calibration_curve
 
 
-def plot_reliability_diagram(score, labels, linspace, scores_set, legend_set,
-                             laplace_reg=1, scatter_prop=0.0, fig=None, n_bins=10,
-                             bins_count=True, title=None, diagonal=True,
-                             **kwargs):
+def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
+                             n_bins=10, class_names=None, fig=None,
+                             fig2=None):
     '''
     Parameters
     ==========
-    scores_set : list of array_like of floats
-        List of scores given by different methods, the first one is always the
-        original one
-    labels : array_like of ints
-        Labels corresponding to the scores
-    legend_set : list of strings
-        Description of each array in the scores_set
-    laplace_reg : float
-        Laplace regularization when computing the elements in the bins
-    scatter_prop : float
-        If original first specifies the proportion of points (score, label) to
-        show
-    fig : matplotlib.pyplot.figure
-        Plots the axis in the given figure
-    bins_count : bool
-        If True, show the number of samples in each bin
+    labels : array (n_samples, )
+        Labels indicating the ground class
+    scores_list : list of matrices [(n_samples, n_classes)]
+        Output probability scores for every method
+    legend : list of strings
+        Text to use for the legend
+    n_bins : int
+        Number of bins to create in the scores' space
+    histogram : boolean
+        If True, it generates an additional figure showing the number of
+        samples in each bin.
 
     Regurns
     =======
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
+    fig2 : matplotlib.pyplot.figure
+        Only if histogram == True
     '''
+    classes = np.unique(labels)
+    n_classes = len(classes)
+    labels = label_binarize(labels, classes=classes)
+
     if fig is None:
-        fig = plt.figure()
+        fig = plt.figure(figsize=(n_classes*4, 4))
 
-    ax = fig.add_subplot(111)
-    if title is not None:
-        ax.set_title(title)
+    if n_classes == 2:
+        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
 
-    n_lines = len(legend_set)
-
-    # Draw the empirical values in a histogram style
-    # TODO careful that now the min and max depend on the scores
-    s_min = min(score)
-    s_max = max(score)
-    bins = np.linspace(s_min, s_max, n_bins+1)
-    hist_tot = np.histogram(score, bins=bins)
-    hist_pos = np.histogram(score[labels == 1], bins=bins)
-    edges = np.insert(bins, np.arange(len(bins)), bins)
-    empirical_p = np.true_divide(hist_pos[0]+laplace_reg,
-                                 hist_tot[0]+2*laplace_reg)
-    empirical_p = np.insert(empirical_p, np.arange(len(empirical_p)),
-                            empirical_p)
-    p = plt.plot(edges[1:-1], empirical_p, label='original')
-    # Draw the centroids of each bin
-    centroids = [np.mean(np.append(
-                 score[np.where(np.logical_and(score >= bins[i],
-                                               score < bins[i+1]))],
-                 bins[i]+0.05)) for i in range(len(hist_tot[1])-1)]
-    proportion = np.true_divide(hist_pos[0]+laplace_reg,
-                                hist_tot[0]+laplace_reg*2)
-    plt.plot(centroids, proportion, 'o', color=p[-1].get_color(), linewidth=2,
-             label='centroid')
-    for (x, y, text) in zip(centroids, proportion, hist_tot[0]):
-        if y < 0.95:
-            y += 0.05
+    if class_names is None:
+        if n_classes == 2:
+            class_names = ['2']
         else:
-            y -= 0.05
-        plt.text(x, y, text, horizontalalignment='center',
-                 verticalalignment='center')
+            class_names = [str(i+1) for i in range(n_classes)]
 
-    # Draw the rest of the lines
-    for (scores, legend) in zip(scores_set, legend_set):
-        # reliability_diagram(scores, labels, marker='o-', label=legend,
-        #                     linewidth=n_lines, alpha=alpha, n_bins=n_bins,
-        #                     **kwargs)
-        plt.plot(linspace, scores, label=legend, linewidth=n_lines, **kwargs)
-        n_lines -= 1
+    n_columns = labels.shape[1]
+    for i in range(n_columns):
+        ax1 = fig.add_subplot(1, n_columns, i+1)
+        for score, name in zip(scores_list, legend):
+            fraction_of_positives, mean_predicted_value = calibration_curve(labels[:, i], score[:, i],
+                                                                            n_bins=n_bins)
+            ax1.plot(mean_predicted_value, fraction_of_positives, "s-",
+                             label=name)
+        ax1.plot([0, 1], [0, 1], "k--")
+        ax1.set_xlim([0, 1])
+        ax1.set_ylim([0, 1])
+        #ax1.set_title('Class {}'.format(class_names[i]))
+        ax1.set_xlabel('Mean predicted value (Class {})'.format(
+            class_names[i]))
+        if i == 0:
+            ax1.set_ylabel('Fraction of positives')
+        ax1.grid()
 
-    # Draw some samples with the labels
-    if scatter_prop:
-        n_points = int(scatter_prop*len(labels))
-        plt.plot(score[:n_points], labels[:n_points], 'kx',
-                 label='samples ({:d}%)'.format(int(scatter_prop*100)),
-                 markersize=6, markeredgewidth=1, alpha=0.4)
+    lines, labels = fig.axes[-1].get_legend_handles_labels()
+    fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+               bbox_transform=fig.transFigure, ncol=6)
 
-    if diagonal:
-        ax.plot([0, 1], [0, 1], 'r--')
-    ax.set_ylim([0, 1])
-    ax.set_xlim([0, 1])
-    ax.set_xlabel(r'$s$')
-    ax.set_ylabel(r'$\hat p$')
-    ax.legend(loc='lower right')
-    ax.grid(True)
 
+    if histogram:
+        if fig2 is None:
+            fig2 = plt.figure(figsize=(n_classes*4, 4))
+
+        for i in range(n_columns):
+            ax = fig2.add_subplot(1, n_columns, i+1)
+            for score, name in zip(scores_list, legend):
+                ax.hist(score[:, i], range=(0, 1), bins=n_bins, label=name,
+                         histtype="step", lw=2)
+                ax.set_xlim([0, 1])
+                ax.set_xlabel('Predicted value (Class {})'.format(
+                    class_names[i]))
+                if i == 0:
+                    ax.set_ylabel('Number of samples in bin')
+                ax.grid()
+        lines, labels = fig2.axes[-1].get_legend_handles_labels()
+        fig2.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+                   bbox_transform=fig2.transFigure, ncol=6)
+        return fig, fig2
     return fig
 
 
-def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
-                                             title=None, fig=None, ax=None,
-                                             legend=True):
-    '''
+def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
+                                         fig=None, ax=None, legend=True):
+    '''Plot binary reliability diagram gaps
+
     Parameters
     ==========
-    y_true : binary matrix shape (n_samples, n_classes)
-        Labels corresponding to the scores
-    p_pred : binary matrix shape (n_samples, n_classes)
-        Output probability scores
+    y_true : np.array shape (n_samples, 2) or (n_samples, )
+        Labels corresponding to the scores as a binary indicator matrix or as a
+        vector of integers indicating the class.
+    p_pred : binary matrix shape (n_samples, 2) or (n_samples, )
+        Output probability scores for each class as a matrix, or for the
+        positive class
     n_bins : integer
         Number of bins to divide the scores
     title : string
@@ -136,8 +131,15 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     if title is not None:
         ax.set_title(title)
 
-    y_true = y_true.flatten()
-    p_pred = p_pred.flatten()
+    if (len(y_true.shape) == 2) and (y_true.shape[1] == 2):
+        y_true = y_true[:, 1]
+    if (len(y_true.shape) == 2) and (y_true.shape[1] > 2):
+        raise ValueError('y_true wrong dimensions {}'.format(y_true.shape))
+
+    if (len(p_pred.shape) == 2) and (p_pred.shape[1] == 2):
+        p_pred = p_pred[:, 1]
+    if (len(p_pred.shape) == 2) and (p_pred.shape[1] > 2):
+        raise ValueError('p_pred wrong dimensions {}'.format(p_pred.shape))
 
     bin_size = 1.0/n_bins
     centers = np.linspace(bin_size/2.0, 1.0 - bin_size/2.0, n_bins)
@@ -145,12 +147,20 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     pred_mean = np.zeros(n_bins)
     for i, center in enumerate(centers):
         if i == 0:
-            # First bin include lower bound
-            bin_indices = np.where(np.logical_and(p_pred >= center - bin_size/2, p_pred <= center + bin_size/2))
+            # First bin includes lower bound
+            bin_indices = np.where(np.logical_and(p_pred >= center - bin_size/2,
+                                                  p_pred <= center +
+                                                  bin_size/2))
         else:
-            bin_indices = np.where(np.logical_and(p_pred > center - bin_size/2, p_pred <= center + bin_size/2))
-        true_proportion[i] = np.nanmean(y_true[bin_indices])
-        pred_mean[i] = np.nanmean(p_pred[bin_indices])
+            bin_indices = np.where(np.logical_and(p_pred > center - bin_size/2,
+                                                  p_pred <= center +
+                                                  bin_size/2))
+        if len(bin_indices[0]) == 0:
+            true_proportion[i] = np.nan
+            pred_mean[i] = np.nan
+        else:
+            true_proportion[i] = np.mean(y_true[bin_indices])
+            pred_mean[i] = np.nanmean(p_pred[bin_indices])
 
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
@@ -160,7 +170,7 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
            color="#ffc8c6",
            label='Gap pred. mean')
     ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
-               marker=".", zorder=10)
+               marker="+", zorder=10)
 
     if legend:
         ax.legend()
@@ -169,25 +179,53 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, n_bins=15,
     ax.set_xlim([0, 1])
     ax.set_xlabel('Predicted probability')
     ax.set_ylim([0, 1])
-    ax.set_ylabel('Frequency')
+    ax.set_ylabel('Proportion of positives')
     ax.grid(True)
     ax.set_axisbelow(True)
-    return fig
 
-def plot_reliability_diagram_per_class(y_true, p_pred, fig=None, ax=None, **kwargs):
-    if fig is None and ax is None:
-        fig = plt.figure()
+    return fig, ax
 
-    if len(y_true.shape) == 1:
-        y_true = OneHotEncoder(categories='auto').transform(y_true)
 
-    n_classes = y_true.shape[1]
-    if ax is None:
-        ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
-    for i in range(n_classes):
-        plot_multiclass_reliability_diagram(y_true[:,i], p_pred[:,i],
-                                            title=r'$C_{}$'.format(i+1),
-                                            fig=fig, ax=ax[i], **kwargs)
+def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
+                                             per_class=True, **kwargs):
+
+    if len(y_true.shape) < 2 or y_true.shape[1] == 1:
+        ohe = OneHotEncoder(categories='auto')
+        ohe.fit(y_true.reshape(-1, 1))
+        y_true = ohe.transform(y_true.reshape(-1,1))
+
+    if per_class:
+        n_classes = y_true.shape[1]
+        if fig is None and ax is None:
+            fig = plt.figure(figsize=((n_classes-1)*4, 4))
+        if ax is None:
+            ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
+        for i in range(n_classes):
+            if i == 0:
+                legend=True
+            else:
+                legend=False
+            plot_binary_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
+                                                 title='$C_{}$'.format(i+1),
+                                                 fig=fig, ax=ax[i],
+                                                 legend=legend,
+                                                 **kwargs)
+            if i > 0:
+                ax[i].set_ylabel('')
+            ax[i].set_xlabel('Predicted probability')
+    else:
+        if fig is None and ax is None:
+            fig = plt.figure()
+        mask = p_pred.argmax(axis=1)
+        indices = np.arange(p_pred.shape[0])
+        y_true = y_true[indices, mask].T
+        p_pred = p_pred[indices, mask].T
+        ax = fig.add_subplot(1, 1, 1)
+        plot_binary_reliability_diagram_gaps(y_true, p_pred,
+                                             title=r'$C_1$',
+                                             fig=fig, ax=ax, **kwargs)
+        ax.set_title('')
+
     return fig
 
 def plot_confusion_matrix(cm, classes,
@@ -235,7 +273,6 @@ def plot_confusion_matrix(cm, classes,
 
     ax.set_ylabel('True label')
     ax.set_xlabel('Predicted label')
-    fig.tight_layout()
     return fig
 
 def plot_weight_matrix(weights, bias, classes, title='Weight matrix',
@@ -278,7 +315,6 @@ def plot_weight_matrix(weights, bias, classes, title='Weight matrix',
                  color="white" if matrix[i, j] > thresh else "black")
 
     ax.set_ylabel('Class')
-    fig.tight_layout()
     return fig
 
 

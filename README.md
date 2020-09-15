@@ -68,3 +68,13 @@ file  __.pypirc__
   username = __token__
   password = pypi-yourtoken
 ```
+
+Contributors
+============
+
+This code has been adapted by Miquel from several previous codes. The following is a list of people that has been involved in some parts of the code.
+
+- Miquel Perello Nieto
+- Hao Song
+- Telmo Silva Filho
+- Markus Kängsepp
