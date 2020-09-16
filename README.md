@@ -65,14 +65,31 @@ file  __.pypirc__
 
 ```
 [pypi]
-  username = __token__
-  password = pypi-yourtoken
+username = __token__
+password = pypi-yourtoken
+```
+
+Check the README file for Pypi
+------------------------------
+
+In order to check that the readme file is compliant with Pypi standards,
+install the following Python package
+
+```
+pip install readme-renderer
+```
+
+and run the following command
+
+```
+twine check dist/*
 ```
 
 Contributors
-============
+------------
 
-This code has been adapted by Miquel from several previous codes. The following is a list of people that has been involved in some parts of the code.
+This code has been adapted by Miquel from several previous codes. The following
+is a list of people that has been involved in some parts of the code.
 
 - Miquel Perello Nieto
 - Hao Song

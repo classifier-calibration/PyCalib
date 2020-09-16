@@ -26,5 +26,6 @@ setup(
   download_url = 'https://github.com/perellonieto/pycalib/archive/{}.tar.gz'.format(main_ns['__version__']),
   keywords = ['classifier calibration', 'calibration', 'classification'],
   classifiers = [],
+  long_description_content_type='text/markdown',
   long_description=long_description
 )
