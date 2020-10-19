@@ -5,10 +5,19 @@ from sklearn.preprocessing import label_binarize
 from scipy.stats import percentileofscore
 
 
+def accuracy(y, y_pred):
+    '''
+    y : true y (n_samples, n_classes)
+    y_pred : predicted y (n_samples, n_classes)
+    '''
+    predictions = numpy.argmax(y_pred, axis=1)
+    return numpy.mean(predictions == y)
+
+
 def cross_entropy(y, y_pred):
     '''
-    y : true y
-    y_pred : predicted y
+    y : true y (n_samples, n_classes)
+    y_pred : predicted y (n_samples, n_classes)
     '''
     print('Warning: The order of parameters y y_pred has recently chagned')
     return log_loss(y, y_pred)
@@ -16,29 +25,28 @@ def cross_entropy(y, y_pred):
 
 def brier_score(y, y_pred):
     '''
-    y : true y
-    y_pred : predicted y
+    y : true y (n_samples, n_classes)
+    y_pred : predicted y (n_samples, n_classes)
     '''
     print('Warning: The order of parameters y y_pred has recently chagned')
     return mean_squared_error(y, y_pred)
 
 
-# FIXME Follow scikit-learn convention of y_true as first argument
-def conf_ECE(probs, y_true, bins=15):
+def conf_ECE(y_true, probs, bins=15):
     """
     Calculate ECE score based on model output probabilities and true labels
 
     Parameters
     ==========
-    probs:
-        a list containing probabilities for all the classes with a shape of
-        (samples, classes)
     y_true:
         - a list containing the actual class labels
         - ndarray shape (n_samples) with a list containing actual class
           labels
         - ndarray shape (n_samples, n_classes) with largest value in
           each row for the correct column class.
+    probs:
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
     bins: (int)
         - into how many bins are probabilities divided (default = 15)
 
@@ -47,24 +55,24 @@ def conf_ECE(probs, y_true, bins=15):
     ece : float
         expected calibration error
     """
-    return ECE(probs, y_true, normalize=False, bins=bins, ece_full=False)
+    return ECE(y_true, probs, normalize=False, bins=bins, ece_full=False)
 
 
-def ECE(probs, y_true, normalize=False, bins=15, ece_full=True):
+def ECE(y_true, probs, normalize=False, bins=15, ece_full=True):
     """
     Calculate ECE score based on model output probabilities and true labels
 
     Parameters
     ==========
-    probs : list
-        a list containing probabilities for all the classes with a shape of
-        (samples, classes)
     y_true : list
         a list containing the actual class labels
         ndarray shape (n_samples) with a list containing actual class
           labels
         ndarray shape (n_samples, n_classes) with largest value in
           each row for the correct column class.
+    probs : list
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
     normalize: (bool)
         in case of 1-vs-K calibration, the probabilities need to be
         normalized. (default = False)
@@ -86,7 +94,7 @@ def ECE(probs, y_true, normalize=False, bins=15, ece_full=True):
 
     # Prepare predictions, confidences and true labels for ECE calculation
     if ece_full:
-        preds, confs, y_true = get_preds_all(probs, y_true,
+        preds, confs, y_true = get_preds_all(y_true, probs,
                                              normalize=normalize, flatten=True)
 
     else:
@@ -104,16 +112,16 @@ def ECE(probs, y_true, normalize=False, bins=15, ece_full=True):
     return ece
 
 
-def get_preds_all(y_probs, y_true, axis=1, normalize=False, flatten=True):
+def get_preds_all(y_true, y_probs, axis=1, normalize=False, flatten=True):
     """
     Method to get predictions in right format for ECE-full.
 
     Parameters
     ==========
-    y_probs: list (samples, classes)
-        containing probabilities for all the classes
     y_true: list
         containing the actual class labels
+    y_probs: list (samples, classes)
+        containing probabilities for all the classes
     axis: (int)
         dimension of set to calculate probabilities on
     normalize: (bool)
@@ -270,18 +278,18 @@ def MCE_helper(conf, pred, true, bin_size=0.1, mce_full=True):
     return np.max(np.asarray(cal_errors))
 
 
-def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
+def MCE(y_true, probs, normalize=False, bins=15, mce_full=False):
 
     """
     Calculate MCE score based on model output probabilities and true labels
 
     Parameters
     ==========
+    y_true : list
+        containing the actual class labels
     probs : list
         containing probabilities for all the classes with a shape of (samples,
         classes)
-    y_true : list
-        containing the actual class labels
     normalize : bool
         in case of 1-vs-K calibration, the probabilities need to be normalized.
         (default = False)
@@ -303,7 +311,7 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
 
     # Prepare predictions, confidences and true labels for MCE calculation
     if mce_full:
-        preds, confs, y_true = get_preds_all(probs, y_true,
+        preds, confs, y_true = get_preds_all(y_true, probs,
                                              normalize=normalize, flatten=True)
 
     else:
@@ -321,22 +329,21 @@ def MCE(probs, y_true, normalize=False, bins=15, mce_full=False):
     return mce
 
 
-# FIXME Follow scikit-learn convention of y_true as first argument
-def conf_MCE(probs, y_true, bins=15):
+def conf_MCE(y_true, probs, bins=15):
     """
     Calculate ECE score based on model output probabilities and true labels
 
     Parameters
     ==========
-    probs:
-        a list containing probabilities for all the classes with a shape of
-        (samples, classes)
     y_true:
         - a list containing the actual class labels
         - ndarray shape (n_samples) with a list containing actual class
           labels
         - ndarray shape (n_samples, n_classes) with largest value in
           each row for the correct column class.
+    probs:
+        a list containing probabilities for all the classes with a shape of
+        (samples, classes)
     bins: (int)
         - into how many bins are probabilities divided (default = 15)
 
@@ -345,11 +352,11 @@ def conf_MCE(probs, y_true, bins=15):
     mce : float
         maximum calibration error
     """
-    return MCE(probs, y_true, normalize=False, bins=bins, mce_full=False)
+    return MCE(y_true, probs, normalize=False, bins=bins, mce_full=False)
 
 
 
-def binary_ECE(probs, y_true, power=1, bins=15):
+def binary_ECE(y_true, probs, power=1, bins=15):
 
     idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
 
@@ -359,11 +366,11 @@ def binary_ECE(probs, y_true, power=1, bins=15):
 
     ece = 0
     for i in np.unique(idx):
-        ece += bin_func(probs, y_true, idx == i)
+        ece += bin_func(y_true, probs, idx == i)
     return ece
 
 
-def classwise_ECE(probs, y_true, power=1, bins=15):
+def classwise_ECE(y_true, probs, power=1, bins=15):
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
         y_true = label_binarize(np.array(y_true),
@@ -374,13 +381,13 @@ def classwise_ECE(probs, y_true, power=1, bins=15):
     return np.sum(
         [
             binary_ECE(
-                probs[:, c], y_true[:, c].astype(float), power=power, bins=bins
+                y_true[:, c].astype(float), probs[:, c], power=power, bins=bins
             ) for c in range(n_classes)
         ]
     )
 
 
-def simplex_binning(probs, y_true, bins=15):
+def simplex_binning(y_true, probs, bins=15):
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
@@ -413,7 +420,7 @@ def simplex_binning(probs, y_true, bins=15):
     return bins
 
 
-def full_ECE(probs, y_true, bins=15, power=1):
+def full_ECE(y_true, probs, bins=15, power=1):
     n = len(probs)
 
     probs = np.array(probs)
@@ -457,7 +464,7 @@ def score_sampling(probs, samples=10000, ece_function=None):
     )
 
 
-def pECE(probs, y_true, samples=10000, ece_function=full_ECE):
+def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
@@ -471,6 +478,6 @@ def pECE(probs, y_true, samples=10000, ece_function=full_ECE):
                 samples=samples,
                 ece_function=ece_function
             ),
-            ece_function(probs, y_true)
+            ece_function(y_true, probs)
         ) / 100
     )
