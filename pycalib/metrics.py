@@ -7,11 +7,13 @@ from scipy.stats import percentileofscore
 
 def accuracy(y, y_pred):
     '''
+    # TODO Add option to pass array with shape (n_samples, )
     y : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
     '''
-    predictions = numpy.argmax(y_pred, axis=1)
-    return numpy.mean(predictions == y)
+    predictions = np.argmax(y_pred, axis=1)
+    y = np.argmax(y, axis=1)
+    return np.mean(predictions == y)
 
 
 def cross_entropy(y, y_pred):

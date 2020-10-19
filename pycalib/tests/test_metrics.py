@@ -1,11 +1,23 @@
 import unittest
 import numpy as np
-from pycalib.metrics import binary_ECE, classwise_ECE, full_ECE, MCE
+from pycalib.metrics import accuracy, binary_ECE, classwise_ECE, full_ECE, MCE
 
 from sklearn.preprocessing import label_binarize
 
 
+# TODO add more test cases
 class TestFunctions(unittest.TestCase):
+    def test_accuracy(self):
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[0, 1], [0, 1]])
+        acc = accuracy(Y, S)
+        self.assertAlmostEqual(acc, 0.5)
+
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[1, 0], [0, 1]])
+        acc = accuracy(Y, S)
+        self.assertAlmostEqual(acc, 0.0)
+
     def test_binary_ece(self):
         S = np.array([.6, .6, .6, .6, .6, .6, .6, .6, .6, .6])
         y = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0])
