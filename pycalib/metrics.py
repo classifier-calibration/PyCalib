@@ -21,7 +21,6 @@ def cross_entropy(y, y_pred):
     y : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
     '''
-    print('Warning: The order of parameters y y_pred has recently chagned')
     return log_loss(y, y_pred)
 
 
@@ -30,7 +29,6 @@ def brier_score(y, y_pred):
     y : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
     '''
-    print('Warning: The order of parameters y y_pred has recently chagned')
     return mean_squared_error(y, y_pred)
 
 
