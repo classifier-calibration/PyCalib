@@ -1,7 +1,9 @@
 from distutils.core import setup
 from distutils.util import convert_path
+from os import path
 
-with open("README.md", 'r') as f:
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README'), encoding='utf-8') as f:
     long_description = f.read()
 
 main_ns = {}
@@ -26,6 +28,6 @@ setup(
   download_url = 'https://github.com/perellonieto/pycalib/archive/{}.tar.gz'.format(main_ns['__version__']),
   keywords = ['classifier calibration', 'calibration', 'classification'],
   classifiers = [],
-  long_description_content_type='text/markdown',
-  long_description=long_description
+  long_description=long_description,
+  long_description_content_type='text/markdown'
 )
