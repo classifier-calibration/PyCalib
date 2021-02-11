@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 
-import matplotlib.pyplot as plt
-
 from functools import partial
 from scipy.stats import ranksums
 from scipy.stats import mannwhitneyu
 from scipy.stats import friedmanchisquare
 
+# TODO Remove from stats.py
+from pycalib.visualisations import plot_critical_difference
 
 def compute_friedmanchisquare(table):
     '''
@@ -69,25 +69,3 @@ def compute_mannwhitneyu(table):
     return paired_test(table, stats_func=partial(mannwhitneyu,
                                                  alternative='less'))
 
-
-def plot_critical_difference(avranks, num_datasets, names,
-                               title=None, test='bonferroni-dunn'):
-    '''
-        test: string in ['nemenyi', 'bonferroni-dunn']
-         - nemenyi two-tailed test (up to 20 methods)
-         - bonferroni-dunn one-tailed test (only up to 10 methods)
-
-    '''
-    # Critical difference plot
-    import Orange
-
-    if len(avranks) > 10:
-        print('Forcing Nemenyi Critical difference')
-        test = 'nemenyi'
-    cd = Orange.evaluation.compute_CD(avranks, num_datasets, alpha='0.05',
-                                      test=test)
-    Orange.evaluation.graph_ranks(avranks, names, cd=cd, width=6,
-                                  textspace=1.5)
-    fig = plt.gcf()
-    fig.suptitle(title, horizontalalignment='left')
-    return fig
