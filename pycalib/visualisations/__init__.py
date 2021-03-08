@@ -8,10 +8,20 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import label_binarize
 from sklearn.calibration import calibration_curve
 
+from sklearn.preprocessing import label_binarize
+from sklearn.calibration import calibration_curve
+from statsmodels.stats.proportion import proportion_confint
 
-def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
+from matplotlib import gridspec
+
+def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
                              n_bins=10, class_names=None, fig=None,
-                             fig2=None):
+                             show_counts=False, errorbar_interval=None,
+                             interval_method='beta', fmt='s-',
+                             show_correction=False,
+                             show_samples=False,
+                             sample_proportion=1.0,
+                             histogram=False):
     '''
     Parameters
     ==========
@@ -34,12 +44,14 @@ def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
     fig2 : matplotlib.pyplot.figure
         Only if histogram == True
     '''
+
+    if histogram:
+        print('Warning: the argument histogram is deprecated, use show_histogram')
+        show_histogram = True
+
     classes = np.unique(labels)
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
-
-    if fig is None:
-        fig = plt.figure(figsize=(n_classes*4, 4))
 
     if n_classes == 2:
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
@@ -51,47 +63,90 @@ def plot_reliability_diagram(labels, scores_list, legend, histogram=True,
             class_names = [str(i+1) for i in range(n_classes)]
 
     n_columns = labels.shape[1]
+
+    if fig is None:
+        fig = plt.figure(figsize=(n_columns*4, 4))
+
+    if show_histogram:
+        spec = gridspec.GridSpec(ncols=n_columns, nrows=2,
+                                 height_ratios=[5, 1],
+                                 wspace=0.01, hspace=0.02)
+    else:
+        spec = gridspec.GridSpec(ncols=1, nrows=1)
+
+    bins = np.linspace(0, 1 + 1e-8, n_bins)
     for i in range(n_columns):
-        ax1 = fig.add_subplot(1, n_columns, i+1)
+        ax = fig.add_subplot(spec[i])
+
         for score, name in zip(scores_list, legend):
-            fraction_of_positives, mean_predicted_value = calibration_curve(labels[:, i], score[:, i],
-                                                                            n_bins=n_bins)
-            ax1.plot(mean_predicted_value, fraction_of_positives, "s-",
-                             label=name)
-        ax1.plot([0, 1], [0, 1], "k--")
-        ax1.set_xlim([0, 1])
-        ax1.set_ylim([0, 1])
+            bin_idx = np.digitize(score[:, i], bins) - 1
+
+            bin_true = np.bincount(bin_idx, weights=labels[:, i], minlength=n_bins)
+            bin_pred = np.bincount(bin_idx, weights=score[:, i], minlength=n_bins)
+            bin_total = np.bincount(bin_idx, minlength=n_bins)
+
+            avg_true = np.divide(bin_true, bin_total)
+            avg_pred = np.divide(bin_pred, bin_total)
+
+            if errorbar_interval is None:
+                p = ax.plot(avg_pred, avg_true, fmt, label=name)
+                color = p.get_color()
+            else:
+                intervals = proportion_confint(count=bin_true, nobs=bin_total,
+                                               alpha=1-errorbar_interval,
+                                               method=interval_method)
+                intervals = np.array(intervals)
+                yerr = intervals - avg_true
+                yerr = np.abs(yerr)
+                ebar  = ax.errorbar(avg_pred, avg_true, yerr=yerr,
+                                    label=name, fmt=fmt, markersize=5)
+                color = ebar[0].get_color()
+
+            if show_counts:
+                for ap, at, count in zip(avg_pred, avg_true, bin_total):
+                    if np.isfinite(ap) and np.isfinite(at):
+                        ax.text(ap, at, str(count), fontsize=8, ha='center', va='center',
+                                bbox=dict(boxstyle='square,pad=0.15', fc='white',
+                                          ec=color))
+
+            if show_correction:
+                for ap, at in zip(avg_pred, avg_true):
+                    ax.arrow(ap, at, at - ap, 0, color='red', head_width=0.02,
+                             length_includes_head=True)
+
+            if show_samples:
+                idx = np.random.choice(labels.shape[0], int(sample_proportion*labels.shape[0]))
+                ax.scatter(score[idx, i], labels[idx, i], marker='d', s=100,
+                           alpha=0.1)
+
+        ax.plot([0, 1], [0, 1], "r--")
+        ax.set_xlim([0, 1])
+        ax.set_ylim([0, 1])
         #ax1.set_title('Class {}'.format(class_names[i]))
-        ax1.set_xlabel('Mean predicted value (Class {})'.format(
+        ax.set_xlabel('Mean predicted value (Class {})'.format(
             class_names[i]))
         if i == 0:
-            ax1.set_ylabel('Fraction of positives')
-        ax1.grid()
+            ax.set_ylabel('Fraction of positives')
+        ax.grid(True)
 
-    lines, labels = fig.axes[-1].get_legend_handles_labels()
+        if show_histogram:
+            #ax.get_xaxis().set_visible(False)
+            ax.set_xticklabels([])
+            ax = fig.add_subplot(spec[n_columns + i])
+            for score, name in zip(scores_list, legend):
+                ax.hist(score[:, i], range=(0, 1), bins=bins, label=name,
+                         histtype="step", lw=2)
+                ax.set_xlim([0, 1])
+                ax.set_xlabel('Mean predicted value (Class {})'.format(
+                    class_names[i]))
+                if i == 0:
+                    ax.set_ylabel('#count')
+                ax.grid(True)
+
+    lines, labels = fig.axes[0].get_legend_handles_labels()
     fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
                bbox_transform=fig.transFigure, ncol=6)
 
-
-    if histogram:
-        if fig2 is None:
-            fig2 = plt.figure(figsize=(n_classes*4, 4))
-
-        for i in range(n_columns):
-            ax = fig2.add_subplot(1, n_columns, i+1)
-            for score, name in zip(scores_list, legend):
-                ax.hist(score[:, i], range=(0, 1), bins=n_bins, label=name,
-                         histtype="step", lw=2)
-                ax.set_xlim([0, 1])
-                ax.set_xlabel('Predicted value (Class {})'.format(
-                    class_names[i]))
-                if i == 0:
-                    ax.set_ylabel('Number of samples in bin')
-                ax.grid()
-        lines, labels = fig2.axes[-1].get_legend_handles_labels()
-        fig2.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
-                   bbox_transform=fig2.transFigure, ncol=6)
-        return fig, fig2
     return fig
 
 
