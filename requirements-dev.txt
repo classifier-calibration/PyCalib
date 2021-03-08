@@ -11,3 +11,4 @@ sphinx-gallery
 twine
 yapf
 restview
+sphix-rtd-theme
