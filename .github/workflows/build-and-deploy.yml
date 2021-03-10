@@ -17,11 +17,13 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies 💾
-      run: pip install -r requirements.txt
-      run: pip install -r requirements-dev.txt
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
     - name: Build the documentation 🔧📖
-      run: cd docs
-      run: make html
+      run: |
+        cd docs
+        make html
     - name: Deploy 🚀
       if: github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.7.1
