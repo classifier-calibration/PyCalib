@@ -17,7 +17,7 @@ setup(
   install_requires=[
     'numpy',
     'scipy',
-    'sklearn',
+    'scikit-learn',
     'matplotlib',
   ],
   version=main_ns['__version__'],
