@@ -1,0 +1,12 @@
+
+:orphan:
+
+.. _sphx_glr_examples_visualisations_sg_execution_times:
+
+Computation times
+=================
+**00:01.721** total execution time for **examples_visualisations** files:
+
++-------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``) | 00:01.721 | 0.0 MB |
++-------------------------------------------------------------------------------------------------------+-----------+--------+

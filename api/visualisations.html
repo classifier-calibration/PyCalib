@@ -13,6 +13,10 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-rendered-html.css" type="text/css" />
 
   
   
@@ -92,6 +96,8 @@
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Visualisations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html#visualisation-examples">Visualisation Examples</a></li>
 </ul>
 
             
@@ -162,6 +168,120 @@
   <div class="section" id="visualisations">
 <span id="id1"></span><h1>Visualisations<a class="headerlink" href="#visualisations" title="Permalink to this headline">¶</a></h1>
 <p>Visualisations file describes all visualisations tools in PyCalib</p>
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_reliability_diagram">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>labels<span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the ground class</p>
+</dd>
+<dt>scores_list<span class="classifier">list of matrices [(n_samples, n_classes)]</span></dt><dd><p>Output probability scores for every method</p>
+</dd>
+<dt>legend<span class="classifier">list of strings</span></dt><dd><p>Text to use for the legend</p>
+</dd>
+<dt>n_bins<span class="classifier">int</span></dt><dd><p>Number of bins to create in the scores’ space</p>
+</dd>
+<dt>histogram<span class="classifier">boolean</span></dt><dd><p>If True, it generates an additional figure showing the number of
+samples in each bin.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>fig<span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Figure with the reliability diagram</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-pycalib.visualisations"></span><dl class="py function">
+<dt id="pycalib.visualisations.plot_binary_reliability_diagram_gaps">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_binary_reliability_diagram_gaps</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_binary_reliability_diagram_gaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot binary reliability diagram gaps</p>
+<dl class="simple">
+<dt>y_true<span class="classifier">np.array shape (n_samples, 2) or (n_samples, )</span></dt><dd><p>Labels corresponding to the scores as a binary indicator matrix or as a
+vector of integers indicating the class.</p>
+</dd>
+<dt>p_pred<span class="classifier">binary matrix shape (n_samples, 2) or (n_samples, )</span></dt><dd><p>Output probability scores for each class as a matrix, or for the
+positive class</p>
+</dd>
+<dt>n_bins<span class="classifier">integer</span></dt><dd><p>Number of bins to divide the scores</p>
+</dd>
+<dt>title<span class="classifier">string</span></dt><dd><p>Title for the plot</p>
+</dd>
+<dt>fig<span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Plots the axis in the given figure</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.pyplot.Axis</span></dt><dd><p>Axis where to draw the plot</p>
+</dd>
+<dt>legend<span class="classifier">boolean</span></dt><dd><p>If True the function will draw a legend</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>fig<span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Figure with the reliability diagram</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_confusion_matrix">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_confusion_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cm</span></em>, <em class="sig-param"><span class="pre">classes</span></em>, <em class="sig-param"><span class="pre">normalize=False</span></em>, <em class="sig-param"><span class="pre">title='Confusion</span> <span class="pre">matrix'</span></em>, <em class="sig-param"><span class="pre">cmap=&lt;matplotlib.colors.LinearSegmentedColormap</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">fig=None</span></em>, <em class="sig-param"><span class="pre">ax=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function prints and plots the confusion matrix.
+Normalization can be applied by setting <cite>normalize=True</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_critical_difference">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_critical_difference</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bonferroni-dunn'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_critical_difference" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>test: string in [‘nemenyi’, ‘bonferroni-dunn’]</dt><dd><ul class="simple">
+<li><p>nemenyi two-tailed test (up to 20 methods)</p></li>
+<li><p>bonferroni-dunn one-tailed test (only up to 10 methods)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_df_to_heatmap">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_df_to_heatmap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_df_to_heatmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports a heatmap of the given pandas DataFrame</p>
+<dl class="simple">
+<dt>df:     pandas.DataFrame</dt><dd><p>It should be a matrix, it can have multiple index and these will be
+flattened.</p>
+</dd>
+<dt>title: string</dt><dd><p>Title of the figure</p>
+</dd>
+<dt>figsize:    tuple of ints (x, y)</dt><dd><p>Figure size in inches</p>
+</dd>
+<dt>annotate:   bool</dt><dd><p>If true, adds numbers inside each box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="id0">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>labels<span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the ground class</p>
+</dd>
+<dt>scores_list<span class="classifier">list of matrices [(n_samples, n_classes)]</span></dt><dd><p>Output probability scores for every method</p>
+</dd>
+<dt>legend<span class="classifier">list of strings</span></dt><dd><p>Text to use for the legend</p>
+</dd>
+<dt>n_bins<span class="classifier">int</span></dt><dd><p>Number of bins to create in the scores’ space</p>
+</dd>
+<dt>histogram<span class="classifier">boolean</span></dt><dd><p>If True, it generates an additional figure showing the number of
+samples in each bin.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>fig<span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Figure with the reliability diagram</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_weight_matrix">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_weight_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">weights</span></em>, <em class="sig-param"><span class="pre">bias</span></em>, <em class="sig-param"><span class="pre">classes</span></em>, <em class="sig-param"><span class="pre">title='Weight</span> <span class="pre">matrix'</span></em>, <em class="sig-param"><span class="pre">cmap=&lt;matplotlib.colors.LinearSegmentedColormap</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">fig=None</span></em>, <em class="sig-param"><span class="pre">ax=None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_weight_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function prints and plots the weight matrix.</p>
+</dd></dl>
+
 </div>
 
 

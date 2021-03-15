@@ -16,6 +16,7 @@ Welcome to PyCalib's documentation!
    api/metrics
    api/visualisations
    api/stats
+   examples/index
 
 
 Indices and tables
