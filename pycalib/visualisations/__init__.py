@@ -47,14 +47,15 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
 
-    if n_classes == 2:
-        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
-
     if class_names is None:
         if n_classes == 2:
             class_names = ['2']
         else:
             class_names = [str(i+1) for i in range(n_classes)]
+
+    if n_classes == 2:
+        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
+        class_names = [class_names[1], ]
 
     n_columns = labels.shape[1]
 
@@ -89,7 +90,7 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
 
             if errorbar_interval is None:
                 p = ax1.plot(avg_pred, avg_true, fmt, label=name)
-                color = p.get_color()
+                color = p[0].get_color()
             else:
                 intervals = proportion_confint(count=bin_true, nobs=bin_total,
                                                alpha=1-errorbar_interval,

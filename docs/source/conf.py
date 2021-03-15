@@ -26,6 +26,10 @@ author = 'Miquel Perello-Nieto'
 # The full version, including alpha/beta/rc tags
 release = '0.0.4.dev0'
 
+github_org = 'perellonieto'
+github_repo = 'pycalib'
+github_docs_repo = 'pycalib'
+
 
 # -- General configuration ---------------------------------------------------
 
@@ -34,7 +38,8 @@ release = '0.0.4.dev0'
 # ones.
 extensions = [
     "sphinx_rtd_theme",
-    "sphinx.ext.autodoc"
+    "sphinx.ext.autodoc",
+    "sphinx_gallery.gen_gallery"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -57,3 +62,21 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Generate examples with figures
+sphinx_gallery_conf = {
+    'filename_pattern': '/xmpl_',
+    'examples_dirs': os.path.join('..', '..', 'examples'),
+    'gallery_dirs': 'examples',
+    'backreferences_dir': 'generated',  # `doc_module`
+    'doc_module': 'pycalib',  # Generate mini galleries for the API documentation.
+    'reference_url': {'pycalib': None},  # Put links to docs in the examples code.
+    'binder': {
+        'org': github_org,
+        'repo': github_docs_repo,
+        'branch': 'gh-pages',
+        'binderhub_url': 'https://mybinder.org',
+        'dependencies': [os.path.join('..', '..', 'requirements.txt'),
+                         os.path.join('..', '..', 'requirements-dev.txt')]
+    }
+}
