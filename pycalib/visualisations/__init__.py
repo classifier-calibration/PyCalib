@@ -14,14 +14,15 @@ from statsmodels.stats.proportion import proportion_confint
 
 from matplotlib import gridspec
 
+
 def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
-                             n_bins=10, class_names=None, fig=None,
+                             bins=10, class_names=None, fig=None,
                              show_counts=False, errorbar_interval=None,
                              interval_method='beta', fmt='s-',
                              show_correction=False,
                              show_samples=False,
                              sample_proportion=1.0,
-                             histogram=False):
+                             hist_per_class=False):
     '''
     Parameters
     ==========
@@ -41,14 +42,7 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     =======
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
-    fig2 : matplotlib.pyplot.figure
-        Only if histogram == True
     '''
-
-    if histogram:
-        print('Warning: the argument histogram is deprecated, use show_histogram')
-        show_histogram = True
-
     classes = np.unique(labels)
     n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
@@ -70,13 +64,18 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     if show_histogram:
         spec = gridspec.GridSpec(ncols=n_columns, nrows=2,
                                  height_ratios=[5, 1],
-                                 wspace=0.01, hspace=0.02)
+                                 wspace=0.01, hspace=0.04)
     else:
         spec = gridspec.GridSpec(ncols=1, nrows=1)
 
-    bins = np.linspace(0, 1 + 1e-8, n_bins)
+    if isinstance(bins, int):
+        n_bins = bins
+        bins = np.linspace(0, 1 + 1e-8, n_bins)
+    elif isinstance(bins, list) or isinstance(bins, np.ndarray):
+        n_bins = len(bins) - 1
+
     for i in range(n_columns):
-        ax = fig.add_subplot(spec[i])
+        ax1 = fig.add_subplot(spec[i])
 
         for score, name in zip(scores_list, legend):
             bin_idx = np.digitize(score[:, i], bins) - 1
@@ -89,7 +88,7 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
             avg_pred = np.divide(bin_pred, bin_total)
 
             if errorbar_interval is None:
-                p = ax.plot(avg_pred, avg_true, fmt, label=name)
+                p = ax1.plot(avg_pred, avg_true, fmt, label=name)
                 color = p.get_color()
             else:
                 intervals = proportion_confint(count=bin_true, nobs=bin_total,
@@ -98,50 +97,58 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
                 intervals = np.array(intervals)
                 yerr = intervals - avg_true
                 yerr = np.abs(yerr)
-                ebar  = ax.errorbar(avg_pred, avg_true, yerr=yerr,
+                ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
                                     label=name, fmt=fmt, markersize=5)
                 color = ebar[0].get_color()
 
             if show_counts:
                 for ap, at, count in zip(avg_pred, avg_true, bin_total):
                     if np.isfinite(ap) and np.isfinite(at):
-                        ax.text(ap, at, str(count), fontsize=8, ha='center', va='center',
+                        ax1.text(ap, at, str(count), fontsize=8, ha='center', va='center',
                                 bbox=dict(boxstyle='square,pad=0.15', fc='white',
                                           ec=color))
 
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
-                    ax.arrow(ap, at, at - ap, 0, color='red', head_width=0.02,
+                    ax1.arrow(ap, at, at - ap, 0, color='red', head_width=0.02,
                              length_includes_head=True)
 
             if show_samples:
                 idx = np.random.choice(labels.shape[0], int(sample_proportion*labels.shape[0]))
-                ax.scatter(score[idx, i], labels[idx, i], marker='d', s=100,
+                ax1.scatter(score[idx, i], labels[idx, i], marker='d', s=100,
                            alpha=0.1)
 
-        ax.plot([0, 1], [0, 1], "r--")
-        ax.set_xlim([0, 1])
-        ax.set_ylim([0, 1])
+        ax1.plot([0, 1], [0, 1], "r--")
+        ax1.set_xlim([0, 1])
+        ax1.set_ylim([0, 1])
         #ax1.set_title('Class {}'.format(class_names[i]))
-        ax.set_xlabel('Mean predicted value (Class {})'.format(
+        ax1.set_xlabel('Mean predicted value (Class {})'.format(
             class_names[i]))
         if i == 0:
-            ax.set_ylabel('Fraction of positives')
-        ax.grid(True)
+            ax1.set_ylabel('Fraction of positives')
+        ax1.grid(True)
 
         if show_histogram:
-            #ax.get_xaxis().set_visible(False)
-            ax.set_xticklabels([])
-            ax = fig.add_subplot(spec[n_columns + i])
-            for score, name in zip(scores_list, legend):
-                ax.hist(score[:, i], range=(0, 1), bins=bins, label=name,
-                         histtype="step", lw=2)
-                ax.set_xlim([0, 1])
-                ax.set_xlabel('Mean predicted value (Class {})'.format(
+            ax1.get_xaxis().set_visible(False)
+            lines = ax1.get_lines()
+            #ax2.set_xticklabels([])
+            ax2 = fig.add_subplot(spec[n_columns + i])
+            for j, (score, name) in enumerate(zip(scores_list, legend)):
+                color = lines[j].get_color()
+                if hist_per_class:
+                    for c in [0, 1]:
+                        linestyle = ('solid','dashed')[c]
+                        ax2.hist(score[labels[:, i]==c, i], range=(0, 1), bins=bins, label=name,
+                                 histtype="step", lw=2, linestyle=linestyle, color=color)
+                else:
+                    ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
+                             histtype="step", lw=2)
+                ax2.set_xlim([0, 1])
+                ax2.set_xlabel('Mean predicted value (Class {})'.format(
                     class_names[i]))
                 if i == 0:
-                    ax.set_ylabel('#count')
-                ax.grid(True)
+                    ax2.set_ylabel('#count')
+                ax2.grid(True)
 
     lines, labels = fig.axes[0].get_legend_handles_labels()
     fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
