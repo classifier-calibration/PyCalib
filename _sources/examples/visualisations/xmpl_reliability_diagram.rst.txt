@@ -146,7 +146,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fc79bef0c10>
+    <matplotlib.legend.Legend object at 0x7f155265cc10>
 
 
 
@@ -180,9 +180,9 @@ Then we can show the most common form to visualise a reliability diagram
 
  .. code-block:: none
 
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:87: RuntimeWarning: invalid value encountered in true_divide
       avg_true = np.divide(bin_true, bin_total)
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:89: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
       avg_pred = np.divide(bin_pred, bin_total)
 
 
@@ -230,9 +230,9 @@ coordinates [0 and 1] for each scored instance.
 
  .. code-block:: none
 
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:87: RuntimeWarning: invalid value encountered in true_divide
       avg_true = np.divide(bin_true, bin_total)
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:89: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
       avg_pred = np.divide(bin_pred, bin_total)
 
 
@@ -276,9 +276,9 @@ distribution and a confidence interval of 95%.
 
  .. code-block:: none
 
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:87: RuntimeWarning: invalid value encountered in true_divide
       avg_true = np.divide(bin_true, bin_total)
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:89: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
       avg_pred = np.divide(bin_pred, bin_total)
     /opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/statsmodels/stats/proportion.py:90: RuntimeWarning: invalid value encountered in true_divide
       q_ = count * 1. / nobs
@@ -317,9 +317,9 @@ The function also allows the visualisation of multiple models for comparison.
 
  .. code-block:: none
 
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:87: RuntimeWarning: invalid value encountered in true_divide
       avg_true = np.divide(bin_true, bin_total)
-    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:89: RuntimeWarning: invalid value encountered in true_divide
+    /home/runner/work/PyCalib/PyCalib/pycalib/visualisations/__init__.py:88: RuntimeWarning: invalid value encountered in true_divide
       avg_pred = np.divide(bin_pred, bin_total)
     /opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/statsmodels/stats/proportion.py:90: RuntimeWarning: invalid value encountered in true_divide
       q_ = count * 1. / nobs
@@ -330,7 +330,7 @@ The function also allows the visualisation of multiple models for comparison.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.721 seconds)
+   **Total running time of the script:** ( 0 minutes  1.933 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:
