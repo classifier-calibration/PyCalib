@@ -9,9 +9,8 @@ probabilistic classifier.
 # Author: Miquel Perello Nieto <miquel.perellonieto@bristol.ac.uk>
 # License: new BSD
 
-from pprint import pprint
-
 print(__doc__)
+SAVEFIGS=False
 
 ##############################################################################
 # This example shows different ways to visualise the reliability diagram for a
@@ -22,6 +21,7 @@ print(__doc__)
 
 import matplotlib.pyplot as plt
 import numpy as np
+np.random.seed(42)
 
 n_c1 = n_c2 = 200
 p = np.concatenate((np.random.beta(2, 5, n_c1),
@@ -74,10 +74,11 @@ plt.legend()
 
 from pycalib.visualisations import plot_reliability_diagram
 
-fig = plt.figure(figsize=(7, 7))
 fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
-                               legend=['Model 1'], bins=10,
-                               class_names=['Negative', 'Positive'], fig=fig)
+                               legend=['Model 1'],
+                               class_names=['Negative', 'Positive'])
+if SAVEFIGS:
+    fig.savefig('fig1.png')
 
 ##############################################################################
 # We can enable some parameters to show several aspects of the reliability
@@ -90,16 +91,17 @@ fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
 
 from pycalib.visualisations import plot_reliability_diagram
 
-fig = plt.figure(figsize=(7, 7))
 fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
                                legend=['Model 1'],
                                show_histogram=True,
-                               bins=10, class_names=['Negative', 'Positive'],
-                               fig=fig, show_counts=True,
+                               bins=9, class_names=['Negative', 'Positive'],
+                               show_counts=True,
                                show_correction=True,
                                show_samples=True,
                                sample_proportion=1.0,
                                hist_per_class=True)
+if SAVEFIGS:
+    fig.savefig('fig2.png')
 
 ##############################################################################
 # It can be also useful to have 95% confidence intervals for each bin by
@@ -109,24 +111,47 @@ fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
 # following example we use the Clopper-Pearson interval based on Beta
 # distribution and a confidence interval of 95%.
 
-fig = plt.figure(figsize=(7, 7))
-fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
-                               legend=['Model 1'],
-                               show_histogram=True,
-                               bins=10, class_names=['Negative', 'Positive'],
-                               fig=fig,
+fig = plot_reliability_diagram(labels=y, scores_list=[s2, ],
+                               legend=['Model 2'],
+                               show_histogram=False,
+                               show_counts=True,
+                               bins=13, class_names=['Negative', 'Positive'],
                                show_samples=True, sample_proportion=1.0,
                                errorbar_interval=0.95,
                                interval_method='beta',)
+if SAVEFIGS:
+    fig.savefig('fig3.png')
 
 ##############################################################################
 # The function also allows the visualisation of multiple models for comparison.
 
-fig = plt.figure(figsize=(7, 7))
 fig = plot_reliability_diagram(labels=y, scores_list=[s1, s2],
                                legend=['Model 1', 'Model 2'],
                                show_histogram=True,
                                bins=10, class_names=['Negative', 'Positive'],
-                               fig=fig,
                                errorbar_interval=0.95,
                                interval_method='beta')
+if SAVEFIGS:
+    fig.savefig('fig4.png')
+
+
+##############################################################################
+# It is possible to draw reliability diagram for multiple classes as well. In
+# this case we will just assign 1/3 of the samples to a 3rd class, will
+# give the same scores as some of the other classes, and normalise them to sum
+# to one.
+
+class_2_idx = range(int(len(y)/3), int(2*len(y)/3))
+y[class_2_idx] = 2
+s1 = np.hstack((s1, s1[:, 1].reshape(-1, 1)))
+s1[class_2_idx,2] *= 3
+s1 /= s1.sum(axis=1)[:, None]
+s2 = np.hstack((s2, s2[:, 1].reshape(-1, 1)))
+s2[class_2_idx,2] *= 2
+
+fig = plot_reliability_diagram(labels=y, scores_list=[s1, s2],
+                               legend=['Model 1', 'Model 2'],
+                               show_histogram=True,
+                               )
+if SAVEFIGS:
+    fig.savefig('fig5.png')
