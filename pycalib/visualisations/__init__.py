@@ -46,6 +46,7 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
     '''
     classes = np.unique(labels)
     n_classes = len(classes)
+    n_scores = len(scores_list)
     labels = label_binarize(labels, classes=classes)
 
     if class_names is None:
@@ -75,6 +76,9 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
 
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
+        # Perfect calibration
+        ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
+                 zorder=0)
 
         for j, score in enumerate(scores_list):
             name = legend[j] if legend else None
@@ -89,7 +93,7 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
 
             if errorbar_interval is None:
                 p = ax1.plot(avg_pred, avg_true, fmt, label=name)
-                color = p[0].get_color()
+                color = p[-1].get_color()
             else:
                 intervals = proportion_confint(count=bin_true, nobs=bin_total,
                                                alpha=1-errorbar_interval,
@@ -98,19 +102,20 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
                 yerr = intervals - avg_true
                 yerr = np.abs(yerr)
                 ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
-                                    label=name, fmt=fmt, markersize=5)
+                                    label=name, fmt=fmt) #, markersize=5)
                 color = ebar[0].get_color()
 
             if show_counts:
                 for ap, at, count in zip(avg_pred, avg_true, bin_total):
                     if np.isfinite(ap) and np.isfinite(at):
-                        ax1.text(ap, at, str(count), fontsize=8, ha='center', va='center',
-                                bbox=dict(boxstyle='square,pad=0.15', fc='white',
-                                          ec=color))
+                        ax1.text(ap, at, str(count), fontsize=6,
+                                 ha='center', va='center',
+                                 bbox=dict(boxstyle='square,pad=0.3',
+                                           fc='white', ec=color))
 
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
-                    ax1.arrow(ap, at, at - ap, 0, color='red', head_width=0.02,
+                    ax1.arrow(ap, at, at - ap, 0, color="lightcoral", head_width=0.02,
                              length_includes_head=True, width=0.01)
 
             if show_samples:
@@ -118,7 +123,7 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
                 ax1.scatter(score[idx, i], labels[idx, i], marker='d', s=100,
                            alpha=0.1)
 
-        ax1.plot([0, 1], [0, 1], "r--")
+
         ax1.set_xlim([0, 1])
         ax1.set_ylim([0, 1])
         #ax1.set_title('Class {}'.format(class_names[i]))
@@ -131,29 +136,41 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
         ax1.grid(True)
 
         if show_histogram:
-            ax1.set_xticklabels([])
-            lines = ax1.get_lines()
-            #ax2.set_xticklabels([])
-            ax2 = fig.add_subplot(spec[n_columns + i])
+            ax2 = fig.add_subplot(spec[n_columns + i],
+                                  label='{}'.format(i))
             for j, score in enumerate(scores_list):
+                ax1.set_xticklabels([])
+                lines = ax1.get_lines()
+                #ax2.set_xticklabels([])
+
                 name = legend[j] if legend else None
                 color = lines[j].get_color()
                 if hist_per_class:
                     for c in [0, 1]:
-                        linestyle = ('dashed', 'solid')[c]
-                        ax2.hist(score[labels[:, i]==c, i], range=(0, 1), bins=bins, label=name,
-                                 histtype="step", lw=2, linestyle=linestyle, color=color)
+                        linestyle = ('dotted', 'dashed')[c]
+                        ax2.hist(score[labels[:, i]==c, i], range=(0, 1),
+                                 bins=bins, label=name,
+                                 histtype="step",
+                                 lw=2, linestyle=linestyle,
+                                 color=color,
+                                 edgecolor='black')
                 else:
+                    if n_scores > 1:
+                        kwargs = {'histtype': 'step'}
+                    else:
+                        kwargs = {'histtype': 'bar',
+                                  'edgecolor': 'black'}
                     ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
-                             histtype="step", lw=2)
+                             lw=2, **kwargs)
                 ax2.set_xlim([0, 1])
                 ax2.set_xlabel('Mean predicted value (Class {})'.format(
                     class_names[i]))
                 if i == 0:
                     ax2.set_ylabel('#count')
                 else:
-                    ax2.set_yticklabels([0])
+                    ax2.set_yticklabels([])
                 ax2.grid(True)
+                ax2.set_axisbelow(True)
 
     if legend is not None:
         lines, labels = fig.axes[0].get_legend_handles_labels()
@@ -164,7 +181,7 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
 
 
 def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
-                                         fig=None, ax=None, legend=True):
+                                         fig=None, ax=None, legend=False):
     '''Plot binary reliability diagram gaps
 
     Parameters
@@ -232,18 +249,20 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
 
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
-           color="blue", label='True class prop.')
+           #color="blue", label='True class prop.')
+           color="cornflowerblue", label='True class prop.')
     ax.bar(pred_mean[not_nan], (true_proportion - pred_mean)[not_nan],
-           bottom=pred_mean[not_nan], width=bin_size/4.0, edgecolor="red",
-           color="#ffc8c6",
-           label='Gap pred. mean')
-    ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
-               marker="+", zorder=10)
+           bottom=pred_mean[not_nan], width=0.01,
+           edgecolor="lightcoral", #"red",# "#ffc8c6", #"red",
+           color="lightcoral", #"red", #"#ffc8c6",
+           label='Gap pred. mean', align='center')
+    #ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
+    #           marker="+", zorder=10)
 
     if legend:
         ax.legend()
 
-    ax.plot([0, 1], [0, 1], linestyle="--")
+    ax.plot([0, 1], [0, 1], linestyle="--", color='grey')
     ax.set_xlim([0, 1])
     ax.set_xlabel('Predicted probability')
     ax.set_ylim([0, 1])
@@ -255,7 +274,8 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
 
 
 def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
-                                             per_class=True, **kwargs):
+                                             per_class=True, legend=False,
+                                             **kwargs):
 
     if len(y_true.shape) < 2 or y_true.shape[1] == 1:
         ohe = OneHotEncoder(categories='auto')
@@ -269,14 +289,14 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
         if ax is None:
             ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
         for i in range(n_classes):
-            if i == 0:
-                legend=True
+            if i == 0 and legend:
+                sub_legend=True
             else:
-                legend=False
+                sub_legend=False
             plot_binary_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
                                                  title='$C_{}$'.format(i+1),
                                                  fig=fig, ax=ax[i],
-                                                 legend=legend,
+                                                 legend=sub_legend,
                                                  **kwargs)
             if i > 0:
                 ax[i].set_ylabel('')
