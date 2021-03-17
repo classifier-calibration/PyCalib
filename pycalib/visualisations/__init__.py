@@ -15,7 +15,8 @@ from statsmodels.stats.proportion import proportion_confint
 from matplotlib import gridspec
 
 
-def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
+def plot_reliability_diagram(labels, scores_list, legend=None,
+                             show_histogram=True,
                              bins=10, class_names=None, fig=None,
                              show_counts=False, errorbar_interval=None,
                              interval_method='beta', fmt='s-',
@@ -27,14 +28,14 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     Parameters
     ==========
     labels : array (n_samples, )
-        Labels indicating the ground class
+        Labels indicating the true class
     scores_list : list of matrices [(n_samples, n_classes)]
         Output probability scores for every method
-    legend : list of strings
+    legend : list of strings or None
         Text to use for the legend
-    n_bins : int
-        Number of bins to create in the scores' space
-    histogram : boolean
+    n_bins : int or list of floats
+        Number of bins to create in the scores' space, or bin boundaries.
+    show_histogram : boolean
         If True, it generates an additional figure showing the number of
         samples in each bin.
 
@@ -48,10 +49,7 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     labels = label_binarize(labels, classes=classes)
 
     if class_names is None:
-        if n_classes == 2:
-            class_names = ['2']
-        else:
-            class_names = [str(i+1) for i in range(n_classes)]
+        class_names = [str(i+1) for i in range(n_classes)]
 
     if n_classes == 2:
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
@@ -65,20 +63,21 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
     if show_histogram:
         spec = gridspec.GridSpec(ncols=n_columns, nrows=2,
                                  height_ratios=[5, 1],
-                                 wspace=0.01, hspace=0.04)
+                                 wspace=0.04, hspace=0.04)
     else:
         spec = gridspec.GridSpec(ncols=1, nrows=1)
 
     if isinstance(bins, int):
         n_bins = bins
-        bins = np.linspace(0, 1 + 1e-8, n_bins)
+        bins = np.linspace(0, 1 + 1e-8, n_bins + 1)
     elif isinstance(bins, list) or isinstance(bins, np.ndarray):
         n_bins = len(bins) - 1
 
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
 
-        for score, name in zip(scores_list, legend):
+        for j, score in enumerate(scores_list):
+            name = legend[j] if legend else None
             bin_idx = np.digitize(score[:, i], bins) - 1
 
             bin_true = np.bincount(bin_idx, weights=labels[:, i], minlength=n_bins)
@@ -112,7 +111,7 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
                     ax1.arrow(ap, at, at - ap, 0, color='red', head_width=0.02,
-                             length_includes_head=True)
+                             length_includes_head=True, width=0.01)
 
             if show_samples:
                 idx = np.random.choice(labels.shape[0], int(sample_proportion*labels.shape[0]))
@@ -127,18 +126,21 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
             class_names[i]))
         if i == 0:
             ax1.set_ylabel('Fraction of positives')
+        else:
+            ax1.set_yticklabels([])
         ax1.grid(True)
 
         if show_histogram:
-            ax1.get_xaxis().set_visible(False)
+            ax1.set_xticklabels([])
             lines = ax1.get_lines()
             #ax2.set_xticklabels([])
             ax2 = fig.add_subplot(spec[n_columns + i])
-            for j, (score, name) in enumerate(zip(scores_list, legend)):
+            for j, score in enumerate(scores_list):
+                name = legend[j] if legend else None
                 color = lines[j].get_color()
                 if hist_per_class:
                     for c in [0, 1]:
-                        linestyle = ('solid','dashed')[c]
+                        linestyle = ('dashed', 'solid')[c]
                         ax2.hist(score[labels[:, i]==c, i], range=(0, 1), bins=bins, label=name,
                                  histtype="step", lw=2, linestyle=linestyle, color=color)
                 else:
@@ -149,11 +151,14 @@ def plot_reliability_diagram(labels, scores_list, legend, show_histogram=True,
                     class_names[i]))
                 if i == 0:
                     ax2.set_ylabel('#count')
+                else:
+                    ax2.set_yticklabels([0])
                 ax2.grid(True)
 
-    lines, labels = fig.axes[0].get_legend_handles_labels()
-    fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
-               bbox_transform=fig.transFigure, ncol=6)
+    if legend is not None:
+        lines, labels = fig.axes[0].get_legend_handles_labels()
+        fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+                   bbox_transform=fig.transFigure, ncol=6)
 
     return fig
 
