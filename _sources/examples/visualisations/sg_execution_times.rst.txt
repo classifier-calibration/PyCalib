@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:02.045** total execution time for **examples_visualisations** files:
+**00:02.369** total execution time for **examples_visualisations** files:
 
 +-------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``) | 00:02.045 | 0.0 MB |
+| :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``) | 00:02.369 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------+-----------+--------+

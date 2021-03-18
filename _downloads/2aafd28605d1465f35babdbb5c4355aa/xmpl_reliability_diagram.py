@@ -30,9 +30,6 @@ p = np.concatenate((np.random.beta(2, 5, n_c1),
 
 y = np.concatenate((np.zeros(n_c1), np.ones(n_c2)))
 
-print(p.shape)
-print(y.shape)
-
 s1 = 1/(1 + np.exp(-3*(p - 0.5)))
 s2 = 1/(1 + np.exp(-8*(p - 0.5)))
 
