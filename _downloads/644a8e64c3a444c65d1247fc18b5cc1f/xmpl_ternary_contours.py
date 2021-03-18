@@ -91,7 +91,7 @@ cmap_list = ['Reds', 'Oranges', 'Blues']
 fig = plt.figure(figsize=(10, 5))
 for c in [0, 1, 2]:
     ax = fig.add_subplot(1, 3, c+1)
-    ax.set_title('{}\n$(C_{})$'.format(labels[c], c), loc='left')
+    ax.set_title('{}\n$(C_{})$'.format(labels[c], c+1), loc='left')
     function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][c]
     fig = draw_func_contours(function, nlevels=30, subdiv=5, cmap=cmap_list[c],
                              ax=ax, fig=fig)
