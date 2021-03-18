@@ -1,10 +1,10 @@
 """
-=============================
-Plotting reliability diagrams
-=============================
+====================================================
+Scatter plot of ternary problem in the simplex space
+====================================================
 
-This example illustrates how to visualise the reliability diagram for a binary
-probabilistic classifier.
+This example illustrates how to draw samples from the scores of a model and
+their true label.
 """
 # Author: Miquel Perello Nieto <miquel.perellonieto@bristol.ac.uk>
 # License: new BSD
@@ -13,11 +13,9 @@ print(__doc__)
 SAVEFIGS=False
 
 ##############################################################################
-# This example shows different ways to visualise the reliability diagram for a
-# binary classification problem.
-# 
-# First we will generate two synthetic models and some synthetic scores and
-# labels.
+# We generate 3 scores as comming from 3 Dirichlet distributions simulating the
+# output scores of a classifier. Then we show how to draw the samples in the
+# simplex space.
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,6 +35,9 @@ fig, ax = draw_tri_samples(p, classes=y, alpha=0.6)
 
 if SAVEFIGS:
     fig.savefig('fig1.png')
+
+##############################################################################
+# Here we specify the names of each class and change their colors.
 
 fig, ax = draw_tri_samples(p, classes=y, alpha=0.6,
                            labels=['dogs', 'cats', 'fox'],

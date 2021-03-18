@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Plotting reliability diagrams &mdash; PyCalib 0.0.4.dev0 documentation</title>
+  <title>Scatter plot of ternary problem in the simplex space &mdash; PyCalib 0.0.4.dev0 documentation</title>
   
 
   
@@ -98,7 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../api/stats.html">Statistics tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html#visualisation-examples">Visualisation Examples</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Plotting reliability diagrams</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Scatter plot of ternary problem in the simplex space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xmpl_reliability_diagram.html">Plotting reliability diagrams</a></li>
 </ul>
 </li>
@@ -152,7 +152,7 @@
         
           <li><a href="../index.html">Examples</a> &raquo;</li>
         
-      <li>Plotting reliability diagrams</li>
+      <li>Scatter plot of ternary problem in the simplex space</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -176,10 +176,10 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-examples-visualisations-xmpl-ternary-samples-py"><span class="std std-ref">here</span></a>
 to download the full example code or to run this example in your browser via Binder</p>
 </div>
-<div class="sphx-glr-example-title section" id="plotting-reliability-diagrams">
-<span id="sphx-glr-examples-visualisations-xmpl-ternary-samples-py"></span><h1>Plotting reliability diagrams<a class="headerlink" href="#plotting-reliability-diagrams" title="Permalink to this headline">¶</a></h1>
-<p>This example illustrates how to visualise the reliability diagram for a binary
-probabilistic classifier.</p>
+<div class="sphx-glr-example-title section" id="scatter-plot-of-ternary-problem-in-the-simplex-space">
+<span id="sphx-glr-examples-visualisations-xmpl-ternary-samples-py"></span><h1>Scatter plot of ternary problem in the simplex space<a class="headerlink" href="#scatter-plot-of-ternary-problem-in-the-simplex-space" title="Permalink to this headline">¶</a></h1>
+<p>This example illustrates how to draw samples from the scores of a model and
+their true label.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Miquel Perello Nieto &lt;miquel.perellonieto@bristol.ac.uk&gt;</span>
 <span class="c1"># License: new BSD</span>
 
@@ -187,10 +187,9 @@ probabilistic classifier.</p>
 <span class="n">SAVEFIGS</span><span class="o">=</span><span class="kc">False</span>
 </pre></div>
 </div>
-<p>This example shows different ways to visualise the reliability diagram for a
-binary classification problem.</p>
-<p>First we will generate two synthetic models and some synthetic scores and
-labels.</p>
+<p>We generate 3 scores as comming from 3 Dirichlet distributions simulating the
+output scores of a classifier. Then we show how to draw the samples in the
+simplex space.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -209,8 +208,11 @@ labels.</p>
 
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig1.png&#39;</span><span class="p">)</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">draw_tri_samples</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+</pre></div>
+</div>
+<img alt="xmpl ternary samples" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_ternary_samples_001.png" />
+<p>Here we specify the names of each class and change their colors.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">draw_tri_samples</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
                            <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dogs&#39;</span><span class="p">,</span> <span class="s1">&#39;cats&#39;</span><span class="p">,</span> <span class="s1">&#39;fox&#39;</span><span class="p">],</span>
                            <span class="n">color_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;saddlebrown&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;darkorange&#39;</span><span class="p">])</span>
 
@@ -218,13 +220,8 @@ labels.</p>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig2.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<ul class="sphx-glr-horizontal">
-<li><img alt="xmpl ternary samples" class="sphx-glr-multi-img" src="../../_images/sphx_glr_xmpl_ternary_samples_001.png" />
-</li>
-<li><img alt="xmpl ternary samples" class="sphx-glr-multi-img" src="../../_images/sphx_glr_xmpl_ternary_samples_002.png" />
-</li>
-</ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.239 seconds)</p>
+<img alt="xmpl ternary samples" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_ternary_samples_002.png" />
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.036 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-ternary-samples-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_ternary_samples.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
