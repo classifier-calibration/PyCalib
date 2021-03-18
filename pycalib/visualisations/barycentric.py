@@ -8,7 +8,7 @@ import matplotlib.tri as tri
 from matplotlib import ticker
 
 
-def xy2bc(xy, tol=1.e-3):
+def xy2bc(xy, tol=1.e-32):
     '''Converts 2D Cartesian coordinates to barycentric.'''
     corners = np.array([[0, 0], [1, 0], [0.5, 0.75**0.5]])
     # Mid-points of triangle sides opposite of each corner

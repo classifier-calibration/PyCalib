@@ -46,13 +46,13 @@ def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None,
     ax.axis('off')
 
     triangle = tri.Triangulation(corners[:, 0], corners[:, 1])
-    plt.triplot(triangle, c='k', lw=0.5)
+    ax.triplot(triangle, c='k', lw=0.5)
 
     return fig, ax
 
 
 def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
-					   ax=None, draw_lines=None, class_index=0, **kwargs):
+                       ax=None, draw_lines=None, class_index=0, **kwargs):
     '''
     Parameters:
     -----------
@@ -92,14 +92,14 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
     #cb.ax.xaxis.set_major_locator(ticker.AutoLocator())
     cb.update_ticks()
 
-    if labels is not None:
-        if labels == 'auto':
-            labels = [r'$C_{}$'.format(i+1) for i in range(len(corners))]
-        center = corners.mean(axis=0)
-        for i, corner in enumerate(corners):
-            text_x, text_y = corner - (center - corner)*0.1
-            ax.text(text_x, text_y, labels[i], verticalalignment='center',
-                    horizontalalignment='center')
+    if labels is None:
+        labels = [r'$C_{}$'.format(i+1) for i in range(len(corners))]
+
+    center = corners.mean(axis=0)
+    for i, corner in enumerate(corners):
+        text_x, text_y = corner - (center - corner)*0.1
+        ax.text(text_x, text_y, labels[i], verticalalignment='center',
+                horizontalalignment='center')
 
     if draw_lines is not None:
         lines = get_converging_lines(num_lines=draw_lines, mesh_precision=2,
@@ -118,7 +118,12 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
     ax.set_ybound(lower=0, upper=0.75**0.5)
     ax.axis('equal')
     ax.axis('off')
+
+    triangle = tri.Triangulation(corners[:, 0], corners[:, 1])
+    ax.triplot(triangle, c='k', lw=0.5)
+
     plt.gca().set_adjustable("box")
+    return fig
 
 
 def plot_converging_lines_pvalues(func, lines, i, ax):
