@@ -88,17 +88,30 @@ def plot_reliability_diagram(labels, scores_list, legend=None,
             bin_pred = np.bincount(bin_idx, weights=score[:, i], minlength=n_bins)
             bin_total = np.bincount(bin_idx, minlength=n_bins)
 
-            avg_true = np.divide(bin_true, bin_total)
-            avg_pred = np.divide(bin_pred, bin_total)
+            zero_idx = bin_total == 0
+            avg_true = np.empty(bin_total.shape[0])
+            avg_true.fill(np.nan)
+            avg_true[~zero_idx] = np.divide(bin_true[~zero_idx],
+                                           bin_total[~zero_idx])
+            avg_pred = np.empty(bin_total.shape[0])
+            avg_pred.fill(np.nan)
+            avg_pred[~zero_idx] = np.divide(bin_pred[~zero_idx],
+                                           bin_total[~zero_idx])
 
             if errorbar_interval is None:
                 p = ax1.plot(avg_pred, avg_true, fmt, label=name)
                 color = p[-1].get_color()
             else:
-                intervals = proportion_confint(count=bin_true, nobs=bin_total,
-                                               alpha=1-errorbar_interval,
-                                               method=interval_method)
-                intervals = np.array(intervals)
+                nozero_intervals = proportion_confint(
+                    count=bin_true[~zero_idx], nobs=bin_total[~zero_idx],
+                    alpha=1-errorbar_interval,
+                    method=interval_method)
+                nozero_intervals = np.array(nozero_intervals)
+
+                intervals = np.empty((2, bin_total.shape[0]))
+                intervals.fill(np.nan)
+                intervals[:, ~zero_idx] = nozero_intervals
+
                 yerr = intervals - avg_true
                 yerr = np.abs(yerr)
                 ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
