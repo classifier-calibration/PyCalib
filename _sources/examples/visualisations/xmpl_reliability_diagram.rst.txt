@@ -134,7 +134,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f5f0c961940>
+    <matplotlib.legend.Legend object at 0x7f8c87ff09a0>
 
 
 
@@ -312,7 +312,7 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.338 seconds)
+   **Total running time of the script:** ( 0 minutes  1.295 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:

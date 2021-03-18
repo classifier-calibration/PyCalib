@@ -53,6 +53,27 @@ calibrated.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to draw contourplots for functions with 3 probability inputs and m...">
+
+.. only:: html
+
+ .. figure:: /examples/visualisations/images/thumb/sphx_glr_xmpl_ternary_contours_thumb.png
+     :alt: Draw contour function of ternary simplex space
+
+     :ref:`sphx_glr_examples_visualisations_xmpl_ternary_contours.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/visualisations/xmpl_ternary_contours
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to visualise the reliability diagram for a binary probabilistic cl...">
 
 .. only:: html
