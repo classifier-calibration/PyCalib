@@ -71,9 +71,9 @@ plt.legend()
 
 from pycalib.visualisations import plot_reliability_diagram
 
-fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
-                               legend=['Model 1'],
-                               class_names=['Negative', 'Positive'])
+fig = plot_reliability_diagram(labels=y, scores=s1,
+                               class_names=['Negative', 'Positive'],
+                               show_gaps=True)
 if SAVEFIGS:
     fig.savefig('fig1.png')
 
@@ -88,7 +88,7 @@ if SAVEFIGS:
 
 from pycalib.visualisations import plot_reliability_diagram
 
-fig = plot_reliability_diagram(labels=y, scores_list=[s1, ],
+fig = plot_reliability_diagram(labels=y, scores=s1,
                                legend=['Model 1'],
                                show_histogram=True,
                                bins=9, class_names=['Negative', 'Positive'],
@@ -108,21 +108,22 @@ if SAVEFIGS:
 # following example we use the Clopper-Pearson interval based on Beta
 # distribution and a confidence interval of 95%.
 
-fig = plot_reliability_diagram(labels=y, scores_list=[s2, ],
+fig = plot_reliability_diagram(labels=y, scores=s2,
                                legend=['Model 2'],
-                               show_histogram=False,
+                               show_histogram=True,
                                show_counts=True,
                                bins=13, class_names=['Negative', 'Positive'],
                                show_samples=True, sample_proportion=1.0,
                                errorbar_interval=0.95,
-                               interval_method='beta',)
+                               interval_method='beta',
+                               color_list=['orange'])
 if SAVEFIGS:
     fig.savefig('fig3.png')
 
 ##############################################################################
 # The function also allows the visualisation of multiple models for comparison.
 
-fig = plot_reliability_diagram(labels=y, scores_list=[s1, s2],
+fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                legend=['Model 1', 'Model 2'],
                                show_histogram=True,
                                bins=10, class_names=['Negative', 'Positive'],
@@ -133,10 +134,9 @@ if SAVEFIGS:
 
 
 ##############################################################################
-# It is possible to draw reliability diagram for multiple classes as well. In
-# this case we will just assign 1/3 of the samples to a 3rd class, will
-# give the same scores as some of the other classes, and normalise them to sum
-# to one.
+# It is possible to draw reliability diagram for multiple classes as well. We
+# will simulate 3 classes by changing some original labels to a 3rd class, and
+# modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
 class_2_idx = range(int(len(y)/3), int(2*len(y)/3))
 y[class_2_idx] = 2
@@ -146,9 +146,9 @@ s1 /= s1.sum(axis=1)[:, None]
 s2 = np.hstack((s2, s2[:, 1].reshape(-1, 1)))
 s2[class_2_idx,2] *= 2
 
-fig = plot_reliability_diagram(labels=y, scores_list=[s1, s2],
-                               legend=['Model 1', 'Model 2'],
+fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                               legend=['Model 3', 'Model 4'],
                                show_histogram=True,
-                               )
+                               color_list=['darkgreen', 'chocolate'])
 if SAVEFIGS:
     fig.savefig('fig5.png')
