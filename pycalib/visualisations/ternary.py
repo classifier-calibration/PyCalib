@@ -6,7 +6,9 @@ import matplotlib.lines as mlines
 from .barycentric import bc2xy, xy2bc
 
 
-def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None, **kwargs):
+def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None,
+                     legend=True, color_list=[None]*3,
+                     **kwargs):
     corners = np.array([[0, 0], [1, 0], [0.5, 0.75**0.5]])
 
     if fig is None:
@@ -23,7 +25,18 @@ def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None, **kwargs):
                 horizontalalignment='center')
 
     xy = bc2xy(pvals, corners)
-    ax.scatter(xy[:,0], xy[:,1], c=classes, **kwargs)
+
+    # TODO Find option to call scatter only once as now the latter classes are
+    # on top of the previous ones
+    for c in [0, 1, 2]:
+        c_idx = classes == c
+        ax.scatter(xy[c_idx,0], xy[c_idx,1],
+                   label=labels[c], color=color_list[c],
+                   **kwargs)
+    if legend:
+        leg = ax.legend()
+        for lh in leg.legendHandles:
+            lh.set_alpha(1)
 
     ax.axis('equal')
     ax.set_xlim(0, 1)
