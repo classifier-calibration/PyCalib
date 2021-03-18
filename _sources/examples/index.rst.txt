@@ -36,6 +36,27 @@ calibrated.
 
 .. only:: html
 
+ .. figure:: /examples/visualisations/images/thumb/sphx_glr_xmpl_ternary_samples_thumb.png
+     :alt: Plotting reliability diagrams
+
+     :ref:`sphx_glr_examples_visualisations_xmpl_ternary_samples.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/visualisations/xmpl_ternary_samples
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to visualise the reliability diagram for a binary probabilistic cl...">
+
+.. only:: html
+
  .. figure:: /examples/visualisations/images/thumb/sphx_glr_xmpl_reliability_diagram_thumb.png
      :alt: Plotting reliability diagrams
 
