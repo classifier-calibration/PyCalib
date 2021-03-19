@@ -238,7 +238,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
 
 def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
-                                         fig=None, ax=None, legend=False):
+                                         fig=None, ax=None, legend=False,
+                                         color_gaps='lightcoral'):
     '''Plot binary reliability diagram gaps
 
     Parameters
