@@ -50,7 +50,7 @@ binary classification problem.
 First we will generate two synthetic models and some synthetic scores and
 labels.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-50
+.. GENERATED FROM PYTHON SOURCE LINES 21-49
 
 .. code-block:: default
 
@@ -58,9 +58,8 @@ labels.
     import matplotlib.pyplot as plt
     import numpy as np
     np.random.seed(42)
-    plt.rcParams['figure.dpi'] = 140
 
-    n_c1 = n_c2 = 200
+    n_c1 = n_c2 = 500
     p = np.concatenate((np.random.beta(2, 5, n_c1),
                         np.random.beta(4, 3, n_c2)
                        ))
@@ -94,12 +93,12 @@ labels.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-53
+.. GENERATED FROM PYTHON SOURCE LINES 50-52
 
 A perfect calibration should be as follows, compared with the generated
 scores
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-70
+.. GENERATED FROM PYTHON SOURCE LINES 52-69
 
 .. code-block:: default
 
@@ -135,17 +134,17 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f9fc71a8ac0>
+    <matplotlib.legend.Legend object at 0x7f29046d5ac0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-74
+.. GENERATED FROM PYTHON SOURCE LINES 70-73
 
 There are at least 2 very common ways to show a reliability diagram for a
 probabilistic binary classifier. Drawing a line between all the binned mean
 predictions and the true proportion of positives.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-82
+.. GENERATED FROM PYTHON SOURCE LINES 73-81
 
 .. code-block:: default
 
@@ -168,12 +167,12 @@ predictions and the true proportion of positives.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-85
+.. GENERATED FROM PYTHON SOURCE LINES 82-84
 
 And showing bars instead of a lineplot, usually with errorbars showing the
 discrepancy with respect to a perfectly calibrated model (diagonal)
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-93
+.. GENERATED FROM PYTHON SOURCE LINES 84-93
 
 .. code-block:: default
 
@@ -182,6 +181,7 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
                                    class_names=['Negative', 'Positive'],
                                    show_gaps=True, show_bars=True,
                                    show_histogram=False)
+
     if SAVEFIGS:
         fig.savefig('fig2.png')
 
@@ -196,21 +196,23 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-98
+.. GENERATED FROM PYTHON SOURCE LINES 94-99
 
 However, both previous illustrations do not include the number of samples
 that fall into each bin. By default the parameter show_bars is set to True as
 this information is crucial to understand how reliable is each estimation,
 and how this affects some of the calibration metrics.
+We also specify the bin boundaries and change the color of the gaps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-106
+.. GENERATED FROM PYTHON SOURCE LINES 99-108
 
 .. code-block:: default
 
 
     fig = plot_reliability_diagram(labels=y, scores=s1,
                                    class_names=['Negative', 'Positive'],
-                                   show_gaps=True)
+                                   show_gaps=True, color_gaps='firebrick',
+                                   bins=[0, .3, .4, .45, .5, .55, .6, .7, 1])
 
     if SAVEFIGS:
         fig.savefig('fig3.png')
@@ -226,7 +228,7 @@ and how this affects some of the calibration metrics.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-114
+.. GENERATED FROM PYTHON SOURCE LINES 109-117
 
 We can enable some parameters to show several aspects of the reliability
 diagram. For example, we can add a histogram indicating the number of samples
@@ -234,9 +236,10 @@ on each bin (or show the count in each marker), the correction that should be
 applied to the average scores in order to calibrate the model can be also
 shown as red arrows pointing to the direction of the diagonal (perfectly
 calibrated model). And even the true class of each sample at the y
-coordinates [0 and 1] for each scored instance.
+coordinates [0 and 1] for each scored instance (50% of the data in
+this example, but default is 100%).
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-127
+.. GENERATED FROM PYTHON SOURCE LINES 117-130
 
 .. code-block:: default
 
@@ -248,7 +251,7 @@ coordinates [0 and 1] for each scored instance.
                                    show_counts=True,
                                    show_correction=True,
                                    show_samples=True,
-                                   sample_proportion=1.0,
+                                   sample_proportion=0.5,
                                    hist_per_class=True)
     if SAVEFIGS:
         fig.savefig('fig4.png')
@@ -264,7 +267,7 @@ coordinates [0 and 1] for each scored instance.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-134
+.. GENERATED FROM PYTHON SOURCE LINES 131-137
 
 It can be also useful to have 95% confidence intervals for each bin by
 performing a binomial proportion confidence interval with various statistical
@@ -273,7 +276,7 @@ thus accepts the different tests available in the statsmodels library. In the
 following example we use the Clopper-Pearson interval based on Beta
 distribution and a confidence interval of 95%.
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-147
+.. GENERATED FROM PYTHON SOURCE LINES 137-150
 
 .. code-block:: default
 
@@ -301,11 +304,11 @@ distribution and a confidence interval of 95%.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-149
+.. GENERATED FROM PYTHON SOURCE LINES 151-152
 
 The function also allows the visualisation of multiple models for comparison.
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-160
+.. GENERATED FROM PYTHON SOURCE LINES 152-163
 
 .. code-block:: default
 
@@ -331,13 +334,13 @@ The function also allows the visualisation of multiple models for comparison.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-164
+.. GENERATED FROM PYTHON SOURCE LINES 164-167
 
 It is possible to draw reliability diagram for multiple classes as well. We
 will simulate 3 classes by changing some original labels to a 3rd class, and
 modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-181
+.. GENERATED FROM PYTHON SOURCE LINES 167-184
 
 .. code-block:: default
 
@@ -369,11 +372,11 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-183
+.. GENERATED FROM PYTHON SOURCE LINES 185-186
 
 The same can be done with the bars.
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-192
+.. GENERATED FROM PYTHON SOURCE LINES 186-196
 
 .. code-block:: default
 
@@ -383,7 +386,8 @@ The same can be done with the bars.
                                    show_histogram=True,
                                    color_list=['darkgreen'],
                                    show_bars=True,
-                                   show_gaps=True)
+                                   show_gaps=True,
+                                   color_gaps='orange')
     if SAVEFIGS:
         fig.savefig('fig8.png')
 
@@ -400,7 +404,7 @@ The same can be done with the bars.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.420 seconds)
+   **Total running time of the script:** ( 0 minutes  1.915 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:

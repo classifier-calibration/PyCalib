@@ -194,9 +194,8 @@ labels.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">140</span>
 
-<span class="n">n_c1</span> <span class="o">=</span> <span class="n">n_c2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">n_c1</span> <span class="o">=</span> <span class="n">n_c2</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">n_c1</span><span class="p">),</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_c2</span><span class="p">)</span>
                    <span class="p">))</span>
@@ -242,7 +241,7 @@ scores</p>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f9fc71a8ac0&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f29046d5ac0&gt;
 </pre></div>
 </div>
 <p>There are at least 2 very common ways to show a reliability diagram for a
@@ -263,6 +262,7 @@ discrepancy with respect to a perfectly calibrated model (diagonal)</p>
                                <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig2.png&#39;</span><span class="p">)</span>
 </pre></div>
@@ -271,10 +271,12 @@ discrepancy with respect to a perfectly calibrated model (diagonal)</p>
 <p>However, both previous illustrations do not include the number of samples
 that fall into each bin. By default the parameter show_bars is set to True as
 this information is crucial to understand how reliable is each estimation,
-and how this affects some of the calibration metrics.</p>
+and how this affects some of the calibration metrics.
+We also specify the bin boundaries and change the color of the gaps.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#id0" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
-                               <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                               <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_gaps</span><span class="o">=</span><span class="s1">&#39;firebrick&#39;</span><span class="p">,</span>
+                               <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">4</span><span class="p">,</span> <span class="o">.</span><span class="mi">45</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">55</span><span class="p">,</span> <span class="o">.</span><span class="mi">6</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig3.png&#39;</span><span class="p">)</span>
@@ -287,7 +289,8 @@ on each bin (or show the count in each marker), the correction that should be
 applied to the average scores in order to calibrate the model can be also
 shown as red arrows pointing to the direction of the diagonal (perfectly
 calibrated model). And even the true class of each sample at the y
-coordinates [0 and 1] for each scored instance.</p>
+coordinates [0 and 1] for each scored instance (50% of the data in
+this example, but default is 100%).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#id0" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 1&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -295,7 +298,7 @@ coordinates [0 and 1] for each scored instance.</p>
                                <span class="n">show_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_correction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_samples</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">sample_proportion</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                               <span class="n">sample_proportion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                                <span class="n">hist_per_class</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig4.png&#39;</span><span class="p">)</span>
@@ -361,13 +364,14 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">color_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">],</span>
                                <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                               <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">color_gaps</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig8.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_010.png" />
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.420 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.915 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-reliability-diagram-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_reliability_diagram.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
