@@ -86,7 +86,13 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=5, fig=None,
                              **kwargs)
 
     # Colorbar
-    cb = fig.colorbar(contour, ax=ax, fraction=0.1, orientation='horizontal')
+    # TODO See if the following way to define the size of the bar can be used
+    #from mpl_toolkits.axes_grid1 import make_axes_locatable
+    #divider = make_axes_locatable(ax)
+    #cax = divider.append_axes("bottom", size="5%", pad=0.1)
+    #cb = fig.colorbar(contour, ax=cax, orientation='horizontal')
+    cb = fig.colorbar(contour, ax=ax, orientation='horizontal',
+                      fraction=0.05, pad=0.06)
     tick_locator = ticker.MaxNLocator(nbins=5)
     cb.locator = tick_locator
     #cb.ax.xaxis.set_major_locator(ticker.AutoLocator())
