@@ -1,5 +1,5 @@
-from distutils.core import setup
 from distutils.util import convert_path
+from setuptools import setup, find_packages
 from os import path
 
 this_directory = path.abspath(path.dirname(__file__))
@@ -13,7 +13,7 @@ with open(ver_path) as ver_file:
 
 setup(
   name = 'pycalib',
-  packages = ['pycalib'],
+  packages = find_packages(exclude=['tests.*', 'tests', 'docs.*', 'docs']),
   install_requires=[
     'numpy',
     'scipy',
