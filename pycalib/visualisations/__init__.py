@@ -25,7 +25,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              show_samples=False,
                              sample_proportion=1.0,
                              hist_per_class=False,
-                             color_list=None):
+                             color_list=None,
+                             show_bars=False):
     '''
     Parameters
     ==========
@@ -54,7 +55,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
         scores_list = [scores, ]
     n_scores = len(scores_list)
     if color_list is None:
-        color_list = [None]*n_scores
+        color_list = plt.rcParams['axes.prop_cycle'].by_key()['color']
     labels = label_binarize(labels, classes=classes)
 
     if class_names is None:
@@ -91,6 +92,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
                  zorder=0)
 
         for j, score in enumerate(scores_list):
+            # TODO Should we raise a warning if necessary to clip instead?
+            score = np.clip(score, a_min=0, a_max=1)
             name = legend[j] if legend else None
             bin_idx = np.digitize(score[:, i], bins) - 1
 
@@ -107,28 +110,32 @@ def plot_reliability_diagram(labels, scores, legend=None,
             avg_pred.fill(np.nan)
             avg_pred[~zero_idx] = np.divide(bin_pred[~zero_idx],
                                            bin_total[~zero_idx])
-
-            if errorbar_interval is None:
-                p = ax1.plot(avg_pred, avg_true, fmt, label=name,
-                             color=color_list[j])
-                color = p[-1].get_color()
+            if show_bars:
+                ax1.bar(x=bins[:-1][~zero_idx], height=avg_true[~zero_idx],
+                    align='edge',
+                    width=(bins[1:] - bins[:-1])[~zero_idx],
+                    edgecolor='black',
+                    color=color_list[j])
             else:
-                nozero_intervals = proportion_confint(
-                    count=bin_true[~zero_idx], nobs=bin_total[~zero_idx],
-                    alpha=1-errorbar_interval,
-                    method=interval_method)
-                nozero_intervals = np.array(nozero_intervals)
+                if errorbar_interval is None:
+                    p = ax1.plot(avg_pred, avg_true, fmt, label=name,
+                                 color=color_list[j])
+                else:
+                    nozero_intervals = proportion_confint(
+                        count=bin_true[~zero_idx], nobs=bin_total[~zero_idx],
+                        alpha=1-errorbar_interval,
+                        method=interval_method)
+                    nozero_intervals = np.array(nozero_intervals)
 
-                intervals = np.empty((2, bin_total.shape[0]))
-                intervals.fill(np.nan)
-                intervals[:, ~zero_idx] = nozero_intervals
+                    intervals = np.empty((2, bin_total.shape[0]))
+                    intervals.fill(np.nan)
+                    intervals[:, ~zero_idx] = nozero_intervals
 
-                yerr = intervals - avg_true
-                yerr = np.abs(yerr)
-                ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
-                                    label=name, fmt=fmt,
-                                    color=color_list[j]) #, markersize=5)
-                color = ebar[0].get_color()
+                    yerr = intervals - avg_true
+                    yerr = np.abs(yerr)
+                    ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
+                                        label=name, fmt=fmt,
+                                         color=color_list[j]) #, markersize=5)
 
             if show_counts:
                 for ap, at, count in zip(avg_pred, avg_true, bin_total):
@@ -136,7 +143,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                         ax1.text(ap, at, str(count), fontsize=6,
                                  ha='center', va='center',
                                  bbox=dict(boxstyle='square,pad=0.3',
-                                           fc='white', ec=color))
+                                           fc='white', ec=color_list[j]))
 
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
@@ -145,6 +152,11 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
+                    ax1.annotate("", (ap, at), (ap, ap),
+                                 arrowprops=dict(arrowstyle="|-|",
+                                                 mutation_scale=4,
+                                                 color="black",
+                                                 lw=3))
                     ax1.annotate("", (ap, at), (ap, ap),
                                  arrowprops=dict(arrowstyle="|-|",
                                                  mutation_scale=3,
@@ -168,17 +180,19 @@ def plot_reliability_diagram(labels, scores, legend=None,
         else:
             ax1.set_yticklabels([])
         ax1.grid(True)
+        ax1.set_axisbelow(True)
 
         if show_histogram:
             ax2 = fig.add_subplot(spec[n_columns + i],
                                   label='{}'.format(i))
             for j, score in enumerate(scores_list):
                 ax1.set_xticklabels([])
-                lines = ax1.get_lines()
+                #lines = ax1.get_lines()
                 #ax2.set_xticklabels([])
 
                 name = legend[j] if legend else None
-                color = lines[j+1].get_color()
+                #color = lines[j+1].get_color()
+                color = color_list[j]
                 if hist_per_class:
                     for c in [0, 1]:
                         linestyle = ('dotted', 'dashed')[c]
