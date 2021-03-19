@@ -22,6 +22,7 @@ SAVEFIGS=False
 import matplotlib.pyplot as plt
 import numpy as np
 np.random.seed(42)
+plt.rcParams['figure.dpi'] = 140
 
 n_c1 = n_c2 = 200
 p = np.concatenate((np.random.beta(2, 5, n_c1),
@@ -67,15 +68,40 @@ plt.grid()
 plt.legend()
 
 ##############################################################################
-# Then we can show the most common form to visualise a reliability diagram
+# There are at least 2 very common ways to show a reliability diagram for a
+# probabilistic binary classifier. Drawing a line between all the binned mean
+# predictions and the true proportion of positives.
 
 from pycalib.visualisations import plot_reliability_diagram
+
+fig = plot_reliability_diagram(labels=y, scores=s1, show_histogram=False)
+
+if SAVEFIGS:
+    fig.savefig('fig1.png')
+
+##############################################################################
+# And showing bars instead of a lineplot, usually with errorbars showing the
+# discrepancy with respect to a perfectly calibrated model (diagonal)
+
+fig = plot_reliability_diagram(labels=y, scores=s1,
+                               class_names=['Negative', 'Positive'],
+                               show_gaps=True, show_bars=True,
+                               show_histogram=False)
+if SAVEFIGS:
+    fig.savefig('fig2.png')
+
+##############################################################################
+# However, both previous illustrations do not include the number of samples
+# that fall into each bin. By default the parameter show_bars is set to True as
+# this information is crucial to understand how reliable is each estimation,
+# and how this affects some of the calibration metrics.
 
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                class_names=['Negative', 'Positive'],
                                show_gaps=True)
+
 if SAVEFIGS:
-    fig.savefig('fig1.png')
+    fig.savefig('fig3.png')
 
 ##############################################################################
 # We can enable some parameters to show several aspects of the reliability
@@ -85,8 +111,6 @@ if SAVEFIGS:
 # shown as red arrows pointing to the direction of the diagonal (perfectly
 # calibrated model). And even the true class of each sample at the y
 # coordinates [0 and 1] for each scored instance.
-
-from pycalib.visualisations import plot_reliability_diagram
 
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                legend=['Model 1'],
@@ -98,7 +122,7 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                sample_proportion=1.0,
                                hist_per_class=True)
 if SAVEFIGS:
-    fig.savefig('fig2.png')
+    fig.savefig('fig4.png')
 
 ##############################################################################
 # It can be also useful to have 95% confidence intervals for each bin by
@@ -118,7 +142,7 @@ fig = plot_reliability_diagram(labels=y, scores=s2,
                                interval_method='beta',
                                color_list=['orange'])
 if SAVEFIGS:
-    fig.savefig('fig3.png')
+    fig.savefig('fig5.png')
 
 ##############################################################################
 # The function also allows the visualisation of multiple models for comparison.
@@ -130,7 +154,7 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                errorbar_interval=0.95,
                                interval_method='beta')
 if SAVEFIGS:
-    fig.savefig('fig4.png')
+    fig.savefig('fig6.png')
 
 
 ##############################################################################
@@ -145,10 +169,23 @@ s1[class_2_idx,2] *= 3
 s1 /= s1.sum(axis=1)[:, None]
 s2 = np.hstack((s2, s2[:, 1].reshape(-1, 1)))
 s2[class_2_idx,2] *= 2
+s2 /= s2.sum(axis=1)[:, None]
 
 fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                legend=['Model 3', 'Model 4'],
                                show_histogram=True,
                                color_list=['darkgreen', 'chocolate'])
 if SAVEFIGS:
-    fig.savefig('fig5.png')
+    fig.savefig('fig7.png')
+
+##############################################################################
+# The same can be done with the bars.
+
+fig = plot_reliability_diagram(labels=y, scores=s1,
+                               legend=['Model 3'],
+                               show_histogram=True,
+                               color_list=['darkgreen'],
+                               show_bars=True,
+                               show_gaps=True)
+if SAVEFIGS:
+    fig.savefig('fig8.png')
