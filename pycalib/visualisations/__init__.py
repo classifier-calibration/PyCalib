@@ -89,6 +89,11 @@ def plot_reliability_diagram(labels, scores, legend=None,
     elif isinstance(bins, list) or isinstance(bins, np.ndarray):
         n_bins = len(bins) - 1
         bins = np.array(bins)
+        if bins[0] == 0.0:
+            bins[0] = 0 - 1e-8
+        if bins[-1] == 1.0:
+            bins[-1] = 1 + 1e-8
+
 
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
