@@ -12,3 +12,4 @@ twine
 yapf
 restview
 sphinx-rtd-theme
+readme-renderer
