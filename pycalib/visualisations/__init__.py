@@ -2,6 +2,7 @@ import numpy as np
 import itertools
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from sklearn.preprocessing import OneHotEncoder
@@ -26,7 +27,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              sample_proportion=1.0,
                              hist_per_class=False,
                              color_list=None,
-                             show_bars=False):
+                             show_bars=False,
+                             invert_histogram=False,
+                             color_gaps='lightcoral'):
     '''
     Parameters
     ==========
@@ -73,7 +76,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
     if show_histogram:
         spec = gridspec.GridSpec(ncols=n_columns, nrows=2,
                                  height_ratios=[5, 1],
-                                 wspace=0.02, hspace=0.07,
+                                 wspace=0.02,
+                                 hspace=0.04,
                                  left=0.15)
     else:
         spec = gridspec.GridSpec(ncols=1, nrows=1,
@@ -84,6 +88,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
         bins = np.linspace(0, 1 + 1e-8, n_bins + 1)
     elif isinstance(bins, list) or isinstance(bins, np.ndarray):
         n_bins = len(bins) - 1
+        bins = np.array(bins)
 
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
@@ -141,39 +146,33 @@ def plot_reliability_diagram(labels, scores, legend=None,
                 for ap, at, count in zip(avg_pred, avg_true, bin_total):
                     if np.isfinite(ap) and np.isfinite(at):
                         ax1.text(ap, at, str(count), fontsize=6,
-                                 ha='center', va='center',
+                                 ha='center', va='center', zorder=11,
                                  bbox=dict(boxstyle='square,pad=0.3',
                                            fc='white', ec=color_list[j]))
 
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
-                    ax1.arrow(ap, at, at - ap, 0, color="lightcoral", head_width=0.02,
+                    ax1.arrow(ap, at, at - ap, 0, color=color_gaps, head_width=0.02,
                              length_includes_head=True, width=0.01)
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
-                    ax1.annotate("", (ap, at), (ap, ap),
-                                 arrowprops=dict(arrowstyle="|-|",
-                                                 mutation_scale=4,
-                                                 color="black",
-                                                 lw=3))
-                    ax1.annotate("", (ap, at), (ap, ap),
-                                 arrowprops=dict(arrowstyle="|-|",
-                                                 mutation_scale=3,
-                                                 color="lightcoral",
-                                                 lw=2))
+                    ygaps = avg_pred - avg_true
+                    ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
+                    ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
+                                 color=color_gaps, lw=4, capsize=5, capthick=1,
+                                 zorder=10)
 
             if show_samples:
                 idx = np.random.choice(labels.shape[0], int(sample_proportion*labels.shape[0]))
-                ax1.scatter(score[idx, i], labels[idx, i], marker='d', s=100,
-                           alpha=0.1, color=color_list[j])
-
+                ax1.scatter(score[idx, i], labels[idx, i], marker='|', s=100,
+                            alpha=0.2, color=color_list[j])
 
         ax1.set_xlim([0, 1])
         ax1.set_ylim([0, 1])
         #ax1.set_title('Class {}'.format(class_names[i]))
         if not show_histogram:
-            ax1.set_xlabel('Mean predicted value (Class {})'.format(
+            ax1.set_xlabel('Average score (Class {})'.format(
                 class_names[i]))
         if i == 0:
             ax1.set_ylabel('Fraction of positives')
@@ -199,7 +198,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                         ax2.hist(score[labels[:, i]==c, i], range=(0, 1),
                                  bins=bins, label=name,
                                  histtype="step",
-                                 lw=2, linestyle=linestyle,
+                                 lw=1, linestyle=linestyle,
                                  color=color,
                                  edgecolor='black')
                 else:
@@ -211,16 +210,24 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                   'edgecolor': 'black',
                                   'color': color}
                     ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
-                             lw=2, **kwargs)
+                             lw=1, **kwargs)
                 ax2.set_xlim([0, 1])
-                ax2.set_xlabel('Mean predicted value (Class {})'.format(
+                ax2.set_xlabel('Average score (Class {})'.format(
                     class_names[i]))
                 if i == 0:
                     ax2.set_ylabel('#count')
+                    ytickloc = ax2.get_yticks().tolist()
+                    ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
+                    yticklabels = ['{:0.0f}'.format(value) for value in
+                                   ytickloc]
+                    ax2.set_yticklabels(labels=yticklabels, fontdict=dict(verticalalignment='top'))
                 else:
                     ax2.set_yticklabels([])
-                ax2.grid(True)
+                ax2.grid(True, which='both')
                 ax2.set_axisbelow(True)
+            if invert_histogram:
+                ylim = ax2.get_ylim()
+                ax2.set_ylim(reversed(ylim))
 
     if legend is not None:
         lines, labels = fig.axes[0].get_legend_handles_labels()
@@ -303,8 +310,8 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
            color="cornflowerblue", label='True class prop.')
     ax.bar(pred_mean[not_nan], (true_proportion - pred_mean)[not_nan],
            bottom=pred_mean[not_nan], width=0.01,
-           edgecolor="lightcoral", #"red",# "#ffc8c6", #"red",
-           color="lightcoral", #"red", #"#ffc8c6",
+           edgecolor=color_gaps, #"red",# "#ffc8c6", #"red",
+           color=color_gaps, #"red", #"#ffc8c6",
            label='Gap pred. mean', align='center')
     #ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
     #           marker="+", zorder=10)

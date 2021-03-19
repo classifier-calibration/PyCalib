@@ -22,9 +22,8 @@ SAVEFIGS=False
 import matplotlib.pyplot as plt
 import numpy as np
 np.random.seed(42)
-plt.rcParams['figure.dpi'] = 140
 
-n_c1 = n_c2 = 200
+n_c1 = n_c2 = 500
 p = np.concatenate((np.random.beta(2, 5, n_c1),
                     np.random.beta(4, 3, n_c2)
                    ))
@@ -87,6 +86,7 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                class_names=['Negative', 'Positive'],
                                show_gaps=True, show_bars=True,
                                show_histogram=False)
+
 if SAVEFIGS:
     fig.savefig('fig2.png')
 
@@ -95,10 +95,12 @@ if SAVEFIGS:
 # that fall into each bin. By default the parameter show_bars is set to True as
 # this information is crucial to understand how reliable is each estimation,
 # and how this affects some of the calibration metrics.
+# We also specify the bin boundaries and change the color of the gaps.
 
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                class_names=['Negative', 'Positive'],
-                               show_gaps=True)
+                               show_gaps=True, color_gaps='firebrick',
+                               bins=[0, .3, .4, .45, .5, .55, .6, .7, 1])
 
 if SAVEFIGS:
     fig.savefig('fig3.png')
@@ -110,7 +112,8 @@ if SAVEFIGS:
 # applied to the average scores in order to calibrate the model can be also
 # shown as red arrows pointing to the direction of the diagonal (perfectly
 # calibrated model). And even the true class of each sample at the y
-# coordinates [0 and 1] for each scored instance.
+# coordinates [0 and 1] for each scored instance (50% of the data in
+# this example, but default is 100%).
 
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                legend=['Model 1'],
@@ -119,7 +122,7 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_counts=True,
                                show_correction=True,
                                show_samples=True,
-                               sample_proportion=1.0,
+                               sample_proportion=0.5,
                                hist_per_class=True)
 if SAVEFIGS:
     fig.savefig('fig4.png')
@@ -186,6 +189,7 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_histogram=True,
                                color_list=['darkgreen'],
                                show_bars=True,
-                               show_gaps=True)
+                               show_gaps=True,
+                               color_gaps='orange')
 if SAVEFIGS:
     fig.savefig('fig8.png')
