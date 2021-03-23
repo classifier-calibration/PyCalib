@@ -1,6 +1,5 @@
-.. -*- mode: md -*-
-
 ![CI](https://github.com/perellonieto/pycalib/workflows/CI/badge.svg)
+![Documentation](https://github.com/perellonieto/pycalib/workflows/Documentation/badge.svg)
 
 PyCalib
 =======

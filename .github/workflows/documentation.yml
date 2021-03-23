@@ -1,4 +1,4 @@
-name: Build 🔧 the Documentation 📖 and deploy 🚀 it to GitHub Pages
+name: Documentation
 on:
   push:
     branches:
