@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+![CI](https://github.com/perellonieto/pycalib/workflows/CI/badge.svg)
+
 PyCalib
 =======
 Python library for classifier calibration
