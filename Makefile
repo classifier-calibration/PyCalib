@@ -1,2 +1,2 @@
 unittest:
-	python -m unittest discover pycalib
+	pytest --cov=pycalib pycalib

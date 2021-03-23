@@ -1,8 +1,5 @@
-import numpy as np
 import pandas as pd
 
-# TODO Remove from utils.py
-from pycalib.visualisations import plot_df_to_heatmap
 
 def multiindex_to_strings(index):
     if isinstance(index, pd.MultiIndex):

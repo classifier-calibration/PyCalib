@@ -7,10 +7,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import label_binarize
-from sklearn.calibration import calibration_curve
 
-from sklearn.preprocessing import label_binarize
-from sklearn.calibration import calibration_curve
 from statsmodels.stats.proportion import proportion_confint
 
 from matplotlib import gridspec
@@ -94,7 +91,6 @@ def plot_reliability_diagram(labels, scores, legend=None,
         if bins[-1] == 1.0:
             bins[-1] = 1 + 1e-8
 
-
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
         # Perfect calibration
@@ -107,29 +103,29 @@ def plot_reliability_diagram(labels, scores, legend=None,
             name = legend[j] if legend else None
             bin_idx = np.digitize(score[:, i], bins) - 1
 
-            bin_true = np.bincount(bin_idx, weights=labels[:, i], minlength=n_bins)
-            bin_pred = np.bincount(bin_idx, weights=score[:, i], minlength=n_bins)
+            bin_true = np.bincount(bin_idx, weights=labels[:, i],
+                                   minlength=n_bins)
+            bin_pred = np.bincount(bin_idx, weights=score[:, i],
+                                   minlength=n_bins)
             bin_total = np.bincount(bin_idx, minlength=n_bins)
 
             zero_idx = bin_total == 0
             avg_true = np.empty(bin_total.shape[0])
             avg_true.fill(np.nan)
             avg_true[~zero_idx] = np.divide(bin_true[~zero_idx],
-                                           bin_total[~zero_idx])
+                                            bin_total[~zero_idx])
             avg_pred = np.empty(bin_total.shape[0])
             avg_pred.fill(np.nan)
             avg_pred[~zero_idx] = np.divide(bin_pred[~zero_idx],
-                                           bin_total[~zero_idx])
+                                            bin_total[~zero_idx])
             if show_bars:
                 ax1.bar(x=bins[:-1][~zero_idx], height=avg_true[~zero_idx],
-                    align='edge',
-                    width=(bins[1:] - bins[:-1])[~zero_idx],
-                    edgecolor='black',
-                    color=color_list[j])
+                        align='edge', width=(bins[1:] - bins[:-1])[~zero_idx],
+                        edgecolor='black', color=color_list[j])
             else:
                 if errorbar_interval is None:
-                    p = ax1.plot(avg_pred, avg_true, fmt, label=name,
-                                 color=color_list[j])
+                    ax1.plot(avg_pred, avg_true, fmt, label=name,
+                             color=color_list[j])
                 else:
                     nozero_intervals = proportion_confint(
                         count=bin_true[~zero_idx], nobs=bin_total[~zero_idx],
@@ -143,9 +139,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
                     yerr = intervals - avg_true
                     yerr = np.abs(yerr)
-                    ebar  = ax1.errorbar(avg_pred, avg_true, yerr=yerr,
-                                        label=name, fmt=fmt,
-                                         color=color_list[j]) #, markersize=5)
+                    ax1.errorbar(avg_pred, avg_true, yerr=yerr, label=name,
+                                 fmt=fmt, color=color_list[j])  # markersize=5)
 
             if show_counts:
                 for ap, at, count in zip(avg_pred, avg_true, bin_total):
@@ -157,8 +152,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
             if show_correction:
                 for ap, at in zip(avg_pred, avg_true):
-                    ax1.arrow(ap, at, at - ap, 0, color=color_gaps, head_width=0.02,
-                             length_includes_head=True, width=0.01)
+                    ax1.arrow(ap, at, at - ap, 0, color=color_gaps,
+                              head_width=0.02, length_includes_head=True,
+                              width=0.01)
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
@@ -169,13 +165,14 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                  zorder=10)
 
             if show_samples:
-                idx = np.random.choice(labels.shape[0], int(sample_proportion*labels.shape[0]))
+                idx = np.random.choice(labels.shape[0],
+                                       int(sample_proportion*labels.shape[0]))
                 ax1.scatter(score[idx, i], labels[idx, i], marker='|', s=100,
                             alpha=0.2, color=color_list[j])
 
         ax1.set_xlim([0, 1])
         ax1.set_ylim([0, 1])
-        #ax1.set_title('Class {}'.format(class_names[i]))
+        # ax1.set_title('Class {}'.format(class_names[i]))
         if not show_histogram:
             ax1.set_xlabel('Average score (Class {})'.format(
                 class_names[i]))
@@ -191,16 +188,16 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                   label='{}'.format(i))
             for j, score in enumerate(scores_list):
                 ax1.set_xticklabels([])
-                #lines = ax1.get_lines()
-                #ax2.set_xticklabels([])
+                # lines = ax1.get_lines()
+                # ax2.set_xticklabels([])
 
                 name = legend[j] if legend else None
-                #color = lines[j+1].get_color()
+                # color = lines[j+1].get_color()
                 color = color_list[j]
                 if hist_per_class:
                     for c in [0, 1]:
                         linestyle = ('dotted', 'dashed')[c]
-                        ax2.hist(score[labels[:, i]==c, i], range=(0, 1),
+                        ax2.hist(score[labels[:, i] == c, i], range=(0, 1),
                                  bins=bins, label=name,
                                  histtype="step",
                                  lw=1, linestyle=linestyle,
@@ -225,7 +222,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
                     ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
                     yticklabels = ['{:0.0f}'.format(value) for value in
                                    ytickloc]
-                    ax2.set_yticklabels(labels=yticklabels, fontdict=dict(verticalalignment='top'))
+                    ax2.set_yticklabels(labels=yticklabels,
+                                        fontdict=dict(verticalalignment='top'))
                 else:
                     ax2.set_yticklabels([])
                 ax2.grid(True, which='both')
@@ -236,7 +234,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
     if legend is not None:
         lines, labels = fig.axes[0].get_legend_handles_labels()
-        fig.legend(lines, labels, loc='upper center', bbox_to_anchor=(0, 0, 1, 1),
+        fig.legend(lines, labels, loc='upper center',
+                   bbox_to_anchor=(0, 0, 1, 1),
                    bbox_transform=fig.transFigure, ncol=6)
 
     return fig
@@ -296,9 +295,9 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     for i, center in enumerate(centers):
         if i == 0:
             # First bin includes lower bound
-            bin_indices = np.where(np.logical_and(p_pred >= center - bin_size/2,
-                                                  p_pred <= center +
-                                                  bin_size/2))
+            bin_indices = np.where(np.logical_and(
+                p_pred >= center - bin_size/2,
+                p_pred <= center + bin_size/2))
         else:
             bin_indices = np.where(np.logical_and(p_pred > center - bin_size/2,
                                                   p_pred <= center +
@@ -312,15 +311,13 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
 
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
-           #color="blue", label='True class prop.')
+           # color="blue", label='True class prop.')
            color="cornflowerblue", label='True class prop.')
     ax.bar(pred_mean[not_nan], (true_proportion - pred_mean)[not_nan],
            bottom=pred_mean[not_nan], width=0.01,
-           edgecolor=color_gaps, #"red",# "#ffc8c6", #"red",
-           color=color_gaps, #"red", #"#ffc8c6",
+           edgecolor=color_gaps,
+           color=color_gaps,
            label='Gap pred. mean', align='center')
-    #ax.scatter(pred_mean[not_nan], true_proportion[not_nan], color='red',
-    #           marker="+", zorder=10)
 
     if legend:
         ax.legend()
@@ -343,7 +340,7 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
     if len(y_true.shape) < 2 or y_true.shape[1] == 1:
         ohe = OneHotEncoder(categories='auto')
         ohe.fit(y_true.reshape(-1, 1))
-        y_true = ohe.transform(y_true.reshape(-1,1))
+        y_true = ohe.transform(y_true.reshape(-1, 1))
 
     if per_class:
         n_classes = y_true.shape[1]
@@ -353,10 +350,10 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
             ax = [fig.add_subplot(1, n_classes, i+1) for i in range(n_classes)]
         for i in range(n_classes):
             if i == 0 and legend:
-                sub_legend=True
+                sub_legend = True
             else:
-                sub_legend=False
-            plot_binary_reliability_diagram_gaps(y_true[:,i], p_pred[:,i],
+                sub_legend = False
+            plot_binary_reliability_diagram_gaps(y_true[:, i], p_pred[:, i],
                                                  title='$C_{}$'.format(i+1),
                                                  fig=fig, ax=ax[i],
                                                  legend=sub_legend,
@@ -424,48 +421,6 @@ def plot_confusion_matrix(cm, classes,
 
     ax.set_ylabel('True label')
     ax.set_xlabel('Predicted label')
-    return fig
-
-def plot_weight_matrix(weights, bias, classes, title='Weight matrix',
-                       cmap=plt.cm.Greens, fig=None, ax=None, **kwargs):
-    """
-    This function prints and plots the weight matrix.
-    """
-    if fig is None:
-        fig = plt.figure()
-
-    if ax is None:
-        ax = fig.add_subplot(111)
-
-    if title is not None:
-        ax.set_title(title)
-
-    matrix = np.hstack((weights, bias.reshape(-1, 1)))
-
-    im = ax.imshow(matrix, interpolation='nearest', cmap=cmap, **kwargs)
-
-    # create an axes on the right side of ax. The width of cax will be 5%
-    # of ax and the padding between cax and ax will be fixed at 0.05 inch.
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes("right", size="5%", pad=0.05)
-
-    fig.colorbar(im, cax=cax)
-
-    tick_marks = np.arange(len(classes))
-    ax.set_yticks(tick_marks)
-    ax.set_yticklabels(classes)
-    ax.set_xticks(np.append(tick_marks, len(classes)))
-    ax.set_xticklabels(np.append(classes, 'c'))
-
-    fmt = '.2f'
-    thresh = matrix.max() / 2.
-    for i, j in itertools.product(range(matrix.shape[0]), range(matrix.shape[1])):
-        ax.text(j, i, format(matrix[i, j], fmt),
-                 horizontalalignment="center",
-                 verticalalignment="center",
-                 color="white" if matrix[i, j] > thresh else "black")
-
-    ax.set_ylabel('Class')
     return fig
 
 

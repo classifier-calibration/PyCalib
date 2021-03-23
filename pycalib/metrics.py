@@ -94,8 +94,9 @@ def ECE(y_true, probs, normalize=False, bins=15, ece_full=True):
 
     # Prepare predictions, confidences and true labels for ECE calculation
     if ece_full:
-        preds, confs, y_true = get_preds_all(y_true, probs,
-                                             normalize=normalize, flatten=True)
+        preds, confs, y_true = _get_preds_all(y_true, probs,
+                                              normalize=normalize,
+                                              flatten=True)
 
     else:
         preds = np.argmax(probs, axis=1)  # Maximum confidence as prediction
@@ -107,12 +108,12 @@ def ECE(y_true, probs, normalize=False, bins=15, ece_full=True):
             confs = np.max(probs, axis=1)  # Take only maximum confidence
 
     # Calculate ECE and ECE2
-    ece = ECE_helper(confs, preds, y_true, bin_size=1/bins, ece_full=ece_full)
+    ece = _ECE_helper(confs, preds, y_true, bin_size=1/bins, ece_full=ece_full)
 
     return ece
 
 
-def get_preds_all(y_true, y_probs, axis=1, normalize=False, flatten=True):
+def _get_preds_all(y_true, y_probs, axis=1, normalize=False, flatten=True):
     """
     Method to get predictions in right format for ECE-full.
 
@@ -158,7 +159,7 @@ def get_preds_all(y_true, y_probs, axis=1, normalize=False, flatten=True):
     return y_preds, y_probs, y_true
 
 
-def ECE_helper(conf, pred, true, bin_size=0.1, ece_full=False):
+def _ECE_helper(conf, pred, true, bin_size=0.1, ece_full=False):
 
     """
     Expected Calibration Error
@@ -185,16 +186,16 @@ def ECE_helper(conf, pred, true, bin_size=0.1, ece_full=False):
     ece = 0  # Starting error
 
     for conf_thresh in upper_bounds:  # Find accur. and confidences per bin
-        acc, avg_conf, len_bin = compute_acc_bin(conf_thresh-bin_size,
-                                                 conf_thresh, conf, pred, true,
-                                                 ece_full)
+        acc, avg_conf, len_bin = _compute_acc_bin(conf_thresh-bin_size,
+                                                  conf_thresh, conf, pred,
+                                                  true, ece_full)
         ece += np.abs(acc-avg_conf)*len_bin/n  # Add weigthed difference to ECE
 
     return ece
 
 
-def compute_acc_bin(conf_thresh_lower, conf_thresh_upper, conf, pred, true,
-                    ece_full=True):
+def _compute_acc_bin(conf_thresh_lower, conf_thresh_upper, conf, pred, true,
+                     ece_full=True):
     """
     # Computes accuracy and average confidence for bin
 
@@ -245,7 +246,7 @@ def compute_acc_bin(conf_thresh_lower, conf_thresh_upper, conf, pred, true,
     return accuracy, avg_conf, len_bin
 
 
-def MCE_helper(conf, pred, true, bin_size=0.1, mce_full=True):
+def _MCE_helper(conf, pred, true, bin_size=0.1, mce_full=True):
 
     """
     Maximal Calibration Error
@@ -270,9 +271,9 @@ def MCE_helper(conf, pred, true, bin_size=0.1, mce_full=True):
     cal_errors = []
 
     for conf_thresh in upper_bounds:
-        acc, avg_conf, count = compute_acc_bin(conf_thresh-bin_size,
-                                               conf_thresh, conf, pred, true,
-                                               mce_full)
+        acc, avg_conf, count = _compute_acc_bin(conf_thresh-bin_size,
+                                                conf_thresh, conf, pred, true,
+                                                mce_full)
         cal_errors.append(np.abs(acc-avg_conf))
 
     return np.max(np.asarray(cal_errors))
@@ -311,8 +312,9 @@ def MCE(y_true, probs, normalize=False, bins=15, mce_full=False):
 
     # Prepare predictions, confidences and true labels for MCE calculation
     if mce_full:
-        preds, confs, y_true = get_preds_all(y_true, probs,
-                                             normalize=normalize, flatten=True)
+        preds, confs, y_true = _get_preds_all(y_true, probs,
+                                              normalize=normalize,
+                                              flatten=True)
 
     else:
         preds = np.argmax(probs, axis=1)  # Maximum confidence as prediction
@@ -324,7 +326,7 @@ def MCE(y_true, probs, normalize=False, bins=15, mce_full=False):
             confs = np.max(probs, axis=1)  # Take only maximum confidence
 
     # Calculate MCE
-    mce = MCE_helper(confs, preds, y_true, bin_size=1/bins, mce_full=mce_full)
+    mce = _MCE_helper(confs, preds, y_true, bin_size=1/bins, mce_full=mce_full)
 
     return mce
 
@@ -353,7 +355,6 @@ def conf_MCE(y_true, probs, bins=15):
         maximum calibration error
     """
     return MCE(y_true, probs, normalize=False, bins=bins, mce_full=False)
-
 
 
 def binary_ECE(y_true, probs, power=1, bins=15):
@@ -443,7 +444,7 @@ def full_ECE(y_true, probs, bins=15, power=1):
     return s
 
 
-def label_resampling(probs):
+def _label_resampling(probs):
     c = probs.cumsum(axis=1)
     u = np.random.rand(len(c), 1)
     choices = (u < c).argmax(axis=1)
@@ -452,13 +453,13 @@ def label_resampling(probs):
     return y
 
 
-def score_sampling(probs, samples=10000, ece_function=None):
+def _score_sampling(probs, samples=10000, ece_function=None):
 
     probs = np.array(probs)
 
     return np.array(
         [
-            ece_function(probs, label_resampling(probs)) for sample in
+            ece_function(probs, _label_resampling(probs)) for sample in
             range(samples)
         ]
     )
@@ -473,7 +474,7 @@ def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
 
     return 1 - (
         percentileofscore(
-            score_sampling(
+            _score_sampling(
                 probs,
                 samples=samples,
                 ece_function=ece_function
