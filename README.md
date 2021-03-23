@@ -1,5 +1,13 @@
-![CI](https://github.com/perellonieto/pycalib/workflows/CI/badge.svg)
-![Documentation](https://github.com/perellonieto/pycalib/workflows/Documentation/badge.svg)
+![CI](ci:b)
+![Documentation](documentation:b)
+[![License BSD3](license:b)](license)
+![Python3.8](python:b)
+
+[ci:b]: https://github.com/perellonieto/pycalib/workflows/CI/badge.svg
+[documentation:b]: https://github.com/perellonieto/pycalib/workflows/Documentation/badge.svg
+[license:b]: https://img.shields.io/github/license/perellonieto/pycalib.svg
+[license]: https://github.com/perellonieto/PyCalib/blob/master/LICENSE.txt
+[python:b]: https://img.shields.io/badge/python-3.8-blue
 
 PyCalib
 =======
