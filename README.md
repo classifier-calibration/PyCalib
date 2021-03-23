@@ -1,6 +1,6 @@
 ![CI][ci:b]
 ![Documentation][documentation:b]
-[![License BSD3][license:b]](license)
+[![License BSD3][license:b]][license]
 ![Python3.8][python:b]
 
 [ci:b]: https://github.com/perellonieto/pycalib/workflows/CI/badge.svg
