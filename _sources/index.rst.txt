@@ -6,6 +6,13 @@
 Welcome to PyCalib's documentation!
 ===================================
 
+PyCalib is a library that offers multiple tools to assess probabilistic
+classifiers in terms of calibration, and provides helpful functions to
+calibrate muticlass probabilistic models that follow the Scikit-learn
+`BaseEstimator`_ standard. 
+
+.. _BaseEstimator: https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
