@@ -1,13 +1,19 @@
-![CI][ci:b]
-![Documentation][documentation:b]
+[![CI][ci:b]][ci]
+[![Documentation][documentation:b]][documentation]
 [![License BSD3][license:b]][license]
 ![Python3.8][python:b]
+[![pypi][pypi:b]][pypi]
 
+[ci]: https://github.com/perellonieto/PyCalib/actions/workflows/ci.yml
 [ci:b]: https://github.com/perellonieto/pycalib/workflows/CI/badge.svg
+[documentation]: https://github.com/perellonieto/PyCalib/actions/workflows/documentation.yml
 [documentation:b]: https://github.com/perellonieto/pycalib/workflows/Documentation/badge.svg
-[license:b]: https://img.shields.io/github/license/perellonieto/pycalib.svg
 [license]: https://github.com/perellonieto/PyCalib/blob/master/LICENSE.txt
+[license:b]: https://img.shields.io/github/license/perellonieto/pycalib.svg
 [python:b]: https://img.shields.io/badge/python-3.8-blue
+[pypi]: https://badge.fury.io/py/pycalib
+[pypi:b]: https://badge.fury.io/py/pycalib.svg
+
 
 PyCalib
 =======
