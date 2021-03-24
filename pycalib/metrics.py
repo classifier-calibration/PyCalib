@@ -6,7 +6,12 @@ from scipy.stats import percentileofscore
 
 
 def accuracy(y_true, y_pred):
-    """
+    """Classification accuracy score
+
+    Accuracy for binary and multiclass classification problems. Consists on the
+    proportion of correct estimations assuming the maximum class probability of
+    each score as the estimated class.
+
     Parameters
     ----------
     y_true : label indicator matrix (n_samples, n_classes)
@@ -39,9 +44,25 @@ def accuracy(y_true, y_pred):
 
 
 def cross_entropy(y_true, y_pred):
-    """
-    y_true : true y (n_samples, n_classes)
-    y_pred : predicted y (n_samples, n_classes)
+    """Cross-entropy score
+
+    Computes the cross-entropy (a.k.a. log-loss) for binary and
+    multiclass classification scores.
+
+    Parameters
+    ----------
+    y_true : label indicator matrix (n_samples, n_classes)
+        True labels.
+        # TODO Add option to pass array with shape (n_samples, )
+
+    y_pred : matrix (n_samples, n_classes)
+        Predicted scores.
+
+    Returns
+    -------
+    score : float
+        
+
     Examples
     --------
     >>> from pycalib.metrics import cross_entropy
@@ -54,9 +75,33 @@ def cross_entropy(y_true, y_pred):
 
 
 def brier_score(y_true, y_pred):
-    """
-    y_true : true y (n_samples, n_classes)
-    y_pred : predicted y (n_samples, n_classes)
+    """Brier score
+
+    Computes the Brier score between the true labels and the estimated
+    probabilities. This corresponds to the Mean Squared Error between the
+    estimations and the true labels.
+
+    Parameters
+    ----------
+    y_true : label indicator matrix (n_samples, n_classes)
+        True labels.
+        # TODO Add option to pass array with shape (n_samples, )
+
+    y_pred : matrix (n_samples, n_classes)
+        Predicted scores.
+
+    Returns
+    -------
+    score : float
+        Positive value between 0 and 1.
+
+    Examples
+    --------
+    >>> from pycalib.metrics import cross_entropy
+    >>> Y = np.array([[0, 1], [0, 1]])
+    >>> S = np.array([[0.1, 0.9], [0.6, 0.4]])
+    >>> brier_score(Y, S)
+    0.185
     """
     # TODO Consider using the following code instead
     # np.mean(np.abs(S - Y)**2)

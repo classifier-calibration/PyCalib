@@ -39,7 +39,8 @@ github_docs_repo = 'pycalib'
 extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.autodoc",
-    "sphinx_gallery.gen_gallery"
+    "sphinx_gallery.gen_gallery",
+    "numpydoc"
 ]
 
 # Add any paths that contain templates here, relative to this directory.

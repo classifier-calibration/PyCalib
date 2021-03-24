@@ -12,12 +12,6 @@ requirements: pip
 requirements-dev: requirements pip
 	pip install -r requirements-dev.txt
 
-test: requirements-dev
-	pytest --doctest-modules --cov-report=term-missing --cov=pycalib pycalib
-
-check-readme: requirements-dev
-	twine check dist/*
-
 build: requirements-dev
 	python3.8 setup.py sdist
 
@@ -34,3 +28,12 @@ code-analysis:
 
 clean:
 	rm -rf ./dist
+
+# All the following assume the requirmenets-dev are installed, but to make the
+# output clean the dependency has been removed
+test:
+	pytest --doctest-modules --cov-report=term-missing --cov=pycalib pycalib
+
+check-readme:
+	twine check dist/*
+

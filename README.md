@@ -71,8 +71,12 @@ in the README file will show if the test has passed or not.
 Analyse code
 ------------
 
-We are trying to follow the same code standards as in Numpy and Scikit-learn,
-it is possible to check for pep8 and other code conventions with
+We are trying to follow the same code standards as in [Numpy][numpy:c] and 
+[Scikit-learn][sklearn:c], it is possible to check for pep8 and other code
+conventions with
+
+[numpy:c]: https://numpy.org/devdocs/dev/index.html
+[sklearn:c]: https://scikit-learn.org/stable/developers/index.html
 
 ```
 make code-analysis
@@ -81,12 +85,21 @@ make code-analysis
 Documentation
 -------------
 
+The documentation can be found at
+[https://www.perellonieto.com/PyCalib](/https://www.perellonieto.com/PyCalib/),
+and it is automatically updated after every push to the master branch.
+
 All documentation is done ussing the [Sphinx documentation
 generator][sphinx:l].  The documentation is written in
-[reStructuredText][rst:l] (\*.rst) files in the `docs/source` folder. The
-examples with images in folder `docs/source/examples` are
-generated automatically with [Sphinx-gallery][sphinx:g] from the python code in
-folder [examples/](examples/) starting with `xmpl_{example_name}.py`.
+[reStructuredText][rst:l] (\*.rst) files in the `docs/source` folder. We try to
+follow the conventions from [Numpy][numpy:d] and [Scikit-learn][sklearn:d].
+
+[numpy:d]: https://numpydoc.readthedocs.io/en/latest/format.html
+[sklearn:d]: https://scikit-learn.org/stable/developers/contributing.html#documentation
+
+The examples with images in folder `docs/source/examples` are generated
+automatically with [Sphinx-gallery][sphinx:g] from the python code in folder
+[examples/](examples/) starting with `xmpl_{example_name}.py`.
 
 [rst:l]: https://docutils.sourceforge.io/rst.html
 [sphinx:l]: https://www.sphinx-doc.org/en/master/
@@ -106,6 +119,11 @@ with an `index.html` that can be opened locally for further exploration.
 The documentation is always build and deployed every time a new commit is
 pushed to the master branch with the workflow
 [.github/workflows/documentation.yml](.github/workflows/documentation.yml).
+
+After building, the `docs/build/html` folder is pushed to the branch
+[gh-pages][gh:l].
+
+[gh:l]: https://github.com/perellonieto/PyCalib/tree/gh-pages
 
 Check Readme
 ------------
