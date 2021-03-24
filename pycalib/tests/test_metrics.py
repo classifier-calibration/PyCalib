@@ -1,6 +1,8 @@
 import unittest
 import numpy as np
-from pycalib.metrics import accuracy, binary_ECE, classwise_ECE, full_ECE, MCE
+from pycalib.metrics import (accuracy, cross_entropy, brier_score,
+                             binary_ECE, conf_ECE, classwise_ECE, full_ECE,
+                             MCE)
 
 from sklearn.preprocessing import label_binarize
 
@@ -18,23 +20,58 @@ class TestFunctions(unittest.TestCase):
         acc = accuracy(Y, S)
         self.assertAlmostEqual(acc, 0.0)
 
+    def test_cross_entropy(self):
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[0, 1], [0, 1]])
+        ce = cross_entropy(Y, S)
+        expected = - (np.log(0.9) + np.log(0.4))/2
+        self.assertAlmostEqual(ce, expected)
+
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[1, 0], [0, 1]])
+        ce = cross_entropy(Y, S)
+        expected = - (np.log(0.1) + np.log(0.4))/2
+        self.assertAlmostEqual(ce, expected)
+
+    def test_brier_score(self):
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[0, 1], [0, 1]])
+        bs = brier_score(Y, S)
+        expected = np.mean(np.abs(S - Y)**2)
+        self.assertAlmostEqual(bs, expected)
+
+        S = np.array([[0.1, 0.9], [0.6, 0.4]])
+        Y = np.array([[1, 0], [0, 1]])
+        bs = brier_score(Y, S)
+        expected = np.mean(np.abs(S - Y)**2)
+        self.assertAlmostEqual(bs, expected)
+
     def test_binary_ece(self):
         S = np.array([.6, .6, .6, .6, .6, .6, .6, .6, .6, .6])
         y = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0])
         ece = binary_ECE(y, S)
         self.assertAlmostEqual(ece, 0)
 
+    def test_conf_ece(self):
+        S = np.array([[0.6, 0.2, 0.2]]*10)
+        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
+        cece = conf_ECE(Y, S)
+        self.assertAlmostEqual(cece, 0)
+        # TODO Add more tests
+
     def test_classwise_ece(self):
         S = np.array([[0.6, 0.2, 0.2]]*10)
         Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
         ece = classwise_ECE(Y, S)
         self.assertAlmostEqual(ece, 0)
+        # TODO Add more tests
 
     def test_full_ece(self):
         S = np.array([[0.6, 0.2, 0.2]]*10)
         Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
         ece = full_ECE(Y, S)
         self.assertAlmostEqual(ece, 0)
+        # TODO Add more tests
 
     def test_conf_mce(self):
         S = np.ones((2, 3))/3.0

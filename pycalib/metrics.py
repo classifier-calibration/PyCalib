@@ -29,6 +29,8 @@ def brier_score(y, y_pred):
     y : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
     '''
+    # TODO Consider using the following code instead
+    # np.mean(np.abs(S - Y)**2)
     return mean_squared_error(y, y_pred)
 
 
