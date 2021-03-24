@@ -48,10 +48,14 @@ make requirements-dev
 Unittest
 --------
 
+Unittests are specified as doctest examples in simple functions (see example ),
+and more complex tests in their own python files starting with `test_` (see
+example ).
+
 Run the unittest with the command
 
 ```
-make unittest
+make test
 ```
 
 The test will show a unittest result including the coverage of the code.
@@ -64,13 +68,23 @@ Every time a commit is pushed to the master branch a unittest is run following
 the workflow [.github/workflows/ci.yml](.github/workflows/ci.yml). The CI badge
 in the README file will show if the test has passed or not.
 
+Analyse code
+------------
+
+We are trying to follow the same code standards as in Numpy and Scikit-learn,
+it is possible to check for pep8 and other code conventions with
+
+```
+make code-analysis
+```
+
 Documentation
 -------------
 
 All documentation is done ussing the [Sphinx documentation
 generator][sphinx:l].  The documentation is written in
 [reStructuredText][rst:l] (\*.rst) files in the `docs/source` folder. The
-examples with images in folder [docs/source/examples](docs/source/examples) are
+examples with images in folder `docs/source/examples` are
 generated automatically with [Sphinx-gallery][sphinx:g] from the python code in
 folder [examples/](examples/) starting with `xmpl_{example_name}.py`.
 
@@ -78,20 +92,13 @@ folder [examples/](examples/) starting with `xmpl_{example_name}.py`.
 [sphinx:l]: https://www.sphinx-doc.org/en/master/
 [sphinx:g]: https://sphinx-gallery.github.io/stable/index.html
 
-The documentation has its own Makefile inside folder [docs](docs).
-
-To build the documentation go into the docs folder, clean the old documentation
-with
+The docuemnation can be build with the command
 
 ```
-make clean
+make doc
 ```
 
-And build the new documentation with
-
-```
-make html
-```
+(Keep in mind that the documentation has its own Makefile inside folder [docs](docs)).
 
 After building the documentation, a new folder should appear in `docs/build/`
 with an `index.html` that can be opened locally for further exploration.

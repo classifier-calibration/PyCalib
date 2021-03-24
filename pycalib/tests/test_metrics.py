@@ -54,21 +54,22 @@ class TestFunctions(unittest.TestCase):
 
     def test_conf_ece(self):
         S = np.array([[0.6, 0.2, 0.2]]*10)
-        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
+        y = [0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+        Y = label_binarize(y, classes=range(3))
         cece = conf_ECE(Y, S)
         self.assertAlmostEqual(cece, 0)
         # TODO Add more tests
 
     def test_classwise_ece(self):
         S = np.array([[0.6, 0.2, 0.2]]*10)
-        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
+        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], classes=range(3))
         ece = classwise_ECE(Y, S)
         self.assertAlmostEqual(ece, 0)
         # TODO Add more tests
 
     def test_full_ece(self):
         S = np.array([[0.6, 0.2, 0.2]]*10)
-        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], range(3))
+        Y = label_binarize([0, 0, 0, 0, 0, 0, 1, 1, 2, 2], classes=range(3))
         ece = full_ECE(Y, S)
         self.assertAlmostEqual(ece, 0)
         # TODO Add more tests
@@ -109,31 +110,31 @@ class TestFunctions(unittest.TestCase):
 
         Y = np.array([[1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 1, 0],
                       [1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 1, 0]])
-        S = np.array([[0.4, 0.3, 0.3], # correct
-                      [0.3, 0.4, 0.3], # incorrect
-                      [0.3, 0.3, 0.4], # incorrect
-                      [0.3, 0.3, 0.4], # incorrect
+        S = np.array([[0.4, 0.3, 0.3],  # correct
+                      [0.3, 0.4, 0.3],  # incorrect
+                      [0.3, 0.3, 0.4],  # incorrect
+                      [0.3, 0.3, 0.4],  # incorrect
 
-                      [0.1, 0.7, 0.2], # incorrect mean conf 0.75
-                      [0.2, 0.1, 0.7], # incorrect
-                      [0.2, 0.8, 0.2], # incorrect
-                      [0.8, 0.1, 0.1]  # incorrect
-                     ])
+                      [0.1, 0.7, 0.2],  # incorrect mean conf 0.75
+                      [0.2, 0.1, 0.7],  # incorrect
+                      [0.2, 0.8, 0.2],  # incorrect
+                      [0.8, 0.1, 0.1]   # incorrect
+                      ])
         mce = MCE(Y, S, bins=2)
         self.assertEqual(mce, 0.75)
 
         Y = np.array([[1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 1, 0],
                       [1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 1, 0]])
-        S = np.array([[0.4, 0.3, 0.3], # correct   # conf 0.4
-                      [0.3, 0.4, 0.3], # incorrect
-                      [0.3, 0.3, 0.4], # incorrect
-                      [0.3, 0.3, 0.4], # incorrect
+        S = np.array([[0.4, 0.3, 0.3],  # correct   # conf 0.4
+                      [0.3, 0.4, 0.3],  # incorrect
+                      [0.3, 0.3, 0.4],  # incorrect
+                      [0.3, 0.3, 0.4],  # incorrect
 
-                      [0.1, 0.7, 0.2], # incorrect
-                      [0.7, 0.1, 0.2], # correct
-                      [0.8, 0.0, 0.2], # correct
-                      [0.1, 0.8, 0.1]  # correct
-                     ])
+                      [0.1, 0.7, 0.2],  # incorrect
+                      [0.7, 0.1, 0.2],  # correct
+                      [0.8, 0.0, 0.2],  # correct
+                      [0.1, 0.8, 0.1]   # correct
+                      ])
         mce = MCE(Y, S, bins=2)
         self.assertAlmostEqual(mce, 0.4 - 1/4)
 

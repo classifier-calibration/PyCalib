@@ -12,6 +12,8 @@ from statsmodels.stats.proportion import proportion_confint
 
 from matplotlib import gridspec
 
+from pycalib.utils import df_normalise, multiindex_to_strings
+
 
 def plot_reliability_diagram(labels, scores, legend=None,
                              show_histogram=True,
@@ -27,7 +29,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              show_bars=False,
                              invert_histogram=False,
                              color_gaps='lightcoral'):
-    '''
+    """
     Parameters
     ==========
     labels : array (n_samples, )
@@ -46,7 +48,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
     =======
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
-    '''
+    """
     classes = np.unique(labels)
     n_classes = len(classes)
     if isinstance(scores, list):
@@ -244,7 +246,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
 def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
                                          fig=None, ax=None, legend=False,
                                          color_gaps='lightcoral'):
-    '''Plot binary reliability diagram gaps
+    """Plot binary reliability diagram gaps
 
     Parameters
     ==========
@@ -269,7 +271,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     =======
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
-    '''
+    """
     if fig is None and ax is None:
         fig = plt.figure()
     if ax is None:
@@ -376,10 +378,9 @@ def plot_multiclass_reliability_diagram_gaps(y_true, p_pred, fig=None, ax=None,
 
     return fig
 
-def plot_confusion_matrix(cm, classes,
-                          normalize=False,
-                          title='Confusion matrix',
-                          cmap=plt.cm.Blues,
+
+def plot_confusion_matrix(cm, classes, normalize=False,
+                          title='Confusion matrix', cmap=plt.cm.Blues,
                           fig=None, ax=None):
     """
     This function prints and plots the confusion matrix.
@@ -425,7 +426,7 @@ def plot_confusion_matrix(cm, classes,
 
 
 def plot_individual_pdfs(class_dist, x_grid=None, y_grid=None,
-                         grid_levels = 200, fig=None, title=None,
+                         grid_levels=200, fig=None, title=None,
                          cmaps=None, grid=True):
     if fig is None:
         fig = plt.figure()
@@ -443,15 +444,17 @@ def plot_individual_pdfs(class_dist, x_grid=None, y_grid=None,
     if cmaps is None:
         cmaps = [None]*len(class_dist.priors)
 
-    for i, (p, d) in enumerate(zip(class_dist.priors, class_dist.distributions)):
+    for i, (p, d) in enumerate(zip(class_dist.priors,
+                                   class_dist.distributions)):
         z = d.pdf(np.vstack([xx.flatten(), yy.flatten()]).T)
 
         ax = fig.add_subplot(1, len(class_dist.distributions), i+1)
         if title is None:
-            ax.set_title('$P(Y={})={:.2f}$\n{}'.format(i+1, p, str(d)), loc='left')
+            ax.set_title('$P(Y={})={:.2f}$\n{}'.format(i+1, p, str(d)),
+                         loc='left')
         else:
             ax.set_title(title[i])
-        contour = ax.contourf(xx, yy, z.reshape(grid_levels,grid_levels),
+        contour = ax.contourf(xx, yy, z.reshape(grid_levels, grid_levels),
                               cmap=cmaps[i])
         if grid:
             ax.grid()
@@ -460,14 +463,14 @@ def plot_individual_pdfs(class_dist, x_grid=None, y_grid=None,
     return fig
 
 
-def plot_critical_difference(avranks, num_datasets, names,
-                               title=None, test='bonferroni-dunn'):
-    '''
+def plot_critical_difference(avranks, num_datasets, names, title=None,
+                             test='bonferroni-dunn'):
+    """
         test: string in ['nemenyi', 'bonferroni-dunn']
          - nemenyi two-tailed test (up to 20 methods)
          - bonferroni-dunn one-tailed test (only up to 10 methods)
 
-    '''
+    """
     # Critical difference plot
     import Orange
 
@@ -484,8 +487,9 @@ def plot_critical_difference(avranks, num_datasets, names,
 
 
 def plot_df_to_heatmap(df, title=None, figsize=None, annotate=True,
-                 normalise_columns=False, normalise_rows=False, cmap=None):
-    ''' Exports a heatmap of the given pandas DataFrame
+                       normalise_columns=False, normalise_rows=False,
+                       cmap=None):
+    """ Exports a heatmap of the given pandas DataFrame
 
     Parameters
     ----------
@@ -501,7 +505,7 @@ def plot_df_to_heatmap(df, title=None, figsize=None, annotate=True,
 
     annotate:   bool
         If true, adds numbers inside each box
-    '''
+    """
     if normalise_columns:
         df = df_normalise(df, columns=True)
     if normalise_rows:
@@ -516,7 +520,8 @@ def plot_df_to_heatmap(df, title=None, figsize=None, annotate=True,
         n_rows = df.shape[0]
         font_size_pt = plt.rcParams['font.size']
         xlabel_space_pt = max([len(xlabel) for xlabel in xticklabels])
-        fig_height_in = ((xlabel_space_pt + n_rows) * (font_size_pt + 3)) / point_inch_ratio
+        fig_height_in = (((xlabel_space_pt + n_rows) * (font_size_pt + 3))
+                         / point_inch_ratio)
 
         n_cols = df.shape[1]
         fig_width_in = df.shape[1]+4

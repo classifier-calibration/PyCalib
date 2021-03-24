@@ -6,8 +6,6 @@ from scipy.stats import ranksums
 from scipy.stats import mannwhitneyu
 from scipy.stats import friedmanchisquare
 
-# TODO Remove from stats.py
-from pycalib.visualisations import plot_critical_difference
 
 def compute_friedmanchisquare(table):
     '''
@@ -28,6 +26,7 @@ def compute_friedmanchisquare(table):
     '''
     if table.shape[1] < 3:
         print('Friedman test not appropiate for less than 3 methods')
+
         class Ftest():
             def __init__(self, statistic, pvalue):
                 self.statistic = statistic
@@ -68,4 +67,3 @@ def compute_ranksums(table):
 def compute_mannwhitneyu(table):
     return paired_test(table, stats_func=partial(mannwhitneyu,
                                                  alternative='less'))
-

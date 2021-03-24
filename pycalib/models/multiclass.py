@@ -1,35 +1,36 @@
 # All this code has been adapted from  scikit-learn.sklearn.multiclass
 # The following is the COPYING clause from Scikit-learn
-# 
+#
 # BSD 3-Clause License
-# 
+#
 # Copyright (c) 2007-2020 The scikit-learn developers.
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # * Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
-# 
+#
 # * Redistributions in binary form must reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
-# 
+#
 # * Neither the name of the copyright holder nor the names of its
 #   contributors may be used to endorse or promote products derived from
 #   this software without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
 import inspect
 import numpy as np
 
@@ -43,6 +44,8 @@ from sklearn.multiclass import _ConstantPredictor
 
 from sklearn.utils.metaestimators import if_delegate_has_method
 from sklearn.utils.validation import check_is_fitted
+
+import warnings
 
 
 def _fit_binary(estimator, X, y, X_val=None, y_val=None, classes=None):
@@ -131,7 +134,7 @@ class OneVsRestCalibrator(BaseEstimator, ClassifierMixin):
         # resulted in less or equal memory consumption in the fit_ovr function
         # overall.
         if X.shape[1] == 2:
-            x_columns = (X[:,1].ravel().T, )
+            x_columns = (X[:, 1].ravel().T, )
         else:
             x_columns = (col.ravel() for col in X.T)
 
@@ -141,10 +144,10 @@ class OneVsRestCalibrator(BaseEstimator, ClassifierMixin):
         self.classes_ = self.label_binarizer_.classes_
         y_columns = (col.toarray().ravel() for col in Y.T)
 
-        if 'X_val' in inspect.getargspec(self.estimator.fit).args and \
-            X_val is not None:
+        if 'X_val' in inspect.getargspec(self.estimator.fit).args \
+                and X_val is not None:
             if X_val.shape[1] == 2:
-                x_val_columns = (X_val[:,1].ravel().T, )
+                x_val_columns = (X_val[:, 1].ravel().T, )
             else:
                 x_val_columns = (col.ravel() for col in X_val.T)
 
@@ -159,11 +162,11 @@ class OneVsRestCalibrator(BaseEstimator, ClassifierMixin):
         # n_jobs > 1 in can results in slower performance due to the overhead
         # of spawning threads.  See joblib issue #112.
         self.estimators_ = Parallel(n_jobs=self.n_jobs)(delayed(_fit_binary)(
-            self.estimator, x_column, y_column, x_val_column, y_val_column,
-            classes=[ "not %s" % self.label_binarizer_.classes_[i],
+            self.estimator, x_col, y_col, x_val_col, y_val_col,
+            classes=["not %s" % self.label_binarizer_.classes_[i],
                      self.label_binarizer_.classes_[i]])
-            for i, (x_column, y_column, x_val_column, y_val_column) in enumerate(zip(x_columns, y_columns, x_val_columns,
-                                                         y_val_columns)))
+            for i, (x_col, y_col, x_val_col, y_val_col) in enumerate(
+                zip(x_columns, y_columns, x_val_columns, y_val_columns)))
 
         return self
 
@@ -190,7 +193,7 @@ class OneVsRestCalibrator(BaseEstimator, ClassifierMixin):
         # Y[i, j] gives the probability that sample i has the label j.
         # In the multi-label case, these are not disjoint.
         if X.shape[1] == 2:
-            x_columns = (X[:,1].ravel().T, )
+            x_columns = (X[:, 1].ravel().T, )
         else:
             x_columns = (col.ravel() for col in X.T)
 

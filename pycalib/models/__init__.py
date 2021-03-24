@@ -4,29 +4,26 @@ import numpy as np
 from scipy.special import expit
 
 from sklearn.base import clone
-from sklearn.utils import check_X_y, indexable, column_or_1d
+from sklearn.utils import check_X_y, indexable
 from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import LogisticRegressionCV
 from sklearn.calibration import _SigmoidCalibration
 from sklearn.metrics import log_loss
 
-from .multiclass import OneVsRestCalibrator
-
 import warnings
 
-from math import log
-
-from scipy.optimize import fmin_bfgs
-
-from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin, clone
+from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.preprocessing import LabelBinarizer
-from sklearn.utils import check_X_y, check_array, indexable, column_or_1d
+from sklearn.utils import check_array
 from sklearn.utils.validation import check_is_fitted
 from inspect import signature
 from sklearn.isotonic import IsotonicRegression
-from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.model_selection import check_cv
+
+
+# TODO Remove BetaCalibration
+class BetaCalibration(object):
+    pass
 
 
 class _DummyCalibration(BaseEstimator, RegressorMixin):
@@ -45,9 +42,9 @@ class _DummyCalibration(BaseEstimator, RegressorMixin):
 
 class IsotonicCalibration(IsotonicRegression):
     def __init__(self):
-        return super(IsotonicCalibration, self).__init__(y_min=0.0, y_max=1.0,
-                                                         increasing=True,
-                                                         out_of_bounds='clip')
+        super(IsotonicCalibration, self).__init__(y_min=0.0, y_max=1.0,
+                                                  increasing=True,
+                                                  out_of_bounds='clip')
 
     def fit(self, scores, y, *args, **kwargs):
         '''
@@ -74,15 +71,18 @@ class IsotonicCalibration(IsotonicRegression):
             transformed = np.vstack((1 - transformed, transformed)).T
         return transformed
 
+
 def logit(x):
     eps = np.finfo(x.dtype).eps
     x = np.clip(x, eps, 1-eps)
     return np.log(x/(1 - x))
 
+
 def log_encode(x):
     eps = np.finfo(x.dtype).eps
     x = np.clip(x, eps, 1)
     return np.log(x)
+
 
 class LogisticCalibration(LogisticRegression):
     def __init__(self, C=1.0, solver='lbfgs', multi_class='multinomial',
@@ -91,8 +91,8 @@ class LogisticCalibration(LogisticRegression):
         self.C = C if isinstance(C, float) else C[0]
         self.solver = solver
         self.log_transform = log_transform
-        self.encode = log_encode if  log_transform else logit
-        self.multiclass=multi_class
+        self.encode = log_encode if log_transform else logit
+        self.multiclass = multi_class
         super(LogisticCalibration, self).__init__(C=C, solver=solver,
                                                   multi_class=multi_class)
 
@@ -110,15 +110,15 @@ class LogisticCalibration(LogisticRegression):
             best_idx = losses.argmin()
             self.C = calibrators[best_idx].C
         return super(LogisticCalibration, self).fit(self.encode(scores), y,
-                *args, **kwargs)
+                                                    *args, **kwargs)
 
     def predict_proba(self, scores, *args, **kwargs):
         return super(LogisticCalibration,
-                self).predict_proba(self.encode(scores), *args, **kwargs)
+                     self).predict_proba(self.encode(scores), *args, **kwargs)
 
     def predict(self, scores, *args, **kwargs):
         return super(LogisticCalibration, self).predict(self.encode(scores),
-                *args, **kwargs)
+                                                        *args, **kwargs)
 
 
 class SigmoidCalibration(_SigmoidCalibration):
@@ -156,12 +156,13 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
         '''
         if isinstance(self.n_bins, list):
             if X_val is None or y_val is None:
-                raise ValueError('If n_bins is a list, scores_val and y_val are required during fit')
+                raise ValueError(('If n_bins is a list, scores_val and y_val'
+                                  'are required during fit'))
             calibrators = []
             losses = []
             for n_bins in self.n_bins:
                 cal = BinningCalibration(n_bins=n_bins, strategy=self.strategy,
-                                           alpha=self.alpha)
+                                         alpha=self.alpha)
                 cal.fit(scores, y)
                 predict = cal.predict_proba(X_val)
                 losses.append(log_loss(y_val, predict))
@@ -173,10 +174,11 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
             return self
 
         if len(np.shape(scores)) > 1:
-            scores = scores[:,1]
+            scores = scores[:, 1]
         # TODO check that this code is correct:
         if self.strategy == 'quantile':
-            self.bins = np.sort(scores)[::int(np.ceil(len(scores)/self.n_bins))]
+            self.bins = np.sort(scores)[::int(np.ceil(len(scores)
+                                                      / self.n_bins))]
             self.bins = np.hstack([self.bins, scores[-1]])
         elif self.strategy == 'uniform':
             self.bins = np.linspace(scores.min(), scores.max(), self.n_bins+1)
@@ -185,17 +187,17 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
                                  self.strategy))
         self.bins[0] = - np.inf
         self.bins[-1] = np.inf
-        s_binned = np.digitize(scores, self.bins) -1
+        s_binned = np.digitize(scores, self.bins) - 1
         self.predictions = np.zeros(self.n_bins)
         for i in range(self.n_bins):
-            self.predictions[i] = (np.sum(y[s_binned == i]) + self.alpha)/ \
-                                    (np.sum(s_binned == i) + self.alpha*2)
+            self.predictions[i] = ((np.sum(y[s_binned == i]) + self.alpha)
+                                   / (np.sum(s_binned == i) + self.alpha*2))
 
         return self
 
     def predict_proba(self, scores, *args, **kwargs):
         if len(np.shape(scores)) > 1:
-            scores = scores[:,1]
+            scores = scores[:, 1]
         s_binned = np.digitize(scores, self.bins) - 1
         return self.predictions[s_binned]
 
@@ -249,8 +251,8 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
         if self.binary:
             try:
                 self.calibrator.fit(scores, y, *args, **kwargs)
-            except ValueError as e:
-                self.calibrator.fit(scores[:,1], y, *args, **kwargs)
+            except ValueError:
+                self.calibrator.fit(scores[:, 1], y, *args, **kwargs)
         else:
             self.calibrator.fit(scores, y, *args, **kwargs)
 
@@ -278,7 +280,7 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
         if self.binary:
             try:
                 predictions = self.calibrator.predict_proba(scores)
-            except ValueError as e:
+            except ValueError:
                 predictions = self.calibrator.predict_proba(scores[:, 1])
 
             if (len(predictions.shape) == 1) or (predictions.shape[1] == 1):
@@ -565,7 +567,7 @@ class _CalibratedClassifier(object):
     method : 'sigmoid' | 'isotonic' | 'beta' | 'beta_am' | 'beta_ab'
         The method to use for calibration. Can be 'sigmoid' which
         corresponds to Platt's method, 'isotonic' which is a
-        non-parameteric approach based on isotonic regression or 'beta', 
+        non-parameteric approach based on isotonic regression or 'beta',
         'beta_am' or 'beta_ab' which correspond to beta calibration methods.
 
     References
@@ -658,6 +660,7 @@ class _CalibratedClassifier(object):
                 calibrator = IsotonicRegression(out_of_bounds='clip')
             elif self.method == 'sigmoid':
                 calibrator = _SigmoidCalibration()
+            # TODO Remove BetaCalibration
             elif self.method == 'beta':
                 calibrator = BetaCalibration(parameters="abm")
             elif self.method == 'beta_am':

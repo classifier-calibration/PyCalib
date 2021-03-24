@@ -5,33 +5,62 @@ from sklearn.preprocessing import label_binarize
 from scipy.stats import percentileofscore
 
 
-def accuracy(y, y_pred):
-    '''
-    # TODO Add option to pass array with shape (n_samples, )
-    y : true y (n_samples, n_classes)
-    y_pred : predicted y (n_samples, n_classes)
-    '''
+def accuracy(y_true, y_pred):
+    """
+    Parameters
+    ----------
+    y_true : label indicator matrix (n_samples, n_classes)
+        True labels.
+        # TODO Add option to pass array with shape (n_samples, )
+
+    y_pred : matrix (n_samples, n_classes)
+        Predicted scores.
+
+    Returns
+    -------
+    score : float
+        Proportion of correct predictions as a value between 0 and 1.
+
+    Examples
+    --------
+    >>> from pycalib.metrics import accuracy
+    >>> Y = np.array([[0, 1], [0, 1]])
+    >>> S = np.array([[0.1, 0.9], [0.6, 0.4]])
+    >>> accuracy(Y, S)
+    0.5
+    >>> Y = np.array([[0, 1], [0, 1]])
+    >>> S = np.array([[0.1, 0.9], [0, 1]])
+    >>> accuracy(Y, S)
+    1.0
+    """
     predictions = np.argmax(y_pred, axis=1)
-    y = np.argmax(y, axis=1)
+    y = np.argmax(y_true, axis=1)
     return np.mean(predictions == y)
 
 
-def cross_entropy(y, y_pred):
-    '''
-    y : true y (n_samples, n_classes)
+def cross_entropy(y_true, y_pred):
+    """
+    y_true : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
-    '''
-    return log_loss(y, y_pred)
+    Examples
+    --------
+    >>> from pycalib.metrics import cross_entropy
+    >>> Y = np.array([[0, 1], [0, 1]])
+    >>> S = np.array([[0.1, 0.9], [0.6, 0.4]])
+    >>> cross_entropy(Y, S)
+    0.5108256237659906
+    """
+    return log_loss(y_true, y_pred)
 
 
-def brier_score(y, y_pred):
-    '''
-    y : true y (n_samples, n_classes)
+def brier_score(y_true, y_pred):
+    """
+    y_true : true y (n_samples, n_classes)
     y_pred : predicted y (n_samples, n_classes)
-    '''
+    """
     # TODO Consider using the following code instead
     # np.mean(np.abs(S - Y)**2)
-    return mean_squared_error(y, y_pred)
+    return mean_squared_error(y_true, y_pred)
 
 
 def conf_ECE(y_true, probs, bins=15):

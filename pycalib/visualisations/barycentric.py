@@ -27,7 +27,7 @@ def bc2xy(pvalues, corners):
 def draw_tri_samples(pvals, classes, labels=None, fig=None, ax=None,
                      handles=None, grid=True, **kwargs):
     corners = np.array([[0, 0], [1, 0], [0.5, 0.75**0.5]])
-    pvals = pvals[:,:3].copy()
+    pvals = pvals[:, :3].copy()
 
     if fig is None:
         fig = plt.figure()
@@ -181,11 +181,8 @@ def plot_individual_pdfs(class_dist, *args, **kwargs):
 # FIXME remove pandas dependency from this function
 # def plot_marginal(func, mesh, c, ax1, ax2):
 #     values = np.array([func(bc) for bc in mesh]).reshape(-1, 1)
-# 
 #     df = pd.DataFrame(np.concatenate((mesh, values), axis=1),
-#                       columns=['C1', 'C2', 'C3', 'P'])
 #     df.plot(kind='scatter', x=c, y='P', alpha=0.1, ax=ax1)
-# 
 #     ax2.set_title('Class {} marginal'.format(c))
 #     table = df.pivot_table(index=c, values='P')
 #     table.reset_index(inplace=True)
@@ -217,47 +214,12 @@ def plot_converging_lines_pvalues(func, lines, i, ax):
     ax.legend()
 
 
-def get_converging_lines(num_lines, mesh_precision=10, class_index=0, tol=1e-6):
-    '''
-    If class_index = 0
-    Create isometric lines from the oposite side of C1 simplex to the C1 corner
-    First line has C2 fixed to 0
-    Last line has C3 fixed to 0
-          Class 3  line 1 start
-                 /\
-                /  \
-               /    \ line 2 start
-              /    - \
-             /   -/   \
-            /  -/      \
-           / -/      ---\ line 3 start
-          /-/  -----/    \
-         //---/           \
-        -------------------- line 4 start
-    Class 1(lines end)      Class 2
-
-    Else if class_index = [1, 2]
-    Then the previusly described lines are rotated towards the indicated class.
-    The lines always follow a clockwise order.
-    '''
-    p = np.linspace(0, 1, mesh_precision).reshape(-1, 1)
-    if num_lines == 1:
-        q = [0.5]
-    else:
-        q = np.linspace(0, 1, num_lines).reshape(-1, 1)
-    lines = [np.hstack((p, (1-p)*q[i], (1-p)*(1-q[i]))) for i in range(len(q))]
-    if class_index > 0:
-        indices = np.array([0, 1, 2])
-        lines = [line[:, np.roll(indices, class_index)] for i, line in
-                 enumerate(lines)]
-    return np.clip(lines, tol, 1.0 - tol)
-
-
-def draw_calibration_map(original_p, calibrated_p, labels=None, fig=None, ax=None,
-                     handles=None, subdiv=5, color=None, **kwargs):
+def draw_calibration_map(original_p, calibrated_p, labels=None, fig=None,
+                         ax=None, handles=None, subdiv=5, color=None,
+                         **kwargs):
     corners = np.array([[0, 0], [1, 0], [0.5, 0.75**0.5]])
-    original_p = original_p[:,:3].copy()
-    calibrated_p = calibrated_p[:,:3].copy()
+    original_p = original_p[:, :3].copy()
+    calibrated_p = calibrated_p[:, :3].copy()
 
     if fig is None:
         fig = plt.figure()
@@ -281,7 +243,7 @@ def draw_calibration_map(original_p, calibrated_p, labels=None, fig=None, ax=Non
 
     o_xy = bc2xy(original_p, corners)
     c_xy = bc2xy(calibrated_p, corners) - o_xy
-    #ax.scatter(xy[:, 0], xy[:, 1], **kwargs)
+    # ax.scatter(xy[:, 0], xy[:, 1], **kwargs)
     ax.quiver(o_xy[:, 0], o_xy[:, 1], c_xy[:, 0], c_xy[:, 1], scale=1,
               color=color, angles='xy', zorder=3, **kwargs)
 
