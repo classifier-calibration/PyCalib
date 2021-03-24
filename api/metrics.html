@@ -171,8 +171,10 @@
 <dt id="pycalib.metrics.ECE">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ece_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
-<dl>
-<dt>y_true<span class="classifier">list</span></dt><dd><p>a list containing the actual class labels
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>y_true</strong><span class="classifier">list</span></dt><dd><p>a list containing the actual class labels
 ndarray shape (n_samples) with a list containing actual class</p>
 <blockquote>
 <div><p>labels</p>
@@ -182,19 +184,23 @@ ndarray shape (n_samples) with a list containing actual class</p>
 </dd>
 </dl>
 </dd>
-<dt>probs<span class="classifier">list</span></dt><dd><p>a list containing probabilities for all the classes with a shape of
+<dt><strong>probs</strong><span class="classifier">list</span></dt><dd><p>a list containing probabilities for all the classes with a shape of
 (samples, classes)</p>
 </dd>
-<dt>normalize: (bool)</dt><dd><p>in case of 1-vs-K calibration, the probabilities need to be
+<dt><strong>normalize: (bool)</strong></dt><dd><p>in case of 1-vs-K calibration, the probabilities need to be
 normalized. (default = False)</p>
 </dd>
-<dt>bins: (int)</dt><dd><p>into how many bins are probabilities divided (default = 15)</p>
+<dt><strong>bins: (int)</strong></dt><dd><p>into how many bins are probabilities divided (default = 15)</p>
 </dd>
-<dt>ece_full: (bool)</dt><dd><p>whether to use ECE-full or ECE-max.</p>
+<dt><strong>ece_full: (bool)</strong></dt><dd><p>whether to use ECE-full or ECE-max.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>ece<span class="classifier">float</span></dt><dd><p>expected calibration error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>ece</strong><span class="classifier">float</span></dt><dd><p>expected calibration error</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -203,22 +209,28 @@ normalized. (default = False)</p>
 <dt id="pycalib.metrics.MCE">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">MCE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mce_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.MCE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate MCE score based on model output probabilities and true labels</p>
-<dl class="simple">
-<dt>y_true<span class="classifier">list</span></dt><dd><p>containing the actual class labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true</strong><span class="classifier">list</span></dt><dd><p>containing the actual class labels</p>
 </dd>
-<dt>probs<span class="classifier">list</span></dt><dd><p>containing probabilities for all the classes with a shape of (samples,
+<dt><strong>probs</strong><span class="classifier">list</span></dt><dd><p>containing probabilities for all the classes with a shape of (samples,
 classes)</p>
 </dd>
-<dt>normalize<span class="classifier">bool</span></dt><dd><p>in case of 1-vs-K calibration, the probabilities need to be normalized.
+<dt><strong>normalize</strong><span class="classifier">bool</span></dt><dd><p>in case of 1-vs-K calibration, the probabilities need to be normalized.
 (default = False)</p>
 </dd>
-<dt>bins<span class="classifier">int</span></dt><dd><p>into how many bins are probabilities divided (default = 15)</p>
+<dt><strong>bins</strong><span class="classifier">int</span></dt><dd><p>into how many bins are probabilities divided (default = 15)</p>
 </dd>
-<dt>mce_full<span class="classifier">boolean</span></dt><dd><p>whether to use ECE-full or ECE-max for calculation MCE.</p>
+<dt><strong>mce_full</strong><span class="classifier">boolean</span></dt><dd><p>whether to use ECE-full or ECE-max for calculation MCE.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>mce<span class="classifier">float</span></dt><dd><p>maximum calibration error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>mce</strong><span class="classifier">float</span></dt><dd><p>maximum calibration error</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -226,17 +238,28 @@ classes)</p>
 <dl class="py function">
 <dt id="pycalib.metrics.accuracy">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">accuracy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>y_true<span class="classifier">label indicator matrix (n_samples, n_classes)</span></dt><dd><p>True labels.
+<dd><p>Classification accuracy score</p>
+<p>Accuracy for binary and multiclass classification problems. Consists on the
+proportion of correct estimations assuming the maximum class probability of
+each score as the estimated class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true</strong><span class="classifier">label indicator matrix (n_samples, n_classes)</span></dt><dd><p>True labels.
 # TODO Add option to pass array with shape (n_samples, )</p>
 </dd>
-<dt>y_pred<span class="classifier">matrix (n_samples, n_classes)</span></dt><dd><p>Predicted scores.</p>
+<dt><strong>y_pred</strong><span class="classifier">matrix (n_samples, n_classes)</span></dt><dd><p>Predicted scores.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>score<span class="classifier">float</span></dt><dd><p>Proportion of correct predictions as a value between 0 and 1.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">float</span></dt><dd><p>Proportion of correct predictions as a value between 0 and 1.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycalib.metrics</span> <span class="kn">import</span> <span class="n">accuracy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]])</span>
@@ -253,16 +276,45 @@ classes)</p>
 <dl class="py function">
 <dt id="pycalib.metrics.brier_score">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">brier_score</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.brier_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>y_true : true y (n_samples, n_classes)
-y_pred : predicted y (n_samples, n_classes)</p>
+<dd><p>Brier score</p>
+<p>Computes the Brier score between the true labels and the estimated
+probabilities. This corresponds to the Mean Squared Error between the
+estimations and the true labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true</strong><span class="classifier">label indicator matrix (n_samples, n_classes)</span></dt><dd><p>True labels.
+# TODO Add option to pass array with shape (n_samples, )</p>
+</dd>
+<dt><strong>y_pred</strong><span class="classifier">matrix (n_samples, n_classes)</span></dt><dd><p>Predicted scores.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">float</span></dt><dd><p>Positive value between 0 and 1.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycalib.metrics</span> <span class="kn">import</span> <span class="n">cross_entropy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brier_score</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="go">0.185</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="pycalib.metrics.conf_ECE">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">conf_ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
-<dl class="simple">
-<dt>y_true:</dt><dd><ul class="simple">
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true:</strong></dt><dd><ul class="simple">
 <li><p>a list containing the actual class labels</p></li>
 <li><p>ndarray shape (n_samples) with a list containing actual class
 labels</p></li>
@@ -270,16 +322,20 @@ labels</p></li>
 each row for the correct column class.</p></li>
 </ul>
 </dd>
-<dt>probs:</dt><dd><p>a list containing probabilities for all the classes with a shape of
+<dt><strong>probs:</strong></dt><dd><p>a list containing probabilities for all the classes with a shape of
 (samples, classes)</p>
 </dd>
-<dt>bins: (int)</dt><dd><ul class="simple">
+<dt><strong>bins: (int)</strong></dt><dd><ul class="simple">
 <li><p>into how many bins are probabilities divided (default = 15)</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>ece<span class="classifier">float</span></dt><dd><p>expected calibration error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>ece</strong><span class="classifier">float</span></dt><dd><p>expected calibration error</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -288,8 +344,10 @@ each row for the correct column class.</p></li>
 <dt id="pycalib.metrics.conf_MCE">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">conf_MCE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_MCE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
-<dl class="simple">
-<dt>y_true:</dt><dd><ul class="simple">
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true:</strong></dt><dd><ul class="simple">
 <li><p>a list containing the actual class labels</p></li>
 <li><p>ndarray shape (n_samples) with a list containing actual class
 labels</p></li>
@@ -297,16 +355,20 @@ labels</p></li>
 each row for the correct column class.</p></li>
 </ul>
 </dd>
-<dt>probs:</dt><dd><p>a list containing probabilities for all the classes with a shape of
+<dt><strong>probs:</strong></dt><dd><p>a list containing probabilities for all the classes with a shape of
 (samples, classes)</p>
 </dd>
-<dt>bins: (int)</dt><dd><ul class="simple">
+<dt><strong>bins: (int)</strong></dt><dd><ul class="simple">
 <li><p>into how many bins are probabilities divided (default = 15)</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>mce<span class="classifier">float</span></dt><dd><p>maximum calibration error</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>mce</strong><span class="classifier">float</span></dt><dd><p>maximum calibration error</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -314,15 +376,33 @@ each row for the correct column class.</p></li>
 <dl class="py function">
 <dt id="pycalib.metrics.cross_entropy">
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd><p>y_true : true y (n_samples, n_classes)
-y_pred : predicted y (n_samples, n_classes)
-Examples
-——–
-&gt;&gt;&gt; from pycalib.metrics import cross_entropy
-&gt;&gt;&gt; Y = np.array([[0, 1], [0, 1]])
-&gt;&gt;&gt; S = np.array([[0.1, 0.9], [0.6, 0.4]])
-&gt;&gt;&gt; cross_entropy(Y, S)
-0.5108256237659906</p>
+<dd><p>Cross-entropy score</p>
+<p>Computes the cross-entropy (a.k.a. log-loss) for binary and
+multiclass classification scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y_true</strong><span class="classifier">label indicator matrix (n_samples, n_classes)</span></dt><dd><p>True labels.
+# TODO Add option to pass array with shape (n_samples, )</p>
+</dd>
+<dt><strong>y_pred</strong><span class="classifier">matrix (n_samples, n_classes)</span></dt><dd><p>Predicted scores.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycalib.metrics</span> <span class="kn">import</span> <span class="n">cross_entropy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="go">0.5108256237659906</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

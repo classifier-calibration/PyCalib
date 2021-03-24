@@ -36,6 +36,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -170,7 +171,39 @@
 <dl class="py class">
 <dt id="pycalib.models.BinningCalibration">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycalib.models.</span></code><code class="sig-name descname"><span class="pre">BinningCalibration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.BinningCalibration" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.BinningCalibration.fit" title="pycalib.models.BinningCalibration.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(scores, y[, X_val, y_val])</p></td>
+<td><p>Score=0 corresponds to y=0, and score=1 to y=1 Parameters ———- scores : array-like, shape = [n_samples,]     Data. y : array-like, shape = [n_samples, ]     Labels. Returns ——- self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>predict_proba</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
 <dt id="pycalib.models.BinningCalibration.fit">
 <code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.BinningCalibration.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Score=0 corresponds to y=0, and score=1 to y=1
@@ -201,12 +234,14 @@ it is assumed that base_estimator has been
 fitted already and all data is used for calibration. Note that
 data for fitting the classifier and for calibrating it must be disjoint.</p>
 <p>Read more in the <a class="reference internal" href="#calibration"><span class="std std-ref">User Guide</span></a>.</p>
-<dl>
-<dt>base_estimator<span class="classifier">instance BaseEstimator</span></dt><dd><p>The classifier whose output decision function needs to be calibrated
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>base_estimator</strong><span class="classifier">instance BaseEstimator</span></dt><dd><p>The classifier whose output decision function needs to be calibrated
 to offer more accurate predict_proba outputs. If cv=prefit, the
 classifier must have been fit already on data.</p>
 </dd>
-<dt>method<span class="classifier">None, ‘sigmoid’, ‘isotonic’, ‘beta’, ‘beta_am’ or ‘beta_ab’</span></dt><dd><p>The method to use for calibration. Can be ‘sigmoid’ which
+<dt><strong>method</strong><span class="classifier">None, ‘sigmoid’, ‘isotonic’, ‘beta’, ‘beta_am’ or ‘beta_ab’</span></dt><dd><p>The method to use for calibration. Can be ‘sigmoid’ which
 corresponds to Platt’s method, ‘isotonic’ which is a
 non-parameteric approach or ‘beta’, ‘beta_am’ or ‘beta_ab’ which
 correspond to three different beta calibration methods. It is
@@ -214,7 +249,7 @@ not advised to use  isotonic  calibration with too few calibration
 samples <code class="docutils literal notranslate"><span class="pre">(&lt;&lt;1000)</span></code> since it tends to overfit.
 Use beta models in this case.</p>
 </dd>
-<dt>cv<span class="classifier">integer, cross-validation generator, iterable or “prefit”, optional</span></dt><dd><p>Determines the cross-validation splitting strategy.
+<dt><strong>cv</strong><span class="classifier">integer, cross-validation generator, iterable or “prefit”, optional</span></dt><dd><p>Determines the cross-validation splitting strategy.
 Possible inputs for cv are:</p>
 <ul class="simple">
 <li><p>None, to use the default 3-fold cross-validation,</p></li>
@@ -231,44 +266,87 @@ cross-validation strategies that can be used here.</p>
 fitted already and all data is used for calibration.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt><a href="#id5"><span class="problematic" id="id6">classes_</span></a><span class="classifier">array, shape (n_classes)</span></dt><dd><p>The class labels.</p>
-</dd>
-<dt><a href="#id7"><span class="problematic" id="id8">calibrated_classifiers_</span></a>: list (len() equal to cv or 1 if cv == “prefit”)</dt><dd><p>The list of calibrated classifiers, one for each cross-validation fold,
-which has been fitted on all but the validation fold and calibrated
-on the validation fold.</p>
 </dd>
 </dl>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="recfa59046caa-1"><span class="brackets">1</span></dt>
 <dd><p>Obtaining calibrated probability estimates from decision trees
 and naive Bayesian classifiers, B. Zadrozny &amp; C. Elkan, ICML 2001</p>
 </dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
+<dt class="label" id="recfa59046caa-2"><span class="brackets">2</span></dt>
 <dd><p>Transforming Classifier Scores into Accurate Multiclass
 Probability Estimates, B. Zadrozny &amp; C. Elkan, (KDD 2002)</p>
 </dd>
-<dt class="label" id="id3"><span class="brackets">3</span></dt>
+<dt class="label" id="recfa59046caa-3"><span class="brackets">3</span></dt>
 <dd><p>Probabilistic Outputs for Support Vector Machines and Comparisons to
 Regularized Likelihood Methods, J. Platt, (1999)</p>
 </dd>
-<dt class="label" id="id4"><span class="brackets">4</span></dt>
+<dt class="label" id="recfa59046caa-4"><span class="brackets">4</span></dt>
 <dd><p>Predicting Good Probabilities with Supervised Learning,
 A. Niculescu-Mizil &amp; R. Caruana, ICML 2005</p>
 </dd>
 </dl>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>classes_</strong><span class="classifier">array, shape (n_classes)</span></dt><dd><p>The class labels.</p>
+</dd>
+<dt><strong>calibrated_classifiers_: list (len() equal to cv or 1 if cv == “prefit”)</strong></dt><dd><p>The list of calibrated classifiers, one for each cross-validation fold,
+which has been fitted on all but the validation fold and calibrated
+on the validation fold.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.calibrate_scores" title="pycalib.models.CalibratedClassifierCV.calibrate_scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibrate_scores</span></code></a>(df)</p></td>
+<td><p>Posterior probabilities of classification</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.fit" title="pycalib.models.CalibratedClassifierCV.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(X, y[, sample_weight])</p></td>
+<td><p>Fit the calibrated model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.predict" title="pycalib.models.CalibratedClassifierCV.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(X)</p></td>
+<td><p>Predict the target of new samples.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.predict_proba" title="pycalib.models.CalibratedClassifierCV.predict_proba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_proba</span></code></a>(X)</p></td>
+<td><p>Posterior probabilities of classification</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the mean accuracy on the given test data and labels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py method">
 <dt id="pycalib.models.CalibratedClassifierCV.calibrate_scores">
 <code class="sig-name descname"><span class="pre">calibrate_scores</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedClassifierCV.calibrate_scores" title="Permalink to this definition">¶</a></dt>
 <dd><p>Posterior probabilities of classification</p>
 <p>This function returns posterior probabilities of classification
 according to each class on an array of test vectors X.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -277,16 +355,22 @@ according to each class on an array of test vectors X.</p>
 <dt id="pycalib.models.CalibratedClassifierCV.fit">
 <code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedClassifierCV.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the calibrated model</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
 </dd>
-<dt>y<span class="classifier">array-like, shape (n_samples,)</span></dt><dd><p>Target values.</p>
+<dt><strong>y</strong><span class="classifier">array-like, shape (n_samples,)</span></dt><dd><p>Target values.</p>
 </dd>
-<dt>sample_weight<span class="classifier">array-like, shape = [n_samples] or None</span></dt><dd><p>Sample weights. If None, then samples are equally weighted.</p>
+<dt><strong>sample_weight</strong><span class="classifier">array-like, shape = [n_samples] or None</span></dt><dd><p>Sample weights. If None, then samples are equally weighted.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>self<span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -296,12 +380,18 @@ according to each class on an array of test vectors X.</p>
 <code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedClassifierCV.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict the target of new samples. Can be different from the
 prediction of the uncalibrated classifier.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape (n_samples,)</span></dt><dd><p>The predicted class.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape (n_samples,)</span></dt><dd><p>The predicted class.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -312,12 +402,18 @@ prediction of the uncalibrated classifier.</p>
 <dd><p>Posterior probabilities of classification</p>
 <p>This function returns posterior probabilities of classification
 according to each class on an array of test vectors X.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -327,18 +423,51 @@ according to each class on an array of test vectors X.</p>
 <dl class="py class">
 <dt id="pycalib.models.CalibratedModel">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycalib.models.</span></code><code class="sig-name descname"><span class="pre">CalibratedModel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.CalibratedModel.fit" title="pycalib.models.CalibratedModel.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(X, y[, X_val, y_val])</p></td>
+<td><p>Fit the calibrated model</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.CalibratedModel.predict" title="pycalib.models.CalibratedModel.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(X)</p></td>
+<td><p>Predict the target of new samples.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycalib.models.CalibratedModel.predict_proba" title="pycalib.models.CalibratedModel.predict_proba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_proba</span></code></a>(X)</p></td>
+<td><p>Posterior probabilities of classification</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the mean accuracy on the given test data and labels.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
 <dt id="pycalib.models.CalibratedModel.fit">
 <code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the calibrated model</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
 </dd>
-<dt>y<span class="classifier">array-like, shape (n_samples, n_classes)</span></dt><dd><p>Target values.</p>
+<dt><strong>y</strong><span class="classifier">array-like, shape (n_samples, n_classes)</span></dt><dd><p>Target values.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>self<span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -348,12 +477,18 @@ according to each class on an array of test vectors X.</p>
 <code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict the target of new samples. Can be different from the
 prediction of the uncalibrated classifier.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape (n_samples,)</span></dt><dd><p>The predicted class.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape (n_samples,)</span></dt><dd><p>The predicted class.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -364,12 +499,18 @@ prediction of the uncalibrated classifier.</p>
 <dd><p>Posterior probabilities of classification</p>
 <p>This function returns posterior probabilities of classification
 according to each class on an array of test vectors X.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas. Can be exact zeros.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape (n_samples, n_classes)</span></dt><dd><p>The predicted probas. Can be exact zeros.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -379,7 +520,48 @@ according to each class on an array of test vectors X.</p>
 <dl class="py class">
 <dt id="pycalib.models.IsotonicCalibration">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycalib.models.</span></code><code class="sig-name descname"><span class="pre">IsotonicCalibration</span></code><a class="headerlink" href="#pycalib.models.IsotonicCalibration" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.IsotonicCalibration.fit" title="pycalib.models.IsotonicCalibration.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(scores, y, *args, **kwargs)</p></td>
+<td><p>Score=0 corresponds to y=0, and score=1 to y=1 Parameters ———- scores : array-like, shape = [n_samples,]     Data. y : array-like, shape = [n_samples, ]     Labels. Returns ——- self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code>(X[, y])</p></td>
+<td><p>Fit to data, then transform it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code>(T)</p></td>
+<td><p>Predict new data by linear interpolation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code>(T)</p></td>
+<td><p>Transform new data by linear interpolation</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>predict_proba</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
 <dt id="pycalib.models.IsotonicCalibration.fit">
 <code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.IsotonicCalibration.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Score=0 corresponds to y=0, and score=1 to y=1
@@ -401,27 +583,73 @@ scores : array-like, shape = [n_samples,]</p>
 <dl class="py class">
 <dt id="pycalib.models.LogisticCalibration">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycalib.models.</span></code><code class="sig-name descname"><span class="pre">LogisticCalibration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lbfgs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'multinomial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.LogisticCalibration" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decision_function</span></code>(X)</p></td>
+<td><p>Predict confidence scores for samples.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">densify</span></code>()</p></td>
+<td><p>Convert coefficient matrix to dense array format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.LogisticCalibration.fit" title="pycalib.models.LogisticCalibration.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(scores, y[, X_val, y_val])</p></td>
+<td><p>Fit the model according to the given training data.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.LogisticCalibration.predict" title="pycalib.models.LogisticCalibration.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(scores, *args, **kwargs)</p></td>
+<td><p>Predict class labels for samples in X.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_log_proba</span></code>(X)</p></td>
+<td><p>Predict logarithm of probability estimates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.LogisticCalibration.predict_proba" title="pycalib.models.LogisticCalibration.predict_proba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_proba</span></code></a>(scores, *args, **kwargs)</p></td>
+<td><p>Probability estimates.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the mean accuracy on the given test data and labels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sparsify</span></code>()</p></td>
+<td><p>Convert coefficient matrix to sparse format.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
 <dt id="pycalib.models.LogisticCalibration.fit">
 <code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.LogisticCalibration.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the model according to the given training data.</p>
-<dl>
-<dt>X<span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where n_samples is the number of samples and
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>X</strong><span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where n_samples is the number of samples and
 n_features is the number of features.</p>
 </dd>
-<dt>y<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Target vector relative to X.</p>
+<dt><strong>y</strong><span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Target vector relative to X.</p>
 </dd>
-<dt>sample_weight<span class="classifier">array-like of shape (n_samples,) default=None</span></dt><dd><p>Array of weights that are assigned to individual samples.
+<dt><strong>sample_weight</strong><span class="classifier">array-like of shape (n_samples,) default=None</span></dt><dd><p>Array of weights that are assigned to individual samples.
 If not provided, then each sample is given unit weight.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.17: </span><em>sample_weight</em> support to LogisticRegression.</p>
 </div>
 </dd>
 </dl>
-<dl class="simple">
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
 <dt>self</dt><dd><p>Fitted estimator.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
 <p>The SAGA solver supports both float64 and float32 bit arrays.</p>
 </dd></dl>
 
@@ -429,12 +657,18 @@ If not provided, then each sample is given unit weight.</p>
 <dt id="pycalib.models.LogisticCalibration.predict">
 <code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.LogisticCalibration.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict class labels for samples in X.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like or sparse matrix, shape (n_samples, n_features)</span></dt><dd><p>Samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like or sparse matrix, shape (n_samples, n_features)</span></dt><dd><p>Samples.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>C<span class="classifier">array, shape [n_samples]</span></dt><dd><p>Predicted class label per sample.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">array, shape [n_samples]</span></dt><dd><p>Predicted class label per sample.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -451,14 +685,20 @@ each class.
 Else use a one-vs-rest approach, i.e calculate the probability
 of each class assuming it to be positive using the logistic function.
 and normalize these values across all the classes.</p>
-<dl class="simple">
-<dt>X<span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Vector to be scored, where <cite>n_samples</cite> is the number of samples and
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Vector to be scored, where <cite>n_samples</cite> is the number of samples and
 <cite>n_features</cite> is the number of features.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>T<span class="classifier">array-like of shape (n_samples, n_classes)</span></dt><dd><p>Returns the probability of the sample for each class in the model,
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array-like of shape (n_samples, n_classes)</span></dt><dd><p>Returns the probability of the sample for each class in the model,
 where classes are ordered as they are in <code class="docutils literal notranslate"><span class="pre">self.classes_</span></code>.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -468,7 +708,42 @@ where classes are ordered as they are in <code class="docutils literal notransla
 <dl class="py class">
 <dt id="pycalib.models.SigmoidCalibration">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycalib.models.</span></code><code class="sig-name descname"><span class="pre">SigmoidCalibration</span></code><a class="headerlink" href="#pycalib.models.SigmoidCalibration" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Fit the model using X, y as training data.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
+<td><p>Get parameters for this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code>(T)</p></td>
+<td><p>Predict new data by linear interpolation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>predict_proba</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 

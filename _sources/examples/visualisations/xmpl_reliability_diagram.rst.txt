@@ -134,7 +134,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f609a216370>
+    <matplotlib.legend.Legend object at 0x7f33e87989a0>
 
 
 
@@ -404,7 +404,7 @@ The same can be done with the bars.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.251 seconds)
+   **Total running time of the script:** ( 0 minutes  1.922 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:
