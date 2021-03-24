@@ -225,16 +225,35 @@ classes)</p>
 
 <dl class="py function">
 <dt id="pycalib.metrics.accuracy">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">accuracy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><p># TODO Add option to pass array with shape (n_samples, )
-y : true y (n_samples, n_classes)
-y_pred : predicted y (n_samples, n_classes)</p>
+<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">accuracy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>y_true<span class="classifier">label indicator matrix (n_samples, n_classes)</span></dt><dd><p>True labels.
+# TODO Add option to pass array with shape (n_samples, )</p>
+</dd>
+<dt>y_pred<span class="classifier">matrix (n_samples, n_classes)</span></dt><dd><p>Predicted scores.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>score<span class="classifier">float</span></dt><dd><p>Proportion of correct predictions as a value between 0 and 1.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycalib.metrics</span> <span class="kn">import</span> <span class="n">accuracy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accuracy</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accuracy</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="pycalib.metrics.brier_score">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">brier_score</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.brier_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>y : true y (n_samples, n_classes)
+<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">brier_score</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.brier_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>y_true : true y (n_samples, n_classes)
 y_pred : predicted y (n_samples, n_classes)</p>
 </dd></dl>
 
@@ -294,9 +313,16 @@ each row for the correct column class.</p></li>
 
 <dl class="py function">
 <dt id="pycalib.metrics.cross_entropy">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd><p>y : true y (n_samples, n_classes)
-y_pred : predicted y (n_samples, n_classes)</p>
+<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>y_true : true y (n_samples, n_classes)
+y_pred : predicted y (n_samples, n_classes)
+Examples
+——–
+&gt;&gt;&gt; from pycalib.metrics import cross_entropy
+&gt;&gt;&gt; Y = np.array([[0, 1], [0, 1]])
+&gt;&gt;&gt; S = np.array([[0.1, 0.9], [0.6, 0.4]])
+&gt;&gt;&gt; cross_entropy(Y, S)
+0.5108256237659906</p>
 </dd></dl>
 
 </div>
