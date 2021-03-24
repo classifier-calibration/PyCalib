@@ -21,61 +21,104 @@ PyCalib
 =======
 Python library for classifier calibration
 
+Development
+===========
+
+There is a make file to automate some of the common tasks during development.
+After downloading the repository create the virtual environment with the
+command
+
+```
+make venv
+```
+
+This will create a `venv` folder in your current folder. The environment needs
+to be loaded out of the makefile with
+
+```
+source venv/bin/activate
+```
+
+After the environment is loaded, all dependencies can be installed with
+
+```
+make requirements-dev
+```
 
 Unittest
 --------
 
+Run the unittest with the command
+
 ```
-python3.6 -m unittest discover pycalib/
+make unittest
 ```
 
-Install as a submodule
+The test will show a unittest result including the coverage of the code.
+Ideally we want to increase the coverage to cover most of the library.
+
+Contiunous Integration
 ----------------------
 
-Create a folder in your project in which to place your submodules
+Every time a commit is pushed to the master branch a unittest is run following
+the workflow [.github/workflows/ci.yml](.github/workflows/ci.yml). The CI badge
+in the README file will show if the test has passed or not.
+
+Documentation
+-------------
+
+All documentation is done ussing the [Sphinx documentation
+generator][sphinx:l].  The documentation is written in
+[reStructuredText][rst:l] (\*.rst) files in the `docs/source` folder. The
+examples with images in folder [docs/source/examples](docs/source/examples) are
+generated automatically with [Sphinx-gallery][sphinx:g] from the python code in
+folder [examples/](examples/) starting with `xmpl_{example_name}.py`.
+
+[rst:l]: https://docutils.sourceforge.io/rst.html
+[sphinx:l]: https://www.sphinx-doc.org/en/master/
+[sphinx:g]: https://sphinx-gallery.github.io/stable/index.html
+
+The documentation has its own Makefile inside folder [docs](docs).
+
+To build the documentation go into the docs folder, clean the old documentation
+with
 
 ```
-mkdir lib
+make clean
 ```
 
-Then add this package as a submodule
+And build the new documentation with
 
 ```
-git submodule add git@github.com:perellonieto/PyCalib.git lib/PyCalib
+make html
 ```
 
-then install into your virtual environment
+After building the documentation, a new folder should appear in `docs/build/`
+with an `index.html` that can be opened locally for further exploration.
+
+The documentation is always build and deployed every time a new commit is
+pushed to the master branch with the workflow
+[.github/workflows/documentation.yml](.github/workflows/documentation.yml).
+
+Check Readme
+------------
+
+It is possible to check that the README file passes some tests for Pypi by
+running
 
 ```
-pip install -e lib/PyCalib
-```
-
-If you want to use your current virtual environment in a Jupyter notebook you
-can create a new kernel with
-
-```
-python -m ipykernel install --user --name NameOfThisKernel --display-name "NameOfThisKernel"
+make check-readme
 ```
 
 Upload to PyPi
 --------------
 
-Create the files to distribute
+After testing that the code passes all unittests and upgrading the version in
+the file `pycalib/__init__.py` the code can be published in Pypi with the
+following command:
 
 ```
-python3.6 setup.py sdist
-```
-
-Ensure twine is installed
-
-```
-pip install twine
-```
-
-Upload the distribution files
-
-```
-twine upload dist/*
+make pypi
 ```
 
 It may require user and password if these are not set in your home directory a
@@ -85,22 +128,6 @@ file  __.pypirc__
 [pypi]
 username = __token__
 password = pypi-yourtoken
-```
-
-Check the README file for Pypi
-------------------------------
-
-In order to check that the readme file is compliant with Pypi standards,
-install the following Python package
-
-```
-pip install readme-renderer
-```
-
-and run the following command
-
-```
-twine check dist/*
 ```
 
 Contributors
