@@ -86,7 +86,7 @@ Documentation
 -------------
 
 The documentation can be found at
-[https://www.perellonieto.com/PyCalib](/https://www.perellonieto.com/PyCalib/),
+[https://www.perellonieto.com/PyCalib/](https://www.perellonieto.com/PyCalib/),
 and it is automatically updated after every push to the master branch.
 
 All documentation is done ussing the [Sphinx documentation
