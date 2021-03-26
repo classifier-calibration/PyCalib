@@ -434,20 +434,86 @@ def conf_MCE(y_true, probs, bins=15):
 
 
 def binary_ECE(y_true, probs, power=1, bins=15):
+    r"""Binary Expected Calibration Error
 
-    idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
+    .. math::
 
-    def bin_func(p, y, idx):
-        return (np.abs(np.mean(p[idx]) - np.mean(y[idx])) ** power) * \
-                np.sum(idx) / len(probs)
+        \text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |\bar{y}(B_{i}) - \bar{p}(B_{i})|
+
+    Parameters
+    ----------
+    y_true : indicator vector (n_samples, )
+        True labels.
+
+    probs : matrix (n_samples, )
+        Predicted probabilities for positive class.
+
+    Returns
+    -------
+    score : float
+
+    Examples
+    --------
+    >>> from pycalib.metrics import binary_ECE
+    >>> Y = np.array([0, 1])
+    >>> P = np.array([0.1, 0.9])
+    >>> print(round(binary_ECE(Y, P, bins=2), 8))
+    0.1
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.1, .2, .3, .7, .8, .9])
+    >>> print(round(binary_ECE(Y, P, bins=2), 8))
+    0.2
+    """
+    idx = np.digitize(probs, np.linspace(0, 1 + 1e-8, bins + 1)) - 1
+
+    def bin_func(y, p, idx):
+        return ((np.abs(np.mean(p[idx]) - np.mean(y[idx])) ** power)
+                * np.sum(idx) / len(p))
 
     ece = 0
     for i in np.unique(idx):
+        #print('Mean scores', np.mean(probs[idx == i]))
+        #print('True proportion', np.mean(y_true[idx == i]))
+        #print('Difference ', np.abs(np.mean(probs[idx == i]) - np.mean(y_true[idx == i])))
         ece += bin_func(y_true, probs, idx == i)
     return ece
 
 
 def classwise_ECE(y_true, probs, power=1, bins=15):
+    r"""Classwise Expected Calibration Error
+
+    .. math::
+
+        \text{class-$j$-ECE}  = \sum_{i=1}^M \frac{|B_{i,j}|}{N}
+        |\bar{y}_j(B_{i,j}) - \bar{p}_j(B_{i,j})|,
+
+        \text{classwise-ECE}  = \frac{1}{K}\sum_{j=1}^K \text{class-$j$-ECE}
+
+    Parameters
+    ----------
+    y_true : label indicator matrix (n_samples, n_classes)
+        True labels.
+        # TODO Add option to pass array with shape (n_samples, )
+
+    probs : matrix (n_samples, n_classes)
+        Predicted probabilities.
+
+    Returns
+    -------
+    score : float
+
+    Examples
+    --------
+    >>> from pycalib.metrics import classwise_ECE
+    >>> Y = np.array([[1, 0], [0, 1]])
+    >>> P = np.array([[0.9, 0.1], [0.1, 0.9]])
+    >>> print(round(classwise_ECE(Y, P, bins=2), 8))
+    0.1
+    >>> Y = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]])
+    >>> P = np.array([[.9, .8, .7, .3, .2, .1], [.1, .2, .3, .7, .8, .9]])
+    >>> print(round(classwise_ECE(Y, P, bins=2), 8))
+    0.2
+    """
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
         y_true = label_binarize(np.array(y_true),
@@ -455,7 +521,7 @@ def classwise_ECE(y_true, probs, power=1, bins=15):
 
     n_classes = probs.shape[1]
 
-    return np.sum(
+    return np.mean(
         [
             binary_ECE(
                 y_true[:, c].astype(float), probs[:, c], power=power, bins=bins
@@ -471,7 +537,7 @@ def simplex_binning(y_true, probs, bins=15):
         y_true = label_binarize(np.array(y_true),
                                 classes=range(probs.shape[1]))
 
-    idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
+    idx = np.digitize(probs, np.linspace(0, 1, bins + 1)) - 1
 
     prob_bins = {}
     label_bins = {}
@@ -505,7 +571,7 @@ def full_ECE(y_true, probs, bins=15, power=1):
         y_true = label_binarize(np.array(y_true),
                                 classes=range(probs.shape[1]))
 
-    idx = np.digitize(probs, np.linspace(0, 1, bins)) - 1
+    idx = np.digitize(probs, np.linspace(0, 1, bins + 1)) - 1
 
     filled_bins = np.unique(idx, axis=0)
 
