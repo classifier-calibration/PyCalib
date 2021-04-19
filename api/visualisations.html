@@ -170,20 +170,59 @@
 <p>Visualisations file describes all visualisations tools in PyCalib</p>
 <dl class="py function">
 <dt id="pycalib.visualisations.plot_reliability_diagram">
-<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the reliability diagram of the given scores and true labels</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class</p>
+<dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class.</p>
 </dd>
-<dt><strong>scores</strong><span class="classifier">matrix (n_samples, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods</p>
+<dt><strong>scores</strong><span class="classifier">matrix (n_samples, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods.</p>
 </dd>
-<dt><strong>legend</strong><span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend</p>
-</dd>
-<dt><strong>n_bins</strong><span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or bin boundaries.</p>
+<dt><strong>legend</strong><span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend.</p>
 </dd>
 <dt><strong>show_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True, it generates an additional figure showing the number of
 samples in each bin.</p>
+</dd>
+<dt><strong>bins</strong><span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or list of bin
+boundaries.</p>
+</dd>
+<dt><strong>class_names</strong><span class="classifier">list of strings or None</span></dt><dd><p>Name of each class, if None it will assign integer numbers starting
+with 1.</p>
+</dd>
+<dt><strong>fig</strong><span class="classifier">matplotlib.pyplot.Figure or None</span></dt><dd><p>Figure to use for the plots, if None a new figure is created.</p>
+</dd>
+<dt><strong>show_counts</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the number of samples of each bin in its corresponding
+line marker.</p>
+</dd>
+<dt><strong>errorbar_interval</strong><span class="classifier">float or None</span></dt><dd><p>If a float between 0 and 1 is passed, it shows an errorbar
+corresponding to a confidence interval containing the specified
+percentile of the data.</p>
+</dd>
+<dt><strong>interval_method</strong><span class="classifier">string (default: ‘beta’)</span></dt><dd><p>Method to estimate the confidence interval which uses the function
+proportion_confint from statsmodels.stats.proportion</p>
+</dd>
+<dt><strong>fmt</strong><span class="classifier">string (default: ‘s-‘)</span></dt><dd><p>Format of the lines following the matplotlib.pyplot.plot standard.</p>
+</dd>
+<dt><strong>show_correction</strong><span class="classifier">boolean</span></dt><dd><p>If True shows an arrow for each bin indicating the necessary correction
+to the average scores in order to be perfectly calibrated.</p>
+</dd>
+<dt><strong>show_gaps</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the gap between the average predictions and the true
+proportion of positive samples.</p>
+</dd>
+<dt><strong>sample_proportion</strong><span class="classifier">float in the interval [0, 1] (default 0)</span></dt><dd><p>If bigger than 0, it shows the labels of the specified proportion of
+samples.</p>
+</dd>
+<dt><strong>hist_per_class</strong><span class="classifier">boolean</span></dt><dd><p>If True shows one histogram of the bins per class.</p>
+</dd>
+<dt><strong>color_list</strong><span class="classifier">list of strings or None</span></dt><dd><p>List of string colors indicating the color of each method.</p>
+</dd>
+<dt><strong>show_bars</strong><span class="classifier">boolean</span></dt><dd><p>If True shows bars instead of lines.</p>
+</dd>
+<dt><strong>invert_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the histogram with the zero on top and highest number of
+bin samples at the bottom.</p>
+</dd>
+<dt><strong>color_gaps</strong><span class="classifier">string</span></dt><dd><p>Color of the gaps (if shown).</p>
 </dd>
 </dl>
 </dd>
@@ -260,22 +299,111 @@ flattened.</p>
 
 <dl class="py function">
 <dt id="id0">
-<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the reliability diagram of the given scores and true labels</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class</p>
+<dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class.</p>
 </dd>
-<dt><strong>scores</strong><span class="classifier">matrix (n_samples, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods</p>
+<dt><strong>scores</strong><span class="classifier">matrix (n_samples, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods.</p>
 </dd>
-<dt><strong>legend</strong><span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend</p>
-</dd>
-<dt><strong>n_bins</strong><span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or bin boundaries.</p>
+<dt><strong>legend</strong><span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend.</p>
 </dd>
 <dt><strong>show_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True, it generates an additional figure showing the number of
 samples in each bin.</p>
 </dd>
+<dt><strong>bins</strong><span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or list of bin
+boundaries.</p>
+</dd>
+<dt><strong>class_names</strong><span class="classifier">list of strings or None</span></dt><dd><p>Name of each class, if None it will assign integer numbers starting
+with 1.</p>
+</dd>
+<dt><strong>fig</strong><span class="classifier">matplotlib.pyplot.Figure or None</span></dt><dd><p>Figure to use for the plots, if None a new figure is created.</p>
+</dd>
+<dt><strong>show_counts</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the number of samples of each bin in its corresponding
+line marker.</p>
+</dd>
+<dt><strong>errorbar_interval</strong><span class="classifier">float or None</span></dt><dd><p>If a float between 0 and 1 is passed, it shows an errorbar
+corresponding to a confidence interval containing the specified
+percentile of the data.</p>
+</dd>
+<dt><strong>interval_method</strong><span class="classifier">string (default: ‘beta’)</span></dt><dd><p>Method to estimate the confidence interval which uses the function
+proportion_confint from statsmodels.stats.proportion</p>
+</dd>
+<dt><strong>fmt</strong><span class="classifier">string (default: ‘s-‘)</span></dt><dd><p>Format of the lines following the matplotlib.pyplot.plot standard.</p>
+</dd>
+<dt><strong>show_correction</strong><span class="classifier">boolean</span></dt><dd><p>If True shows an arrow for each bin indicating the necessary correction
+to the average scores in order to be perfectly calibrated.</p>
+</dd>
+<dt><strong>show_gaps</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the gap between the average predictions and the true
+proportion of positive samples.</p>
+</dd>
+<dt><strong>sample_proportion</strong><span class="classifier">float in the interval [0, 1] (default 0)</span></dt><dd><p>If bigger than 0, it shows the labels of the specified proportion of
+samples.</p>
+</dd>
+<dt><strong>hist_per_class</strong><span class="classifier">boolean</span></dt><dd><p>If True shows one histogram of the bins per class.</p>
+</dd>
+<dt><strong>color_list</strong><span class="classifier">list of strings or None</span></dt><dd><p>List of string colors indicating the color of each method.</p>
+</dd>
+<dt><strong>show_bars</strong><span class="classifier">boolean</span></dt><dd><p>If True shows bars instead of lines.</p>
+</dd>
+<dt><strong>invert_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the histogram with the zero on top and highest number of
+bin samples at the bottom.</p>
+</dd>
+<dt><strong>color_gaps</strong><span class="classifier">string</span></dt><dd><p>Color of the gaps (if shown).</p>
+</dd>
 </dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycalib.visualisations.plot_reliability_diagram_theoretical">
+<code class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></code><code class="sig-name descname"><span class="pre">plot_reliability_diagram_theoretical</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avg_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avg_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram_theoretical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the reliability diagram for precomputed averaged scores and labels</p>
+<p>NOTE: This function is currently a copy from plot_reliability_diagram and
+modified to accept average scores and true proportions. In the future both
+functions may be merged or share common private functions.
+Parameters
+==========
+avg_true : matrix (n_bins, n_classes) or list of matrices</p>
+<blockquote>
+<div><p>True proportions per class.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>avg_pred<span class="classifier">matrix (n_bins, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods.</p>
+</dd>
+<dt>legend<span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend.</p>
+</dd>
+<dt>bins<span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or list of bin
+boundaries.</p>
+</dd>
+<dt>class_names<span class="classifier">list of strings or None</span></dt><dd><p>Name of each class, if None it will assign integer numbers starting
+with 1.</p>
+</dd>
+<dt>fig<span class="classifier">matplotlib.pyplot.Figure or None</span></dt><dd><p>Figure to use for the plots, if None a new figure is created.</p>
+</dd>
+<dt>show_counts<span class="classifier">boolean</span></dt><dd><p>If True shows the number of samples of each bin in its corresponding
+line marker.</p>
+</dd>
+<dt>interval_method<span class="classifier">string (default: ‘beta’)</span></dt><dd><p>Method to estimate the confidence interval which uses the function
+proportion_confint from statsmodels.stats.proportion</p>
+</dd>
+<dt>fmt<span class="classifier">string (default: ‘s-‘)</span></dt><dd><p>Format of the lines following the matplotlib.pyplot.plot standard.</p>
+</dd>
+<dt>show_correction<span class="classifier">boolean</span></dt><dd><p>If True shows an arrow for each bin indicating the necessary correction
+to the average scores in order to be perfectly calibrated.</p>
+</dd>
+<dt>show_gaps<span class="classifier">boolean</span></dt><dd><p>If True shows the gap between the average predictions and the true
+proportion of positive samples.</p>
+</dd>
+<dt>sample_proportion<span class="classifier">float in the interval [0, 1] (default 0)</span></dt><dd><p>If bigger than 0, it shows the labels of the specified proportion of
+samples.</p>
+</dd>
+<dt>color_list<span class="classifier">list of strings or None</span></dt><dd><p>List of string colors indicating the color of each method.</p>
+</dd>
+<dt>color_gaps<span class="classifier">string</span></dt><dd><p>Color of the gaps (if shown).</p>
 </dd>
 </dl>
 </dd></dl>

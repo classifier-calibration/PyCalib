@@ -121,7 +121,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                bins=9, class_names=['Negative', 'Positive'],
                                show_counts=True,
                                show_correction=True,
-                               show_samples=True,
                                sample_proportion=0.5,
                                hist_per_class=True)
 if SAVEFIGS:
@@ -140,7 +139,7 @@ fig = plot_reliability_diagram(labels=y, scores=s2,
                                show_histogram=True,
                                show_counts=True,
                                bins=13, class_names=['Negative', 'Positive'],
-                               show_samples=True, sample_proportion=1.0,
+                               sample_proportion=1.0,
                                errorbar_interval=0.95,
                                interval_method='beta',
                                color_list=['orange'])
@@ -193,3 +192,47 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                color_gaps='orange')
 if SAVEFIGS:
     fig.savefig('fig8.png')
+
+
+
+##############################################################################
+# If we have precomputed the average proportion of true positives and
+# predictions, or we have access to the ground truth, it is possible to plot
+# the same reliability diagram using the following function
+from pycalib.visualisations import plot_reliability_diagram_theoretical
+
+avg_true = [np.array([.1, .3, .6, .8, .9, 1]).reshape(-1, 1),
+            np.array([.2, .4, .5, .7, .8, .9]).reshape(-1, 1)]
+avg_pred = [np.array([.01, .25, .4, .6, .7, .8]).reshape(-1, 1),
+            np.array([.15, .39, .7, .75, .8, .9]).reshape(-1, 1)]
+
+fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
+
+if SAVEFIGS:
+    fig.savefig('fig9.png')
+
+##############################################################################
+# Similarly for a multiclass problem we can provide full matrices of size
+# (n_bins, n_classes) instead. Notice that the order of the predicted scores
+# doesn't need to be in order, and the probabilities doesn't need to sum to one
+# among all classes, as the way they are computed may be from different
+# instances.
+
+avg_true = [np.array([[.1, .3, .6, .8, .9, 1.],
+                      [.0, .2, .4, .7, .8, .9],
+                      [.1, .2, .3, .5, .6, .8]]).T,
+            np.array([[.1, .4, .7, .8, .9, 1.],
+                      [.9, .3, .8, .2, .7, .1],
+                      [.2, .3, .5, .4, .7, .1]]).T]
+avg_pred = [np.array([[.0, .3, .6, .7, .8, 9.],
+                      [.1, .2, .3, .5, .8, .7],
+                      [.3, .5, .4, .7, .8, .9]]).T,
+            np.array([[.0, .3, .6, .8, .9, 1.],
+                      [.8, .1, .6, .2, .9, 0.],
+                      [.1, .4, .6, .3, .5, 0.]]).T]
+
+fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
+
+if SAVEFIGS:
+    fig.savefig('fig10.png')
+
