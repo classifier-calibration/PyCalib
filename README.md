@@ -21,6 +21,20 @@ PyCalib
 =======
 Python library for classifier calibration
 
+User installation
+-----------------
+
+The PyCalib package can be installed from Pypi with the command
+
+```
+pip install pycalib
+```
+
+Documentation
+-------------
+
+The documentation can be found at https://www.perellonieto.com/PyCalib/
+
 Development
 ===========
 
