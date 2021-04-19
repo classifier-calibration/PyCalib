@@ -14,6 +14,140 @@ from matplotlib import gridspec
 
 from pycalib.utils import df_normalise, multiindex_to_strings
 
+def plot_reliability_diagram_theoretical(avg_true, avg_pred,
+                                         legend=None,
+                                         class_names=None,
+                                         fig=None,
+                                         fmt='s-',
+                                         show_correction=False,
+                                         show_gaps=False,
+                                         color_list=None,
+                                         color_gaps='lightcoral'):
+    """ Plots the reliability diagram for precomputed averaged scores and labels
+
+    NOTE: This function is currently a copy from plot_reliability_diagram and
+    modified to accept average scores and true proportions. In the future both
+    functions may be merged or share common private functions.
+    Parameters
+    ==========
+    avg_true : matrix (n_bins, n_classes) or list of matrices
+        True proportions per class.
+    avg_pred : matrix (n_bins, n_classes) or list of matrices
+        Output probability scores for one or several methods.
+    legend : list of strings or None
+        Text to use for the legend.
+    bins : int or list of floats
+        Number of bins to create in the scores' space, or list of bin
+        boundaries.
+    class_names : list of strings or None
+        Name of each class, if None it will assign integer numbers starting
+        with 1.
+    fig : matplotlib.pyplot.Figure or None
+        Figure to use for the plots, if None a new figure is created.
+    show_counts : boolean
+        If True shows the number of samples of each bin in its corresponding
+        line marker.
+    interval_method : string (default: 'beta')
+        Method to estimate the confidence interval which uses the function
+        proportion_confint from statsmodels.stats.proportion
+    fmt : string (default: 's-')
+        Format of the lines following the matplotlib.pyplot.plot standard.
+    show_correction : boolean
+        If True shows an arrow for each bin indicating the necessary correction
+        to the average scores in order to be perfectly calibrated.
+    show_gaps : boolean
+        If True shows the gap between the average predictions and the true
+        proportion of positive samples.
+    sample_proportion : float in the interval [0, 1] (default 0)
+        If bigger than 0, it shows the labels of the specified proportion of
+        samples.
+    color_list : list of strings or None
+        List of string colors indicating the color of each method.
+    color_gaps : string
+        Color of the gaps (if shown).
+
+    Regurns
+    =======
+    fig : matplotlib.pyplot.figure
+        Figure with the reliability diagram
+    """
+    if isinstance(avg_true, list):
+        avg_true_list = avg_true
+    else:
+        avg_true_list = [avg_true, ]
+    if isinstance(avg_pred, list):
+        avg_pred_list = avg_pred
+    else:
+        avg_pred_list = [avg_pred, ]
+
+    n_classes = avg_true_list[0].shape[1]
+    n_scores = len(avg_true_list)
+
+    if color_list is None:
+        color_list = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+    if class_names is None:
+        class_names = [str(i+1) for i in range(n_classes)]
+
+    if n_classes == 2:
+        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
+        class_names = [class_names[1], ]
+
+    n_columns = n_classes if n_classes != 2 else 1
+
+    if fig is None:
+        fig = plt.figure(figsize=(n_columns*4, 4))
+
+    spec = gridspec.GridSpec(ncols=n_columns, nrows=1, left=0.15)
+
+    for i in range(n_columns):
+        ax1 = fig.add_subplot(spec[i])
+        # Perfect calibration
+        ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
+                 zorder=0)
+
+        for j in range(n_scores):
+            #bin_total = bin_total_list[j][:, i]
+            pred_sort_idx = np.argsort(avg_pred_list[j][:, i])
+            avg_true = avg_true_list[j][pred_sort_idx, i]
+            avg_pred = avg_pred_list[j][pred_sort_idx, i]
+
+            name = legend[j] if legend else None
+            ax1.plot(avg_pred, avg_true, fmt, label=name, color=color_list[j])
+
+            if show_correction:
+                for ap, at in zip(avg_pred, avg_true):
+                    ax1.arrow(ap, at, at - ap, 0, color=color_gaps,
+                              head_width=0.02, length_includes_head=True,
+                              width=0.01)
+
+            if show_gaps:
+                for ap, at in zip(avg_pred, avg_true):
+                    ygaps = avg_pred - avg_true
+                    ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
+                    ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
+                                 color=color_gaps, lw=4, capsize=5, capthick=1,
+                                 zorder=10)
+
+        ax1.set_xlim([0, 1])
+        ax1.set_ylim([0, 1])
+        ax1.set_xlabel('Average score (Class {})'.format( class_names[i]))
+        if i == 0:
+            ax1.set_ylabel('Fraction of positives')
+        else:
+            ax1.set_yticklabels([])
+        ax1.grid(True)
+        ax1.set_axisbelow(True)
+
+    if legend is not None:
+        lines, labels = fig.axes[0].get_legend_handles_labels()
+        fig.legend(lines, labels, loc='upper center',
+                   bbox_to_anchor=(0, 0, 1, 1),
+                   bbox_transform=fig.transFigure, ncol=6)
+
+    return fig
+
+
 
 def plot_reliability_diagram(labels, scores, legend=None,
                              show_histogram=True,
@@ -22,27 +156,65 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              interval_method='beta', fmt='s-',
                              show_correction=False,
                              show_gaps=False,
-                             show_samples=False,
-                             sample_proportion=1.0,
+                             sample_proportion=0,
                              hist_per_class=False,
                              color_list=None,
                              show_bars=False,
                              invert_histogram=False,
                              color_gaps='lightcoral'):
-    """
+    """ Plots the reliability diagram of the given scores and true labels
+
     Parameters
     ==========
     labels : array (n_samples, )
-        Labels indicating the true class
+        Labels indicating the true class.
     scores : matrix (n_samples, n_classes) or list of matrices
-        Output probability scores for one or several methods
+        Output probability scores for one or several methods.
     legend : list of strings or None
-        Text to use for the legend
-    n_bins : int or list of floats
-        Number of bins to create in the scores' space, or bin boundaries.
+        Text to use for the legend.
     show_histogram : boolean
         If True, it generates an additional figure showing the number of
         samples in each bin.
+    bins : int or list of floats
+        Number of bins to create in the scores' space, or list of bin
+        boundaries.
+    class_names : list of strings or None
+        Name of each class, if None it will assign integer numbers starting
+        with 1.
+    fig : matplotlib.pyplot.Figure or None
+        Figure to use for the plots, if None a new figure is created.
+    show_counts : boolean
+        If True shows the number of samples of each bin in its corresponding
+        line marker.
+    errorbar_interval : float or None
+        If a float between 0 and 1 is passed, it shows an errorbar
+        corresponding to a confidence interval containing the specified
+        percentile of the data.
+    interval_method : string (default: 'beta')
+        Method to estimate the confidence interval which uses the function
+        proportion_confint from statsmodels.stats.proportion
+    fmt : string (default: 's-')
+        Format of the lines following the matplotlib.pyplot.plot standard.
+    show_correction : boolean
+        If True shows an arrow for each bin indicating the necessary correction
+        to the average scores in order to be perfectly calibrated.
+    show_gaps : boolean
+        If True shows the gap between the average predictions and the true
+        proportion of positive samples.
+    sample_proportion : float in the interval [0, 1] (default 0)
+        If bigger than 0, it shows the labels of the specified proportion of
+        samples.
+    hist_per_class : boolean
+        If True shows one histogram of the bins per class.
+    color_list : list of strings or None
+        List of string colors indicating the color of each method.
+    show_bars : boolean
+        If True shows bars instead of lines.
+    invert_histogram : boolean
+        If True shows the histogram with the zero on top and highest number of
+        bin samples at the bottom.
+    color_gaps : string
+        Color of the gaps (if shown).
 
     Regurns
     =======
@@ -79,7 +251,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                  hspace=0.04,
                                  left=0.15)
     else:
-        spec = gridspec.GridSpec(ncols=1, nrows=1,
+        spec = gridspec.GridSpec(ncols=n_columns, nrows=1,
                                  left=0.15)
 
     if isinstance(bins, int):
@@ -102,7 +274,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
         for j, score in enumerate(scores_list):
             # TODO Should we raise a warning if necessary to clip instead?
             score = np.clip(score, a_min=0, a_max=1)
-            name = legend[j] if legend else None
+
             bin_idx = np.digitize(score[:, i], bins) - 1
 
             bin_true = np.bincount(bin_idx, weights=labels[:, i],
@@ -120,6 +292,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
             avg_pred.fill(np.nan)
             avg_pred[~zero_idx] = np.divide(bin_pred[~zero_idx],
                                             bin_total[~zero_idx])
+
+            name = legend[j] if legend else None
             if show_bars:
                 ax1.bar(x=bins[:-1][~zero_idx], height=avg_true[~zero_idx],
                         align='edge', width=(bins[1:] - bins[:-1])[~zero_idx],
@@ -166,7 +340,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                  color=color_gaps, lw=4, capsize=5, capthick=1,
                                  zorder=10)
 
-            if show_samples:
+            if sample_proportion > 0:
                 idx = np.random.choice(labels.shape[0],
                                        int(sample_proportion*labels.shape[0]))
                 ax1.scatter(score[idx, i], labels[idx, i], marker='|', s=100,
@@ -194,8 +368,6 @@ def plot_reliability_diagram(labels, scores, legend=None,
                 # ax2.set_xticklabels([])
 
                 name = legend[j] if legend else None
-                # color = lines[j+1].get_color()
-                color = color_list[j]
                 if hist_per_class:
                     for c in [0, 1]:
                         linestyle = ('dotted', 'dashed')[c]
@@ -203,33 +375,34 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                  bins=bins, label=name,
                                  histtype="step",
                                  lw=1, linestyle=linestyle,
-                                 color=color,
+                                 color=color_list[j],
                                  edgecolor='black')
                 else:
                     if n_scores > 1:
                         kwargs = {'histtype': 'step',
-                                  'edgecolor': color}
+                                  'edgecolor': color_list[j]}
                     else:
                         kwargs = {'histtype': 'bar',
                                   'edgecolor': 'black',
-                                  'color': color}
+                                  'color': color_list[j]}
                     ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
                              lw=1, **kwargs)
                 ax2.set_xlim([0, 1])
                 ax2.set_xlabel('Average score (Class {})'.format(
                     class_names[i]))
-                if i == 0:
-                    ax2.set_ylabel('#count')
-                    ytickloc = ax2.get_yticks().tolist()
-                    ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
-                    yticklabels = ['{:0.0f}'.format(value) for value in
-                                   ytickloc]
-                    ax2.set_yticklabels(labels=yticklabels,
-                                        fontdict=dict(verticalalignment='top'))
-                else:
-                    ax2.set_yticklabels([])
-                ax2.grid(True, which='both')
-                ax2.set_axisbelow(True)
+                print(ax2.get_yticks().tolist())
+            if i == 0:
+                ax2.set_ylabel('#count')
+                ytickloc = ax2.get_yticks().tolist()
+                ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
+                yticklabels = ['{:0.0f}'.format(value) for value in
+                               ytickloc]
+                ax2.set_yticklabels(labels=yticklabels,
+                                    fontdict=dict(verticalalignment='top'))
+            else:
+                ax2.set_yticklabels([])
+            ax2.grid(True, which='both')
+            ax2.set_axisbelow(True)
             if invert_histogram:
                 ylim = ax2.get_ylim()
                 ax2.set_ylim(reversed(ylim))
