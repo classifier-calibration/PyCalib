@@ -3,6 +3,7 @@ import itertools
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
+from matplotlib.ticker import MaxNLocator
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from sklearn.preprocessing import OneHotEncoder
@@ -386,15 +387,17 @@ def plot_reliability_diagram(labels, scores, legend=None,
                         kwargs = {'histtype': 'bar',
                                   'edgecolor': 'black',
                                   'color': color_list[j]}
-                    ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
-                             lw=1, **kwargs)
+                    hist = ax2.hist(score[:, i], range=(0, 1), bins=bins,
+                                    label=name, lw=1, **kwargs)
                 ax2.set_xlim([0, 1])
                 ax2.set_xlabel('Average score (Class {})'.format(
                     class_names[i]))
-                # print(ax2.get_yticks().tolist())
+                ax2.yaxis.set_major_locator(MaxNLocator(integer=True,
+                                                        prune='upper',
+                                                        nbins=4))
             if i == 0:
                 ax2.set_ylabel('#count')
-                ytickloc = ax2.get_yticks().tolist()
+                ytickloc = ax2.get_yticks()
                 ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
                 yticklabels = ['{:0.0f}'.format(value) for value in
                                ytickloc]
