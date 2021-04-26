@@ -14,6 +14,7 @@ from matplotlib import gridspec
 
 from pycalib.utils import df_normalise, multiindex_to_strings
 
+
 def plot_reliability_diagram_theoretical(avg_true, avg_pred,
                                          legend=None,
                                          class_names=None,
@@ -90,7 +91,7 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
         class_names = [str(i+1) for i in range(n_classes)]
 
     if n_classes == 2:
-        scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
+        avg_pred_list = [pred[:, 1].reshape(-1, 1) for pred in avg_pred_list]
         class_names = [class_names[1], ]
 
     n_columns = n_classes if n_classes != 2 else 1
@@ -107,7 +108,7 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
                  zorder=0)
 
         for j in range(n_scores):
-            #bin_total = bin_total_list[j][:, i]
+            # bin_total = bin_total_list[j][:, i]
             pred_sort_idx = np.argsort(avg_pred_list[j][:, i])
             avg_true = avg_true_list[j][pred_sort_idx, i]
             avg_pred = avg_pred_list[j][pred_sort_idx, i]
@@ -131,7 +132,7 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
 
         ax1.set_xlim([0, 1])
         ax1.set_ylim([0, 1])
-        ax1.set_xlabel('Average score (Class {})'.format( class_names[i]))
+        ax1.set_xlabel('Average score (Class {})'.format(class_names[i]))
         if i == 0:
             ax1.set_ylabel('Fraction of positives')
         else:
@@ -145,8 +146,8 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
                    bbox_to_anchor=(0, 0, 1, 1),
                    bbox_transform=fig.transFigure, ncol=6)
 
+    fig.align_labels()
     return fig
-
 
 
 def plot_reliability_diagram(labels, scores, legend=None,
@@ -390,7 +391,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                 ax2.set_xlim([0, 1])
                 ax2.set_xlabel('Average score (Class {})'.format(
                     class_names[i]))
-                print(ax2.get_yticks().tolist())
+                # print(ax2.get_yticks().tolist())
             if i == 0:
                 ax2.set_ylabel('#count')
                 ytickloc = ax2.get_yticks().tolist()
@@ -413,6 +414,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                    bbox_to_anchor=(0, 0, 1, 1),
                    bbox_transform=fig.transFigure, ncol=6)
 
+    fig.align_labels()
     return fig
 
 

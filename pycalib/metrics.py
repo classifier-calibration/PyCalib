@@ -61,7 +61,6 @@ def cross_entropy(y_true, y_pred):
     Returns
     -------
     score : float
-        
 
     Examples
     --------
@@ -438,7 +437,8 @@ def binary_ECE(y_true, probs, power=1, bins=15):
 
     .. math::
 
-        \text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |\bar{y}(B_{i}) - \bar{p}(B_{i})|
+        \text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |
+        \bar{y}(B_{i}) - \bar{p}(B_{i})|
 
     Parameters
     ----------
@@ -472,9 +472,10 @@ def binary_ECE(y_true, probs, power=1, bins=15):
 
     ece = 0
     for i in np.unique(idx):
-        #print('Mean scores', np.mean(probs[idx == i]))
-        #print('True proportion', np.mean(y_true[idx == i]))
-        #print('Difference ', np.abs(np.mean(probs[idx == i]) - np.mean(y_true[idx == i])))
+        # print('Mean scores', np.mean(probs[idx == i]))
+        # print('True proportion', np.mean(y_true[idx == i]))
+        # print('Difference ', np.abs(np.mean(probs[idx == i])
+        #                      - np.mean(y_true[idx == i])))
         ece += bin_func(y_true, probs, idx == i)
     return ece
 

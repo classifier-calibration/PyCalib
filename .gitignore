@@ -7,3 +7,6 @@ pycalib/tests/__pycache__/
 venv
 .coverage
 *.swp
+*.pdf
+*.svg
+*.png
