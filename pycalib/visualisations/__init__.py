@@ -100,7 +100,8 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
     if fig is None:
         fig = plt.figure(figsize=(n_columns*4, 4))
 
-    spec = gridspec.GridSpec(ncols=n_columns, nrows=1, left=0.15)
+    spec = gridspec.GridSpec(ncols=n_columns, nrows=1, wspace=0.02,
+                             hspace=0.04, left=0.15)
 
     for i in range(n_columns):
         ax1 = fig.add_subplot(spec[i])
@@ -138,6 +139,9 @@ def plot_reliability_diagram_theoretical(avg_true, avg_pred,
             ax1.set_ylabel('Fraction of positives')
         else:
             ax1.set_yticklabels([])
+            nbins = len(ax1.get_xticklabels())
+            ax1.xaxis.set_major_locator(MaxNLocator(nbins=nbins,
+                                                    prune='lower'))
         ax1.grid(True)
         ax1.set_axisbelow(True)
 
@@ -254,7 +258,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                  left=0.15)
     else:
         spec = gridspec.GridSpec(ncols=n_columns, nrows=1,
-                                 left=0.15)
+                                 hspace=0.04, left=0.15)
 
     if isinstance(bins, int):
         n_bins = bins
@@ -387,16 +391,16 @@ def plot_reliability_diagram(labels, scores, legend=None,
                         kwargs = {'histtype': 'bar',
                                   'edgecolor': 'black',
                                   'color': color_list[j]}
-                    hist = ax2.hist(score[:, i], range=(0, 1), bins=bins,
-                                    label=name, lw=1, **kwargs)
+                    ax2.hist(score[:, i], range=(0, 1), bins=bins, label=name,
+                             lw=1, **kwargs)
                 ax2.set_xlim([0, 1])
                 ax2.set_xlabel('Average score (Class {})'.format(
                     class_names[i]))
                 ax2.yaxis.set_major_locator(MaxNLocator(integer=True,
                                                         prune='upper',
-                                                        nbins=4))
+                                                        nbins=3))
             if i == 0:
-                ax2.set_ylabel('#count')
+                ax2.set_ylabel('Count')
                 ytickloc = ax2.get_yticks()
                 ax2.yaxis.set_major_locator(mticker.FixedLocator(ytickloc))
                 yticklabels = ['{:0.0f}'.format(value) for value in
@@ -405,6 +409,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
                                     fontdict=dict(verticalalignment='top'))
             else:
                 ax2.set_yticklabels([])
+                nbins = len(ax2.get_xticklabels())
+                ax2.xaxis.set_major_locator(MaxNLocator(nbins=nbins,
+                                                        prune='lower'))
             ax2.grid(True, which='both')
             ax2.set_axisbelow(True)
             if invert_histogram:
