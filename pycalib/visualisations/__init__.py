@@ -167,7 +167,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              color_list=None,
                              show_bars=False,
                              invert_histogram=False,
-                             color_gaps='lightcoral'):
+                             color_gaps='lightcoral',
+                             confidence=False):
     """ Plots the reliability diagram of the given scores and true labels
 
     Parameters
@@ -221,6 +222,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
         bin samples at the bottom.
     color_gaps : string
         Color of the gaps (if shown).
+    confidence : boolean
+        If True shows only the confidence reliability diagram.
 
     Regurns
     =======
@@ -238,14 +241,32 @@ def plot_reliability_diagram(labels, scores, legend=None,
         color_list = plt.rcParams['axes.prop_cycle'].by_key()['color']
     labels = label_binarize(labels, classes=classes)
 
+    labels_list = []
+    if confidence:
+        labels_idx = np.argmax(labels, axis=1)
+        new_scores_list = []
+        for score in scores_list:
+            # TODO: randomize selection when there are several winning classes
+            conf_idx = np.argmax(score, axis=1)
+            winning_score = np.max(score, axis=1)
+            new_scores_list.append(np.vstack([1 - winning_score,
+                                              winning_score]).T)
+            labels_list.append((conf_idx.flatten()
+                               == labels_idx.flatten()).astype(int))
+            labels_list[-1] = label_binarize(labels_list[-1], classes=[0, 1])
+        scores_list = new_scores_list
+        n_classes = 2
+        class_names = ['Non winning', 'winning']
+        n_columns = 1
+    else:
+        n_columns = labels.shape[1]
+
     if class_names is None:
         class_names = [str(i+1) for i in range(n_classes)]
 
     if n_classes == 2:
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
         class_names = [class_names[1], ]
-
-    n_columns = labels.shape[1]
 
     if fig is None:
         fig = plt.figure(figsize=(n_columns*4, 4))
@@ -276,8 +297,10 @@ def plot_reliability_diagram(labels, scores, legend=None,
         # Perfect calibration
         ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
                  zorder=0)
-
         for j, score in enumerate(scores_list):
+            if labels_list:
+                labels = labels_list[j]
+
             # TODO Should we raise a warning if necessary to clip instead?
             score = np.clip(score, a_min=0, a_max=1)
 

@@ -23,6 +23,24 @@ class TestVisualisations(unittest.TestCase):
         fig = plot_reliability_diagram(labels=y, scores=[s1, s2])
         self.assertIsInstance(fig, plt.Figure)
 
+    def test_plot_reliability_diagram_confidence(self):
+        n_c1 = n_c2 = 500
+        p = np.concatenate((np.random.beta(2, 5, n_c1),
+                            np.random.beta(4, 3, n_c2)))
+
+        y = np.concatenate((np.zeros(n_c1), np.ones(n_c2)))
+
+        s1 = 1/(1 + np.exp(-3*(p - 0.5)))
+        s2 = 1/(1 + np.exp(-8*(p - 0.5)))
+
+        p = np.vstack((1 - p, p)).T
+        s1 = np.vstack((1 - s1, s1)).T
+        s2 = np.vstack((1 - s2, s2)).T
+
+        fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                                       confidence=True)
+        self.assertIsInstance(fig, plt.Figure)
+
     def test_plot_reliability_diagram_simple(self):
         n_c1 = n_c2 = 500
         p = np.concatenate((np.random.beta(2, 5, n_c1),
@@ -91,6 +109,18 @@ class TestVisualisations(unittest.TestCase):
                                        bins=bins,
                                        color_list=['darkgreen', 'chocolate'],
                                        invert_histogram=True)
+        self.assertIsInstance(fig, plt.Figure)
+
+        fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                                       legend=['Model 3', 'Model 4'],
+                                       show_histogram=True,
+                                       show_correction=True,
+                                       show_counts=True,
+                                       sample_proportion=0.3,
+                                       bins=bins,
+                                       color_list=['darkgreen', 'chocolate'],
+                                       invert_histogram=True,
+                                       confidence=True)
         self.assertIsInstance(fig, plt.Figure)
 
 

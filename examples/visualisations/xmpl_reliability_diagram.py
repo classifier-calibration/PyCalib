@@ -10,7 +10,6 @@ probabilistic classifier.
 # License: new BSD
 
 print(__doc__)
-SAVEFIGS = False
 
 ##############################################################################
 # This example shows different ways to visualise the reliability diagram for a
@@ -75,9 +74,6 @@ from pycalib.visualisations import plot_reliability_diagram
 
 fig = plot_reliability_diagram(labels=y, scores=s1, show_histogram=False)
 
-if SAVEFIGS:
-    fig.savefig('fig1.png')
-
 ##############################################################################
 # And showing bars instead of a lineplot, usually with errorbars showing the
 # discrepancy with respect to a perfectly calibrated model (diagonal)
@@ -86,9 +82,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                class_names=['Negative', 'Positive'],
                                show_gaps=True, show_bars=True,
                                show_histogram=False)
-
-if SAVEFIGS:
-    fig.savefig('fig2.png')
 
 ##############################################################################
 # However, both previous illustrations do not include the number of samples
@@ -102,8 +95,15 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_gaps=True, color_gaps='firebrick',
                                bins=[0, .3, .4, .45, .5, .55, .6, .7, 1])
 
-if SAVEFIGS:
-    fig.savefig('fig3.png')
+##############################################################################
+# It is also common to plot only the confidence (considering the winning class
+# only as positive class for each prediction). Notice that the class names is
+# automatically set to *winning* class.
+
+fig = plot_reliability_diagram(labels=y, scores=s1,
+                               show_gaps=True,
+                               confidence=True,
+                               show_bars=True)
 
 ##############################################################################
 # We can enable some parameters to show several aspects of the reliability
@@ -123,9 +123,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_correction=True,
                                sample_proportion=0.5,
                                hist_per_class=True)
-if SAVEFIGS:
-    fig.savefig('fig4.png')
-
 ##############################################################################
 # It can be also useful to have 95% confidence intervals for each bin by
 # performing a binomial proportion confidence interval with various statistical
@@ -143,9 +140,6 @@ fig = plot_reliability_diagram(labels=y, scores=s2,
                                errorbar_interval=0.95,
                                interval_method='beta',
                                color_list=['orange'])
-if SAVEFIGS:
-    fig.savefig('fig5.png')
-
 ##############################################################################
 # The function also allows the visualisation of multiple models for comparison.
 
@@ -155,9 +149,6 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                bins=10, class_names=['Negative', 'Positive'],
                                errorbar_interval=0.95,
                                interval_method='beta')
-if SAVEFIGS:
-    fig.savefig('fig6.png')
-
 
 ##############################################################################
 # It is possible to draw reliability diagram for multiple classes as well. We
@@ -177,8 +168,16 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                legend=['Model 3', 'Model 4'],
                                show_histogram=True,
                                color_list=['darkgreen', 'chocolate'])
-if SAVEFIGS:
-    fig.savefig('fig7.png')
+
+##############################################################################
+# If we are only interested in the confidence, the 3 classes can be visualised
+# in a single reliability diagram
+
+fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                               legend=['Model 3', 'Model 4'],
+                               show_histogram=True,
+                               color_list=['darkgreen', 'chocolate'],
+                               confidence=True)
 
 ##############################################################################
 # The same can be done with the bars.
@@ -190,10 +189,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_bars=True,
                                show_gaps=True,
                                color_gaps='orange')
-if SAVEFIGS:
-    fig.savefig('fig8.png')
-
-
 
 ##############################################################################
 # If we have precomputed the average proportion of true positives and
@@ -207,9 +202,6 @@ avg_pred = [np.array([.01, .25, .4, .6, .7, .8]).reshape(-1, 1),
             np.array([.15, .39, .7, .75, .8, .9]).reshape(-1, 1)]
 
 fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
-
-if SAVEFIGS:
-    fig.savefig('fig9.png')
 
 ##############################################################################
 # Similarly for a multiclass problem we can provide full matrices of size
@@ -232,7 +224,3 @@ avg_pred = [np.array([[.0, .3, .6, .7, .8, 9.],
                       [.1, .4, .6, .3, .5, 0.]]).T]
 
 fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
-
-if SAVEFIGS:
-    fig.savefig('fig10.png')
-
