@@ -25,7 +25,7 @@ Plotting reliability diagrams
 This example illustrates how to visualise the reliability diagram for a binary
 probabilistic classifier.
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-15
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
 .. code-block:: default
 
@@ -33,7 +33,6 @@ probabilistic classifier.
     # License: new BSD
 
     print(__doc__)
-    SAVEFIGS = False
 
 
 
@@ -42,7 +41,7 @@ probabilistic classifier.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-21
+.. GENERATED FROM PYTHON SOURCE LINES 15-20
 
 This example shows different ways to visualise the reliability diagram for a
 binary classification problem.
@@ -50,7 +49,7 @@ binary classification problem.
 First we will generate two synthetic models and some synthetic scores and
 labels.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-49
+.. GENERATED FROM PYTHON SOURCE LINES 20-48
 
 .. code-block:: default
 
@@ -93,12 +92,12 @@ labels.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-52
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 A perfect calibration should be as follows, compared with the generated
 scores
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-69
+.. GENERATED FROM PYTHON SOURCE LINES 51-68
 
 .. code-block:: default
 
@@ -134,17 +133,17 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fd27bbf2820>
+    <matplotlib.legend.Legend object at 0x7fec07e53ca0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-73
+.. GENERATED FROM PYTHON SOURCE LINES 69-72
 
 There are at least 2 very common ways to show a reliability diagram for a
 probabilistic binary classifier. Drawing a line between all the binned mean
 predictions and the true proportion of positives.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-81
+.. GENERATED FROM PYTHON SOURCE LINES 72-77
 
 .. code-block:: default
 
@@ -152,9 +151,6 @@ predictions and the true proportion of positives.
     from pycalib.visualisations import plot_reliability_diagram
 
     fig = plot_reliability_diagram(labels=y, scores=s1, show_histogram=False)
-
-    if SAVEFIGS:
-        fig.savefig('fig1.png')
 
 
 
@@ -167,12 +163,12 @@ predictions and the true proportion of positives.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-84
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
 
 And showing bars instead of a lineplot, usually with errorbars showing the
 discrepancy with respect to a perfectly calibrated model (diagonal)
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-93
+.. GENERATED FROM PYTHON SOURCE LINES 80-86
 
 .. code-block:: default
 
@@ -181,9 +177,6 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
                                    class_names=['Negative', 'Positive'],
                                    show_gaps=True, show_bars=True,
                                    show_histogram=False)
-
-    if SAVEFIGS:
-        fig.savefig('fig2.png')
 
 
 
@@ -196,7 +189,7 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-99
+.. GENERATED FROM PYTHON SOURCE LINES 87-92
 
 However, both previous illustrations do not include the number of samples
 that fall into each bin. By default the parameter show_bars is set to True as
@@ -204,7 +197,7 @@ this information is crucial to understand how reliable is each estimation,
 and how this affects some of the calibration metrics.
 We also specify the bin boundaries and change the color of the gaps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-108
+.. GENERATED FROM PYTHON SOURCE LINES 92-98
 
 .. code-block:: default
 
@@ -214,13 +207,37 @@ We also specify the bin boundaries and change the color of the gaps.
                                    show_gaps=True, color_gaps='firebrick',
                                    bins=[0, .3, .4, .45, .5, .55, .6, .7, 1])
 
-    if SAVEFIGS:
-        fig.savefig('fig3.png')
-
 
 
 
 .. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_005.png
+    :alt: xmpl reliability diagram
+    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 99-102
+
+It is also common to plot only the confidence (considering the winning class
+only as positive class for each prediction). Notice that the class names is
+automatically set to *winning* class.
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-108
+
+.. code-block:: default
+
+
+    fig = plot_reliability_diagram(labels=y, scores=s1,
+                                   show_gaps=True,
+                                   confidence=True,
+                                   show_bars=True)
+
+
+
+
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_006.png
     :alt: xmpl reliability diagram
     :class: sphx-glr-single-img
 
@@ -239,7 +256,7 @@ calibrated model). And even the true class of each sample at the y
 coordinates [0 and 1] for each scored instance (50% of the data in
 this example, but default is 100%).
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-129
+.. GENERATED FROM PYTHON SOURCE LINES 117-126
 
 .. code-block:: default
 
@@ -252,13 +269,10 @@ this example, but default is 100%).
                                    show_correction=True,
                                    sample_proportion=0.5,
                                    hist_per_class=True)
-    if SAVEFIGS:
-        fig.savefig('fig4.png')
 
 
 
-
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_006.png
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_007.png
     :alt: xmpl reliability diagram
     :class: sphx-glr-single-img
 
@@ -266,7 +280,7 @@ this example, but default is 100%).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-136
+.. GENERATED FROM PYTHON SOURCE LINES 127-133
 
 It can be also useful to have 95% confidence intervals for each bin by
 performing a binomial proportion confidence interval with various statistical
@@ -275,7 +289,7 @@ thus accepts the different tests available in the statsmodels library. In the
 following example we use the Clopper-Pearson interval based on Beta
 distribution and a confidence interval of 95%.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-149
+.. GENERATED FROM PYTHON SOURCE LINES 133-143
 
 .. code-block:: default
 
@@ -289,39 +303,6 @@ distribution and a confidence interval of 95%.
                                    errorbar_interval=0.95,
                                    interval_method='beta',
                                    color_list=['orange'])
-    if SAVEFIGS:
-        fig.savefig('fig5.png')
-
-
-
-
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_007.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 150-151
-
-The function also allows the visualisation of multiple models for comparison.
-
-.. GENERATED FROM PYTHON SOURCE LINES 151-162
-
-.. code-block:: default
-
-
-    fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
-                                   legend=['Model 1', 'Model 2'],
-                                   show_histogram=True,
-                                   bins=10, class_names=['Negative', 'Positive'],
-                                   errorbar_interval=0.95,
-                                   interval_method='beta')
-    if SAVEFIGS:
-        fig.savefig('fig6.png')
-
-
 
 
 
@@ -333,13 +314,40 @@ The function also allows the visualisation of multiple models for comparison.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-166
+.. GENERATED FROM PYTHON SOURCE LINES 144-145
+
+The function also allows the visualisation of multiple models for comparison.
+
+.. GENERATED FROM PYTHON SOURCE LINES 145-153
+
+.. code-block:: default
+
+
+    fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                                   legend=['Model 1', 'Model 2'],
+                                   show_histogram=True,
+                                   bins=10, class_names=['Negative', 'Positive'],
+                                   errorbar_interval=0.95,
+                                   interval_method='beta')
+
+
+
+
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_009.png
+    :alt: xmpl reliability diagram
+    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 154-157
 
 It is possible to draw reliability diagram for multiple classes as well. We
 will simulate 3 classes by changing some original labels to a 3rd class, and
 modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-183
+.. GENERATED FROM PYTHON SOURCE LINES 157-172
 
 .. code-block:: default
 
@@ -357,40 +365,6 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
                                    legend=['Model 3', 'Model 4'],
                                    show_histogram=True,
                                    color_list=['darkgreen', 'chocolate'])
-    if SAVEFIGS:
-        fig.savefig('fig7.png')
-
-
-
-
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_009.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 184-185
-
-The same can be done with the bars.
-
-.. GENERATED FROM PYTHON SOURCE LINES 185-198
-
-.. code-block:: default
-
-
-    fig = plot_reliability_diagram(labels=y, scores=s1,
-                                   legend=['Model 3'],
-                                   show_histogram=True,
-                                   color_list=['darkgreen'],
-                                   show_bars=True,
-                                   show_gaps=True,
-                                   color_gaps='orange')
-    if SAVEFIGS:
-        fig.savefig('fig8.png')
-
-
 
 
 
@@ -403,27 +377,21 @@ The same can be done with the bars.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-202
+.. GENERATED FROM PYTHON SOURCE LINES 173-175
 
-If we have precomputed the average proportion of true positives and
-predictions, or we have access to the ground truth, it is possible to plot
-the same reliability diagram using the following function
+If we are only interested in the confidence, the 3 classes can be visualised
+in a single reliability diagram
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-214
+.. GENERATED FROM PYTHON SOURCE LINES 175-182
 
 .. code-block:: default
 
-    from pycalib.visualisations import plot_reliability_diagram_theoretical
 
-    avg_true = [np.array([.1, .3, .6, .8, .9, 1]).reshape(-1, 1),
-                np.array([.2, .4, .5, .7, .8, .9]).reshape(-1, 1)]
-    avg_pred = [np.array([.01, .25, .4, .6, .7, .8]).reshape(-1, 1),
-                np.array([.15, .39, .7, .75, .8, .9]).reshape(-1, 1)]
-
-    fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
-
-    if SAVEFIGS:
-        fig.savefig('fig9.png')
+    fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
+                                   legend=['Model 3', 'Model 4'],
+                                   show_histogram=True,
+                                   color_list=['darkgreen', 'chocolate'],
+                                   confidence=True)
 
 
 
@@ -436,7 +404,65 @@ the same reliability diagram using the following function
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 215-220
+.. GENERATED FROM PYTHON SOURCE LINES 183-184
+
+The same can be done with the bars.
+
+.. GENERATED FROM PYTHON SOURCE LINES 184-193
+
+.. code-block:: default
+
+
+    fig = plot_reliability_diagram(labels=y, scores=s1,
+                                   legend=['Model 3'],
+                                   show_histogram=True,
+                                   color_list=['darkgreen'],
+                                   show_bars=True,
+                                   show_gaps=True,
+                                   color_gaps='orange')
+
+
+
+
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+    :alt: xmpl reliability diagram
+    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 194-197
+
+If we have precomputed the average proportion of true positives and
+predictions, or we have access to the ground truth, it is possible to plot
+the same reliability diagram using the following function
+
+.. GENERATED FROM PYTHON SOURCE LINES 197-206
+
+.. code-block:: default
+
+    from pycalib.visualisations import plot_reliability_diagram_theoretical
+
+    avg_true = [np.array([.1, .3, .6, .8, .9, 1]).reshape(-1, 1),
+                np.array([.2, .4, .5, .7, .8, .9]).reshape(-1, 1)]
+    avg_pred = [np.array([.01, .25, .4, .6, .7, .8]).reshape(-1, 1),
+                np.array([.15, .39, .7, .75, .8, .9]).reshape(-1, 1)]
+
+    fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
+
+
+
+
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
+    :alt: xmpl reliability diagram
+    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 207-212
 
 Similarly for a multiclass problem we can provide full matrices of size
 (n_bins, n_classes) instead. Notice that the order of the predicted scores
@@ -444,7 +470,7 @@ doesn't need to be in order, and the probabilities doesn't need to sum to one
 among all classes, as the way they are computed may be from different
 instances.
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-239
+.. GENERATED FROM PYTHON SOURCE LINES 212-227
 
 .. code-block:: default
 
@@ -464,13 +490,9 @@ instances.
 
     fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
 
-    if SAVEFIGS:
-        fig.savefig('fig10.png')
 
 
-
-
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
     :alt: xmpl reliability diagram
     :class: sphx-glr-single-img
 
@@ -481,7 +503,7 @@ instances.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.073 seconds)
+   **Total running time of the script:** ( 0 minutes  3.137 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:
