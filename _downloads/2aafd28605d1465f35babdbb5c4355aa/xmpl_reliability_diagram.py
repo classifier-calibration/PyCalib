@@ -10,7 +10,7 @@ probabilistic classifier.
 # License: new BSD
 
 print(__doc__)
-SAVEFIGS=False
+SAVEFIGS = False
 
 ##############################################################################
 # This example shows different ways to visualise the reliability diagram for a

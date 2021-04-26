@@ -184,7 +184,7 @@ probabilistic classifier.</p>
 <span class="c1"># License: new BSD</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">)</span>
-<span class="n">SAVEFIGS</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">SAVEFIGS</span> <span class="o">=</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <p>This example shows different ways to visualise the reliability diagram for a
@@ -241,7 +241,7 @@ scores</p>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f15a13c8490&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f3ee74a3190&gt;
 </pre></div>
 </div>
 <p>There are at least 2 very common ways to show a reliability diagram for a
@@ -283,10 +283,6 @@ We also specify the bin boundaries and change the color of the gaps.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_005.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 200.0, 400.0]
-</pre></div>
-</div>
 <p>We can enable some parameters to show several aspects of the reliability
 diagram. For example, we can add a histogram indicating the number of samples
 on each bin (or show the count in each marker), the correction that should be
@@ -308,10 +304,6 @@ this example, but default is 100%).</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_006.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 200.0, 400.0]
-</pre></div>
-</div>
 <p>It can be also useful to have 95% confidence intervals for each bin by
 performing a binomial proportion confidence interval with various statistical
 tests. This function uses <a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html">https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html</a>
@@ -332,10 +324,6 @@ distribution and a confidence interval of 95%.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_007.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 100.0, 200.0]
-</pre></div>
-</div>
 <p>The function also allows the visualisation of multiple models for comparison.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#id0" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Model 2&#39;</span><span class="p">],</span>
@@ -348,11 +336,6 @@ distribution and a confidence interval of 95%.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_008.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 200.0, 400.0]
-[0.0, 200.0, 400.0]
-</pre></div>
-</div>
 <p>It is possible to draw reliability diagram for multiple classes as well. We
 will simulate 3 classes by changing some original labels to a 3rd class, and
 modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
@@ -374,15 +357,6 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_009.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 200.0, 400.0]
-[0.0, 200.0, 400.0]
-[0.0, 250.0, 500.0]
-[0.0, 250.0, 500.0]
-[0.0, 250.0, 500.0]
-[0.0, 250.0, 500.0]
-</pre></div>
-</div>
 <p>The same can be done with the bars.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#id0" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 3&#39;</span><span class="p">],</span>
@@ -396,12 +370,6 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_010.png" />
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.0, 200.0, 400.0]
-[0.0, 250.0, 500.0]
-[0.0, 250.0, 500.0]
-</pre></div>
-</div>
 <p>If we have precomputed the average proportion of true positives and
 predictions, or we have access to the ground truth, it is possible to plot
 the same reliability diagram using the following function</p>
@@ -444,7 +412,7 @@ instances.</p>
 </pre></div>
 </div>
 <img alt="xmpl reliability diagram" class="sphx-glr-single-img" src="../../_images/sphx_glr_xmpl_reliability_diagram_012.png" />
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.263 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.696 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-reliability-diagram-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_reliability_diagram.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>

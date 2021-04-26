@@ -279,7 +279,8 @@ each score as the estimated class.</p>
 <code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">binary_ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.binary_ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Binary Expected Calibration Error</p>
 <div class="math notranslate nohighlight">
-\[\text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |\bar{y}(B_{i}) - \bar{p}(B_{i})|\]</div>
+\[\text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |
+\bar{y}(B_{i}) - \bar{p}(B_{i})|\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">

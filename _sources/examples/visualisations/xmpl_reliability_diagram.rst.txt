@@ -33,7 +33,7 @@ probabilistic classifier.
     # License: new BSD
 
     print(__doc__)
-    SAVEFIGS=False
+    SAVEFIGS = False
 
 
 
@@ -134,7 +134,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f15a13c8490>
+    <matplotlib.legend.Legend object at 0x7f3ee74a3190>
 
 
 
@@ -225,14 +225,6 @@ We also specify the bin boundaries and change the color of the gaps.
     :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 200.0, 400.0]
-
 
 
 
@@ -271,14 +263,6 @@ this example, but default is 100%).
     :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 200.0, 400.0]
-
 
 
 
@@ -316,14 +300,6 @@ distribution and a confidence interval of 95%.
     :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 100.0, 200.0]
-
 
 
 
@@ -353,15 +329,6 @@ The function also allows the visualisation of multiple models for comparison.
     :alt: xmpl reliability diagram
     :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 200.0, 400.0]
-    [0.0, 200.0, 400.0]
 
 
 
@@ -401,19 +368,6 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
     :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 200.0, 400.0]
-    [0.0, 200.0, 400.0]
-    [0.0, 250.0, 500.0]
-    [0.0, 250.0, 500.0]
-    [0.0, 250.0, 500.0]
-    [0.0, 250.0, 500.0]
-
 
 
 
@@ -445,16 +399,6 @@ The same can be done with the bars.
     :alt: xmpl reliability diagram
     :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    [0.0, 200.0, 400.0]
-    [0.0, 250.0, 500.0]
-    [0.0, 250.0, 500.0]
 
 
 
@@ -537,7 +481,7 @@ instances.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.263 seconds)
+   **Total running time of the script:** ( 0 minutes  2.696 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:
