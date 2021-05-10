@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
@@ -33,10 +35,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -169,8 +172,8 @@
   <div class="section" id="metrics">
 <span id="id1"></span><h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-pycalib.metrics"></span><dl class="py function">
-<dt id="pycalib.metrics.ECE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ece_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.ECE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.ECE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ece_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -207,8 +210,8 @@ normalized. (default = False)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.MCE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">MCE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mce_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.MCE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.MCE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">MCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mce_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.MCE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate MCE score based on model output probabilities and true labels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -237,8 +240,8 @@ classes)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.accuracy">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">accuracy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.accuracy">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Classification accuracy score</p>
 <p>Accuracy for binary and multiclass classification problems. Consists on the
 proportion of correct estimations assuming the maximum class probability of
@@ -275,8 +278,8 @@ each score as the estimated class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.binary_ECE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">binary_ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.binary_ECE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.binary_ECE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">binary_ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.binary_ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Binary Expected Calibration Error</p>
 <div class="math notranslate nohighlight">
 \[\text{binary-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |
@@ -303,7 +306,7 @@ each score as the estimated class.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">binary_ECE</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
 <span class="go">0.1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">binary_ECE</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
 <span class="go">0.2</span>
 </pre></div>
@@ -311,8 +314,8 @@ each score as the estimated class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.brier_score">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">brier_score</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.brier_score" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.brier_score">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">brier_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.brier_score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Brier score</p>
 <p>Computes the Brier score between the true labels and the estimated
 probabilities. This corresponds to the Mean Squared Error between the
@@ -345,8 +348,8 @@ estimations and the true labels.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.classwise_ECE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">classwise_ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.classwise_ECE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.classwise_ECE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">classwise_ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.classwise_ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Classwise Expected Calibration Error</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\text{class-$j$-ECE}  = \sum_{i=1}^M \frac{|B_{i,j}|}{N}
@@ -374,7 +377,7 @@ estimations and the true labels.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">classwise_ECE</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
 <span class="go">0.1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">.</span><span class="mi">9</span><span class="p">,</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">.9</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">classwise_ECE</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
 <span class="go">0.2</span>
 </pre></div>
@@ -382,8 +385,8 @@ estimations and the true labels.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.conf_ECE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">conf_ECE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_ECE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.conf_ECE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">conf_ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_ECE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -415,8 +418,8 @@ each row for the correct column class.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.conf_MCE">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">conf_MCE</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_MCE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.conf_MCE">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">conf_MCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_MCE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ECE score based on model output probabilities and true labels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -448,8 +451,8 @@ each row for the correct column class.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pycalib.metrics.cross_entropy">
-<code class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></code><code class="sig-name descname"><span class="pre">cross_entropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pycalib.metrics.cross_entropy">
+<span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">cross_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.cross_entropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cross-entropy score</p>
 <p>Computes the cross-entropy (a.k.a. log-loss) for binary and
 multiclass classification scores.</p>

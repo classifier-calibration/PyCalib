@@ -229,7 +229,7 @@ previous functions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.731 seconds)
+   **Total running time of the script:** ( 0 minutes  2.540 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_ternary_contours.py:

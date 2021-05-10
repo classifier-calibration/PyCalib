@@ -194,14 +194,14 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
 # If we have precomputed the average proportion of true positives and
 # predictions, or we have access to the ground truth, it is possible to plot
 # the same reliability diagram using the following function
-from pycalib.visualisations import plot_reliability_diagram_theoretical
+from pycalib.visualisations import plot_reliability_diagram_precomputed
 
 avg_true = [np.array([.1, .3, .6, .8, .9, 1]).reshape(-1, 1),
             np.array([.2, .4, .5, .7, .8, .9]).reshape(-1, 1)]
 avg_pred = [np.array([.01, .25, .4, .6, .7, .8]).reshape(-1, 1),
             np.array([.15, .39, .7, .75, .8, .9]).reshape(-1, 1)]
 
-fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
+fig = plot_reliability_diagram_precomputed(avg_true, avg_pred)
 
 ##############################################################################
 # Similarly for a multiclass problem we can provide full matrices of size
@@ -223,4 +223,4 @@ avg_pred = [np.array([[.0, .3, .6, .7, .8, 9.],
                       [.8, .1, .6, .2, .9, 0.],
                       [.1, .4, .6, .3, .5, 0.]]).T]
 
-fig = plot_reliability_diagram_theoretical(avg_true, avg_pred)
+fig = plot_reliability_diagram_precomputed(avg_true, avg_pred)
