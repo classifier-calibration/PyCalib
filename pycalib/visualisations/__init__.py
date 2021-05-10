@@ -16,7 +16,7 @@ from matplotlib import gridspec
 from pycalib.utils import df_normalise, multiindex_to_strings
 
 
-def plot_reliability_diagram_theoretical(avg_true, avg_pred,
+def plot_reliability_diagram_precomputed(avg_true, avg_pred,
                                          legend=None,
                                          class_names=None,
                                          fig=None,
