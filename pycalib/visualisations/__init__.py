@@ -230,8 +230,6 @@ def plot_reliability_diagram(labels, scores, legend=None,
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
     """
-    classes = np.unique(labels)
-    n_classes = len(classes)
     if isinstance(scores, list):
         scores_list = scores
     else:
@@ -239,6 +237,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
     n_scores = len(scores_list)
     if color_list is None:
         color_list = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+    classes = np.arange(scores_list[0].shape[1])
+    n_classes = len(classes)
     labels = label_binarize(labels, classes=classes)
 
     labels_list = []
