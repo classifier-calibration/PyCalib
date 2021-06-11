@@ -13,7 +13,8 @@ from statsmodels.stats.proportion import proportion_confint
 
 from matplotlib import gridspec
 
-from pycalib.utils import df_normalise, multiindex_to_strings
+from pycalib.utils import (df_normalise, multiindex_to_strings,
+                          get_binned_scores)
 
 
 def plot_reliability_diagram_precomputed(avg_true, avg_pred,
@@ -302,26 +303,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
             if labels_list:
                 labels = labels_list[j]
 
-            # TODO Should we raise a warning if necessary to clip instead?
-            score = np.clip(score, a_min=0, a_max=1)
-
-            bin_idx = np.digitize(score[:, i], bins) - 1
-
-            bin_true = np.bincount(bin_idx, weights=labels[:, i],
-                                   minlength=n_bins)
-            bin_pred = np.bincount(bin_idx, weights=score[:, i],
-                                   minlength=n_bins)
-            bin_total = np.bincount(bin_idx, minlength=n_bins)
-
+            avg_true, avg_pred, bin_true, bin_total = get_binned_scores(
+                labels[:, i], score[:, i], bins=bins)
             zero_idx = bin_total == 0
-            avg_true = np.empty(bin_total.shape[0])
-            avg_true.fill(np.nan)
-            avg_true[~zero_idx] = np.divide(bin_true[~zero_idx],
-                                            bin_total[~zero_idx])
-            avg_pred = np.empty(bin_total.shape[0])
-            avg_pred.fill(np.nan)
-            avg_pred[~zero_idx] = np.divide(bin_pred[~zero_idx],
-                                            bin_total[~zero_idx])
 
             name = legend[j] if legend else None
             if show_bars:
