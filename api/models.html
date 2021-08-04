@@ -92,7 +92,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
@@ -201,7 +201,10 @@
 <col style="width: 37%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><strong>predict_proba</strong></p></td>
+<tr class="row-odd"><td><p><strong>predict</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>predict_proba</strong></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -425,7 +428,7 @@ according to each class on an array of test vectors X.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pycalib.models.CalibratedModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">CalibratedModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">CalibratedModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibrator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -539,7 +542,7 @@ according to each class on an array of test vectors X.</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
 <td><p>Get parameters for this estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code>(T)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycalib.models.IsotonicCalibration.predict" title="pycalib.models.IsotonicCalibration.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(scores, *args, **kwargs)</p></td>
 <td><p>Predict new data by linear interpolation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
@@ -579,6 +582,26 @@ scores : array-like, shape = [n_samples,]</p>
 </dd>
 </dl>
 <p>self</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycalib.models.IsotonicCalibration.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.IsotonicCalibration.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict new data by linear interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array-like of shape (n_samples,) or (n_samples, 1)</span></dt><dd><p>Data to transform.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>y_pred</strong><span class="classifier">ndarray of shape (n_samples,)</span></dt><dd><p>Transformed data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -718,13 +741,13 @@ where classes are ordered as they are in <code class="docutils literal notransla
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(X, y[, sample_weight])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.SigmoidCalibration.fit" title="pycalib.models.SigmoidCalibration.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(scores, y, *args, **kwargs)</p></td>
 <td><p>Fit the model using X, y as training data.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code>([deep])</p></td>
 <td><p>Get parameters for this estimator.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code>(T)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycalib.models.SigmoidCalibration.predict" title="pycalib.models.SigmoidCalibration.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Predict new data by linear interpolation.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
@@ -746,6 +769,50 @@ where classes are ordered as they are in <code class="docutils literal notransla
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycalib.models.SigmoidCalibration.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.SigmoidCalibration.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model using X, y as training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Training data.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Training target.</p>
+</dd>
+<dt><strong>sample_weight</strong><span class="classifier">array-like of shape (n_samples,), default=None</span></dt><dd><p>Sample weights. If None, then samples are equally weighted.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">object</span></dt><dd><p>Returns an instance of self.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycalib.models.SigmoidCalibration.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.SigmoidCalibration.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict new data by linear interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Data to predict from.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T_</strong><span class="classifier">ndarray of shape (n_samples,)</span></dt><dd><p>The predicted data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
