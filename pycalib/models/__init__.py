@@ -39,6 +39,10 @@ class _DummyCalibration(BaseEstimator, RegressorMixin):
         """Return the probabilities of the base classifier"""
         return T
 
+    def predict(self, scores, *args, **kwargs):
+        proba = self.predict_proba(scores, *args, **kwargs)
+        return proba.argmax(axis=1)
+
 
 class IsotonicCalibration(IsotonicRegression):
     def __init__(self):
@@ -70,6 +74,10 @@ class IsotonicCalibration(IsotonicRegression):
         if len(transformed.shape) == 1:
             transformed = np.vstack((1 - transformed, transformed)).T
         return transformed
+
+    def predict(self, scores, *args, **kwargs):
+        proba = self.predict_proba(scores, *args, **kwargs)
+        return proba.argmax(axis=1)
 
 
 def logit(x):
@@ -122,8 +130,20 @@ class LogisticCalibration(LogisticRegression):
 
 
 class SigmoidCalibration(_SigmoidCalibration):
-    def predict_proba(self, *args, **kwargs):
-        return super(SigmoidCalibration, self).predict(*args, **kwargs)
+    def fit(self, scores, y, *args, **kwargs):
+        if len(scores.shape) > 1:
+            scores = scores[:, 1]
+        return super(SigmoidCalibration, self).fit(scores, y, *args, **kwargs)
+
+    def predict_proba(self, scores, *args, **kwargs):
+        if len(scores.shape) > 1:
+            scores = scores[:, 1]
+        transformed = super(SigmoidCalibration, self).predict(scores, *args, **kwargs)
+        return np.vstack((1 - transformed, transformed)).T
+
+    def predict(self, *args, **kwargs):
+        proba = self.predict_proba(*args, **kwargs)
+        return proba.argmax(axis=1)
 
 
 class BinningCalibration(BaseEstimator, RegressorMixin):
@@ -199,11 +219,16 @@ class BinningCalibration(BaseEstimator, RegressorMixin):
         if len(np.shape(scores)) > 1:
             scores = scores[:, 1]
         s_binned = np.digitize(scores, self.bins) - 1
-        return self.predictions[s_binned]
+        transformed = self.predictions[s_binned]
+        return np.vstack((1 - transformed, transformed)).T
+
+    def predict(self, scores, *args, **kwargs):
+        proba = self.predict_proba(scores, *args, **kwargs)
+        return proba.argmax(axis=1)
 
 
 class CalibratedModel(BaseEstimator, ClassifierMixin):
-    def __init__(self, base_estimator=None, method=None,
+    def __init__(self, base_estimator=None, calibrator=None,
                  fit_estimator=True):
         ''' Initialize a Calibrated model (classifier + calibrator)
 
@@ -211,10 +236,10 @@ class CalibratedModel(BaseEstimator, ClassifierMixin):
         ----------
         base_estimator : estimator
             Classifier instance
-        method : estimator
+        calibrator : estimator
             Calibrator instance
         '''
-        self.calibrator = clone(method)
+        self.calibrator = clone(calibrator)
         self.base_estimator = clone(base_estimator)
         self.fit_estimator = fit_estimator
         self.binary = False
@@ -433,7 +458,7 @@ class CalibratedClassifierCV(BaseEstimator, ClassifierMixin):
 
         if self.cv == "prefit":
             calibrated_classifier = _CalibratedClassifier(
-                base_estimator, method=self.method, score_type=self.score_type)
+                base_estimator, calibrator=self.method, score_type=self.score_type)
             if sample_weight is not None:
                 calibrated_classifier.fit(X, y, sample_weight)
             else:
@@ -461,7 +486,7 @@ class CalibratedClassifierCV(BaseEstimator, ClassifierMixin):
                     this_estimator.fit(X[train], y[train])
 
                 calibrated_classifier = _CalibratedClassifier(
-                    this_estimator, method=self.method,
+                    this_estimator, calibrator=self.method,
                     score_type=self.score_type)
                 if sample_weight is not None:
                     calibrated_classifier.fit(X[test], y[test],
