@@ -612,7 +612,7 @@ class _CalibratedClassifier(object):
     def __init__(self, base_estimator, method='beta',
                  score_type=None):
         self.base_estimator = base_estimator
-        self.calibrator = method
+        self.method = method
         self.score_type = score_type
 
     def _preproc(self, X):
