@@ -108,11 +108,20 @@ def brier_score(y_true, y_pred):
 
 
 def conf_ECE(y_true, probs, bins=15):
-    """
-    Calculate ECE score based on model output probabilities and true labels
+    r"""Confidence Expected Calibration Error
+
+    Calculate ECE score based on model maximum output probabilities and true labels
+
+    .. math::
+
+        \text{confidence-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |
+        \text{accuracy}(B_{i}) - \bar{p}(B_{i})|
+
+    In which $p$ are the maximum predicted probabilities.
+
 
     Parameters
-    ==========
+    ----------
     y_true:
         - a list containing the actual class labels
         - ndarray shape (n_samples) with a list containing actual class
@@ -126,9 +135,21 @@ def conf_ECE(y_true, probs, bins=15):
         - into how many bins are probabilities divided (default = 15)
 
     Returns
-    =======
+    -------
     ece : float
         expected calibration error
+
+    Examples
+    --------
+    >>> from pycalib.metrics import conf_ECE
+    >>> Y = np.array([[1, 0], [0, 1]]).T
+    >>> P = np.array([[0.9, 0.1], [0.1, 0.9]]).T
+    >>> print(round(conf_ECE(Y, P, bins=2), 8))
+    0.1
+    >>> Y = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]]).T
+    >>> P = np.array([[.9, .8, .7, .3, .2, .1], [.1, .2, .3, .7, .8, .9]]).T
+    >>> print(round(conf_ECE(Y, P, bins=2), 8))
+    0.2
     """
     return ECE(y_true, probs, normalize=False, bins=bins, ece_full=False)
 
@@ -432,6 +453,64 @@ def conf_MCE(y_true, probs, bins=15):
     return MCE(y_true, probs, normalize=False, bins=bins, mce_full=False)
 
 
+def binary_MCE(y_true, probs, power=1, bins=15):
+    r"""Binary Maximum Calibration Error
+
+    .. math::
+
+        \text{binary-MCE}  = \max_{i \in \{1, ..., M\}} |\bar{y}(B_{i}) - \bar{p}(B_{i})|
+
+    Parameters
+    ----------
+    y_true : indicator vector (n_samples, )
+        True labels.
+
+    probs : matrix (n_samples, )
+        Predicted probabilities for positive class.
+
+    Returns
+    -------
+    score : float
+
+    Examples
+    --------
+    >>> from pycalib.metrics import binary_MCE
+    >>> Y = np.array([0, 1])
+    >>> P = np.array([0.1, 0.6])
+    >>> print(round(binary_MCE(Y, P, bins=2), 8))
+    0.4
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.1, .2, .3, .6, .7, .8])
+    >>> print(round(binary_MCE(Y, P, bins=2), 8))
+    0.3
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.1, .2, .3, .3, .2, .1])
+    >>> print(round(binary_MCE(Y, P, bins=1), 8))
+    0.3
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.1, .2, .3, .9, .9, .9])
+    >>> print(round(binary_MCE(Y, P, bins=2), 8))
+    0.2
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.1, .1, .1, .6, .6, .6])
+    >>> print(round(binary_MCE(Y, P, bins=2), 8))
+    0.4
+    """
+    idx = np.digitize(probs, np.linspace(0, 1 + 1e-8, bins + 1)) - 1
+
+    def bin_func(y, p, idx):
+        return (np.abs(np.mean(p[idx]) - np.mean(y[idx])) ** power)
+
+    mce = []
+    for i in np.unique(idx):
+        # print('Mean scores', np.mean(probs[idx == i]))
+        # print('True proportion', np.mean(y_true[idx == i]))
+        # print('Difference ', np.abs(np.mean(probs[idx == i])
+        #                      - np.mean(y_true[idx == i])))
+        mce.append(bin_func(y_true, probs, idx == i))
+    return max(mce)
+
+
 def binary_ECE(y_true, probs, power=1, bins=15):
     r"""Binary Expected Calibration Error
 
@@ -463,6 +542,10 @@ def binary_ECE(y_true, probs, power=1, bins=15):
     >>> P = np.array([.1, .2, .3, .7, .8, .9])
     >>> print(round(binary_ECE(Y, P, bins=2), 8))
     0.2
+    >>> Y = np.array([0, 0, 0, 1, 1, 1])
+    >>> P = np.array([.4, .4, .4, .6, .6, .6])
+    >>> print(round(binary_ECE(Y, P, bins=2), 8))
+    0.4
     """
     idx = np.digitize(probs, np.linspace(0, 1 + 1e-8, bins + 1)) - 1
 
@@ -506,12 +589,12 @@ def classwise_ECE(y_true, probs, power=1, bins=15):
     Examples
     --------
     >>> from pycalib.metrics import classwise_ECE
-    >>> Y = np.array([[1, 0], [0, 1]])
-    >>> P = np.array([[0.9, 0.1], [0.1, 0.9]])
+    >>> Y = np.array([[1, 0], [0, 1]]).T
+    >>> P = np.array([[0.9, 0.1], [0.1, 0.9]]).T
     >>> print(round(classwise_ECE(Y, P, bins=2), 8))
     0.1
-    >>> Y = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]])
-    >>> P = np.array([[.9, .8, .7, .3, .2, .1], [.1, .2, .3, .7, .8, .9]])
+    >>> Y = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]]).T
+    >>> P = np.array([[.9, .8, .7, .3, .2, .1], [.1, .2, .3, .7, .8, .9]]).T
     >>> print(round(classwise_ECE(Y, P, bins=2), 8))
     0.2
     """
@@ -526,6 +609,57 @@ def classwise_ECE(y_true, probs, power=1, bins=15):
         [
             binary_ECE(
                 y_true[:, c].astype(float), probs[:, c], power=power, bins=bins
+            ) for c in range(n_classes)
+        ]
+    )
+
+
+def classwise_MCE(y_true, probs, bins=15):
+    r"""Classwise Maximum Calibration Error
+
+    .. math::
+
+        \text{class-$j$-MCE}  = \max_{i \in {1, ..., M}}
+        |\bar{y}_j(B_{i,j}) - \bar{p}_j(B_{i,j})|,
+
+        \text{classwise-MCE}  = \max_{j \in {1, ..., K}} \text{class-$j$-MCE}
+
+    Parameters
+    ----------
+    y_true : label indicator matrix (n_samples, n_classes)
+        True labels.
+        # TODO Add option to pass array with shape (n_samples, )
+
+    probs : matrix (n_samples, n_classes)
+        Predicted probabilities.
+
+    Returns
+    -------
+    score : float
+
+    Examples
+    --------
+    >>> from pycalib.metrics import classwise_MCE
+    >>> Y = np.array([[1, 0], [0, 1]]).T
+    >>> P = np.array([[0.8, 0.1], [0.2, 0.9]]).T
+    >>> print(round(classwise_MCE(Y, P, bins=2), 8))
+    0.2
+    >>> Y = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 1]]).T
+    >>> P = np.array([[.8, .7, .6, .1, .1, .1], [.2, .3, .4, .9, .9, .9]]).T
+    >>> print(round(classwise_MCE(Y, P, bins=2), 8))
+    0.3
+    """
+    probs = np.array(probs)
+    if not np.array_equal(probs.shape, y_true.shape):
+        y_true = label_binarize(np.array(y_true),
+                                classes=range(probs.shape[1]))
+
+    n_classes = probs.shape[1]
+
+    return np.max(
+        [
+            binary_MCE(
+                y_true[:, c].astype(float), probs[:, c], bins=bins
             ) for c in range(n_classes)
         ]
     )
