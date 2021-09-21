@@ -4,7 +4,8 @@
 ![Python3.8][python:b]
 [![pypi][pypi:b]][pypi]
 [![codecov][codecov:b]][codecov]
-![doi][doi:b]
+[![DOI](https://zenodo.org/badge/280465805.svg)](https://zenodo.org/badge/latestdoi/280465805)
+
 
 [ci]: https://github.com/perellonieto/PyCalib/actions/workflows/ci.yml
 [ci:b]: https://github.com/perellonieto/pycalib/workflows/CI/badge.svg
@@ -17,7 +18,6 @@
 [pypi:b]: https://badge.fury.io/py/pycalib.svg
 [codecov]: https://codecov.io/gh/perellonieto/PyCalib
 [codecov:b]: https://codecov.io/gh/perellonieto/PyCalib/branch/master/graph/badge.svg?token=AYMZPLELT3
-[doi:b]: https://user-images.githubusercontent.com/2480334/134136730-13f0534c-fada-4342-bc86-8e67ae21b0d0.png
 
 
 
