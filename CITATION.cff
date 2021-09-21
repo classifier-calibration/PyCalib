@@ -12,6 +12,5 @@ authors:
   given-names: "Markus"
 title: "PyCalib a library for classifier calibration"
 version: 0.1.0.dev0
-doi: 
 date-released: 2021-08-20
 url: "https://github.com/perellonieto/PyCalib"
