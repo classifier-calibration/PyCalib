@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Perello-Nieto"
+  given-names: "Miquel"
+  orcid: "https://orcid.org/0000-0001-8925-424X"
+- family-names: "Song"
+  given-names: "Hao"
+- family-names: "Silva-Filho"
+  given-names: "Telmo"
+- family-names: "Kängsepp"
+  given-names: "Markus"
+title: "PyCalib a library for classifier calibration"
+version: 0.1.0.dev0
+doi: 
+date-released: 2021-08-20
+url: "https://github.com/perellonieto/PyCalib"
