@@ -69,9 +69,10 @@ case we will define a Dirichlet function and pass it with default parameters.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_001.png
-    :alt: xmpl ternary contours
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_001.png
+   :alt: xmpl ternary contours
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -127,9 +128,10 @@ We also select a colormap for the first class.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_002.png
-    :alt: xmpl ternary contours
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_002.png
+   :alt: xmpl ternary contours
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_002.png
+   :class: sphx-glr-single-img
 
 
 
@@ -155,9 +157,10 @@ the simplex (subdiv=3). And the number of contour values (nlevels=10).
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_003.png
-    :alt: xmpl ternary contours
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_003.png
+   :alt: xmpl ternary contours
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_003.png
+   :class: sphx-glr-single-img
 
 
 
@@ -184,9 +187,10 @@ the names of each class.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_004.png
-    :alt: xmpl ternary contours
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_004.png
+   :alt: xmpl ternary contours
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_004.png
+   :class: sphx-glr-single-img
 
 
 
@@ -218,9 +222,10 @@ previous functions.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_005.png
-    :alt: strawberry $(C_1)$, orange $(C_2)$, smurf $(C_3)$
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_005.png
+   :alt: strawberry $(C_1)$, orange $(C_2)$, smurf $(C_3)$
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_contours_005.png
+   :class: sphx-glr-single-img
 
 
 
@@ -229,7 +234,7 @@ previous functions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.574 seconds)
+   **Total running time of the script:** ( 0 minutes  2.562 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_ternary_contours.py:

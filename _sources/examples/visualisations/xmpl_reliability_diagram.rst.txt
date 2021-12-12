@@ -84,9 +84,10 @@ labels.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_001.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_001.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -121,9 +122,10 @@ scores
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_002.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_002.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_002.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -133,7 +135,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f93109b7cd0>
+    <matplotlib.legend.Legend object at 0x7fad84dd96a0>
 
 
 
@@ -155,9 +157,10 @@ predictions and the true proportion of positives.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_003.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_003.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_003.png
+   :class: sphx-glr-single-img
 
 
 
@@ -181,9 +184,10 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_004.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_004.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_004.png
+   :class: sphx-glr-single-img
 
 
 
@@ -210,9 +214,10 @@ We also specify the bin boundaries and change the color of the gaps.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_005.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_005.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_005.png
+   :class: sphx-glr-single-img
 
 
 
@@ -237,9 +242,10 @@ automatically set to *winning* class.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_006.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_006.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_006.png
+   :class: sphx-glr-single-img
 
 
 
@@ -272,9 +278,10 @@ this example, but default is 100%).
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_007.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_007.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_007.png
+   :class: sphx-glr-single-img
 
 
 
@@ -306,9 +313,10 @@ distribution and a confidence interval of 95%.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_008.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_008.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_008.png
+   :class: sphx-glr-single-img
 
 
 
@@ -333,9 +341,10 @@ The function also allows the visualisation of multiple models for comparison.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_009.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_009.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_009.png
+   :class: sphx-glr-single-img
 
 
 
@@ -369,9 +378,10 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_010.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_010.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_010.png
+   :class: sphx-glr-single-img
 
 
 
@@ -396,9 +406,10 @@ in a single reliability diagram
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_011.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_011.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_011.png
+   :class: sphx-glr-single-img
 
 
 
@@ -424,9 +435,10 @@ The same can be done with the bars.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+   :class: sphx-glr-single-img
 
 
 
@@ -454,9 +466,10 @@ the same reliability diagram using the following function
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
+   :class: sphx-glr-single-img
 
 
 
@@ -492,9 +505,10 @@ instances.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
-    :alt: xmpl reliability diagram
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
+   :class: sphx-glr-single-img
 
 
 
@@ -503,7 +517,7 @@ instances.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.090 seconds)
+   **Total running time of the script:** ( 0 minutes  3.036 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:

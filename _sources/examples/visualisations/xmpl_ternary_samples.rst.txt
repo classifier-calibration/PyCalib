@@ -75,9 +75,10 @@ simplex space.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_001.png
-    :alt: xmpl ternary samples
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_001.png
+   :alt: xmpl ternary samples
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -101,9 +102,10 @@ Here we specify the names of each class and change their colors.
 
 
 
-.. image:: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_002.png
-    :alt: xmpl ternary samples
-    :class: sphx-glr-single-img
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_002.png
+   :alt: xmpl ternary samples
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_ternary_samples_002.png
+   :class: sphx-glr-single-img
 
 
 
@@ -112,7 +114,7 @@ Here we specify the names of each class and change their colors.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.033 seconds)
+   **Total running time of the script:** ( 0 minutes  1.228 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_ternary_samples.py:
