@@ -1,6 +1,6 @@
-numpy
-scipy
-scikit-learn
-matplotlib
-statsmodels
-orange3
+numpy==1.20
+scipy==1.6
+scikit-learn==0.24
+matplotlib==3.3
+statsmodels=0.12
+orange3=3.28
