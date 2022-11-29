@@ -7,17 +7,17 @@
 [![DOI](https://zenodo.org/badge/280465805.svg)](https://zenodo.org/badge/latestdoi/280465805)
 
 
-[ci]: https://github.com/perellonieto/PyCalib/actions/workflows/ci.yml
-[ci:b]: https://github.com/perellonieto/pycalib/workflows/CI/badge.svg
-[documentation]: https://github.com/perellonieto/PyCalib/actions/workflows/documentation.yml
-[documentation:b]: https://github.com/perellonieto/pycalib/workflows/Documentation/badge.svg
-[license]: https://github.com/perellonieto/PyCalib/blob/master/LICENSE.txt
-[license:b]: https://img.shields.io/github/license/perellonieto/pycalib.svg
+[ci]: https://github.com/classifier-calibration/PyCalib/actions/workflows/ci.yml
+[ci:b]: https://github.com/classifier-calibration/pycalib/workflows/CI/badge.svg
+[documentation]: https://github.com/classifier-calibration/PyCalib/actions/workflows/documentation.yml
+[documentation:b]: https://github.com/classifier-calibration/pycalib/workflows/Documentation/badge.svg
+[license]: https://github.com/classifier-calibration/PyCalib/blob/master/LICENSE.txt
+[license:b]: https://img.shields.io/github/license/classifier-calibration/pycalib.svg
 [python:b]: https://img.shields.io/badge/python-3.8-blue
 [pypi]: https://badge.fury.io/py/pycalib
 [pypi:b]: https://badge.fury.io/py/pycalib.svg
-[codecov]: https://codecov.io/gh/perellonieto/PyCalib
-[codecov:b]: https://codecov.io/gh/perellonieto/PyCalib/branch/master/graph/badge.svg?token=AYMZPLELT3
+[codecov]: https://codecov.io/gh/classifier-calibration/PyCalib
+[codecov:b]: https://codecov.io/gh/classifier-calibration/PyCalib/branch/master/graph/badge.svg?token=AYMZPLELT3
 
 
 
@@ -37,7 +37,7 @@ pip install pycalib
 Documentation
 -------------
 
-The documentation can be found at https://www.perellonieto.com/PyCalib/
+The documentation can be found at https://classifier-calibration.github.io/PyCalib/
 
 Development
 ===========
@@ -104,7 +104,7 @@ Documentation
 -------------
 
 The documentation can be found at
-[https://www.perellonieto.com/PyCalib/](https://www.perellonieto.com/PyCalib/),
+[https://www.classifier-calibration.com/PyCalib/](https://www.classifier-calibration.com/PyCalib/),
 and it is automatically updated after every push to the master branch.
 
 All documentation is done ussing the [Sphinx documentation
