@@ -154,7 +154,7 @@ scores</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fde1203e550&gt;
+<img src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f27a132ca60&gt;
 </pre></div>
 </div>
 <p>There are at least 2 very common ways to show a reliability diagram for a
@@ -170,7 +170,9 @@ discrepancy with respect to a perfectly calibrated model (diagonal)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#id0" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                               <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pycalib_rd_bars.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_004.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_004.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>However, both previous illustrations do not include the number of samples
@@ -235,6 +237,8 @@ distribution and a confidence interval of 95%.</p>
                                <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
                                <span class="n">errorbar_interval</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                                <span class="n">interval_method</span><span class="o">=</span><span class="s1">&#39;beta&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pycalib_rd_lines.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_009.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_009.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>It is possible to draw reliability diagram for multiple classes as well. We
@@ -272,6 +276,8 @@ in a single reliability diagram</p>
                                <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">color_gaps</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pycalib_rd_ternary.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_012.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_012.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>If we have precomputed the average proportion of true positives and
@@ -308,7 +314,7 @@ instances.</p>
 <span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram_precomputed" title="pycalib.visualisations.plot_reliability_diagram_precomputed" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram_precomputed</span></a><span class="p">(</span><span class="n">avg_true</span><span class="p">,</span> <span class="n">avg_pred</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_xmpl_reliability_diagram_014.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_014.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.039 seconds)</p>
+<img src="../../_images/sphx_glr_xmpl_reliability_diagram_014.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_014.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.091 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-reliability-diagram-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_reliability_diagram.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
