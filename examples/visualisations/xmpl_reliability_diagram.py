@@ -81,7 +81,9 @@ fig = plot_reliability_diagram(labels=y, scores=s1, show_histogram=False)
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                class_names=['Negative', 'Positive'],
                                show_gaps=True, show_bars=True,
-                               show_histogram=False)
+                               show_histogram=True)
+
+fig.savefig('pycalib_rd_bars.pdf')
 
 ##############################################################################
 # However, both previous illustrations do not include the number of samples
@@ -150,6 +152,8 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                errorbar_interval=0.95,
                                interval_method='beta')
 
+fig.savefig('pycalib_rd_lines.pdf')
+
 ##############################################################################
 # It is possible to draw reliability diagram for multiple classes as well. We
 # will simulate 3 classes by changing some original labels to a 3rd class, and
@@ -189,6 +193,8 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_bars=True,
                                show_gaps=True,
                                color_gaps='orange')
+
+fig.savefig('pycalib_rd_ternary.pdf')
 
 ##############################################################################
 # If we have precomputed the average proportion of true positives and
