@@ -18,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -47,7 +49,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Calibration methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualisations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualisations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_reliability_diagram"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_binary_reliability_diagram_gaps"><code class="docutils literal notranslate"><span class="pre">plot_binary_reliability_diagram_gaps()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_critical_difference"><code class="docutils literal notranslate"><span class="pre">plot_critical_difference()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_df_to_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_df_to_heatmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_reliability_diagram_precomputed"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram_precomputed()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html#visualisation-examples">Visualisation Examples</a></li>
@@ -66,8 +77,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Visualisations</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Visualisations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/visualisations.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,7 +89,7 @@
            <div itemprop="articleBody">
              
   <section id="visualisations">
-<span id="id1"></span><h1>Visualisations<a class="headerlink" href="#visualisations" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Visualisations<a class="headerlink" href="#visualisations" title="Permalink to this heading"></a></h1>
 <p>Visualisations file describes all visualisations tools in PyCalib</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pycalib.visualisations.plot_reliability_diagram">

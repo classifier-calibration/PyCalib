@@ -18,7 +18,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -65,8 +67,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to PyCalib’s documentation!</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Welcome to PyCalib’s documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -77,7 +79,7 @@
            <div itemprop="articleBody">
              
   <section id="welcome-to-pycalib-s-documentation">
-<h1>Welcome to PyCalib’s documentation!<a class="headerlink" href="#welcome-to-pycalib-s-documentation" title="Permalink to this headline"></a></h1>
+<h1>Welcome to PyCalib’s documentation!<a class="headerlink" href="#welcome-to-pycalib-s-documentation" title="Permalink to this heading"></a></h1>
 <p>PyCalib is a library that offers multiple tools to assess probabilistic
 classifiers in terms of calibration, and provides helpful functions to
 calibrate muticlass probabilistic models that follow the Scikit-learn
@@ -87,19 +89,50 @@ calibrate muticlass probabilistic models that follow the Scikit-learn
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/models.html">Calibration methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/visualisations.html">Visualisations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/stats.html">Statistics tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html#visualisation-examples">Visualisation Examples</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="api/models.html">Calibration methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.BinningCalibration"><code class="docutils literal notranslate"><span class="pre">BinningCalibration</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.CalibratedClassifierCV"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.CalibratedModel"><code class="docutils literal notranslate"><span class="pre">CalibratedModel</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.IsotonicCalibration"><code class="docutils literal notranslate"><span class="pre">IsotonicCalibration</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.LogisticCalibration"><code class="docutils literal notranslate"><span class="pre">LogisticCalibration</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#pycalib.models.SigmoidCalibration"><code class="docutils literal notranslate"><span class="pre">SigmoidCalibration</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api/metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.ECE"><code class="docutils literal notranslate"><span class="pre">ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.MCE"><code class="docutils literal notranslate"><span class="pre">MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.binary_ECE"><code class="docutils literal notranslate"><span class="pre">binary_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.binary_MCE"><code class="docutils literal notranslate"><span class="pre">binary_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.brier_score"><code class="docutils literal notranslate"><span class="pre">brier_score()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.classwise_ECE"><code class="docutils literal notranslate"><span class="pre">classwise_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.classwise_MCE"><code class="docutils literal notranslate"><span class="pre">classwise_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.conf_ECE"><code class="docutils literal notranslate"><span class="pre">conf_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.conf_MCE"><code class="docutils literal notranslate"><span class="pre">conf_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/metrics.html#pycalib.metrics.cross_entropy"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/visualisations.html">Visualisations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_reliability_diagram"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_binary_reliability_diagram_gaps"><code class="docutils literal notranslate"><span class="pre">plot_binary_reliability_diagram_gaps()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_critical_difference"><code class="docutils literal notranslate"><span class="pre">plot_critical_difference()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_df_to_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_df_to_heatmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#id0"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visualisations.html#pycalib.visualisations.plot_reliability_diagram_precomputed"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram_precomputed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/stats.html">Statistics tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/stats.html#pycalib.stats.compute_friedmanchisquare"><code class="docutils literal notranslate"><span class="pre">compute_friedmanchisquare()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html#visualisation-examples">Visualisation Examples</a></li>
 </ul>
 </div>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

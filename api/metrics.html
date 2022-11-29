@@ -18,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -47,7 +49,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Calibration methods</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.ECE"><code class="docutils literal notranslate"><span class="pre">ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.MCE"><code class="docutils literal notranslate"><span class="pre">MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.binary_ECE"><code class="docutils literal notranslate"><span class="pre">binary_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.binary_MCE"><code class="docutils literal notranslate"><span class="pre">binary_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.brier_score"><code class="docutils literal notranslate"><span class="pre">brier_score()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.classwise_ECE"><code class="docutils literal notranslate"><span class="pre">classwise_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.classwise_MCE"><code class="docutils literal notranslate"><span class="pre">classwise_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.conf_ECE"><code class="docutils literal notranslate"><span class="pre">conf_ECE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.conf_MCE"><code class="docutils literal notranslate"><span class="pre">conf_MCE()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.metrics.cross_entropy"><code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="visualisations.html">Visualisations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
@@ -67,8 +82,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Metrics</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Metrics</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/metrics.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,7 +94,7 @@
            <div itemprop="articleBody">
              
   <section id="metrics">
-<span id="id1"></span><h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this heading"></a></h1>
 <span class="target" id="module-pycalib.metrics"></span><dl class="py function">
 <dt class="sig sig-object py" id="pycalib.metrics.ECE">
 <span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ece_full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.ECE" title="Permalink to this definition"></a></dt>
@@ -231,7 +246,8 @@ each score as the estimated class.</p>
 <span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">binary_MCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.binary_MCE" title="Permalink to this definition"></a></dt>
 <dd><p>Binary Maximum Calibration Error</p>
 <div class="math notranslate nohighlight">
-\[\text{binary-MCE}  = \max_{i \in \{1, ..., M\}} |\bar{y}(B_{i}) - \bar{p}(B_{i})|\]</div>
+\[\text{binary-MCE}  = \max_{i \in \{1, ..., M\}} |\bar{y}(B_{i})
+- \bar{p}(B_{i})|\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -385,7 +401,8 @@ estimations and the true labels.</p>
 <dt class="sig sig-object py" id="pycalib.metrics.conf_ECE">
 <span class="sig-prename descclassname"><span class="pre">pycalib.metrics.</span></span><span class="sig-name descname"><span class="pre">conf_ECE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.metrics.conf_ECE" title="Permalink to this definition"></a></dt>
 <dd><p>Confidence Expected Calibration Error</p>
-<p>Calculate ECE score based on model maximum output probabilities and true labels</p>
+<p>Calculate ECE score based on model maximum output probabilities and true
+labels</p>
 <div class="math notranslate nohighlight">
 \[\text{confidence-ECE}  = \sum_{i=1}^M \frac{|B_{i}|}{N} |
 \text{accuracy}(B_{i}) - \bar{p}(B_{i})|\]</div>

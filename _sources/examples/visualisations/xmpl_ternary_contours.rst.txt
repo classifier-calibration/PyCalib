@@ -234,35 +234,30 @@ previous functions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.562 seconds)
+   **Total running time of the script:** ( 0 minutes  2.704 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_ternary_contours.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_ternary_contours.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_ternary_contours.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: xmpl_ternary_contours.py <xmpl_ternary_contours.py>`
 
-     :download:`Download Python source code: xmpl_ternary_contours.py <xmpl_ternary_contours.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: xmpl_ternary_contours.ipynb <xmpl_ternary_contours.ipynb>`
+      :download:`Download Jupyter notebook: xmpl_ternary_contours.ipynb <xmpl_ternary_contours.ipynb>`
 
 
 .. only:: html

@@ -18,7 +18,10 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,7 +48,42 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Calibration methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Calibration methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.BinningCalibration"><code class="docutils literal notranslate"><span class="pre">BinningCalibration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.BinningCalibration.fit"><code class="docutils literal notranslate"><span class="pre">BinningCalibration.fit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.calibrate_scores"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV.calibrate_scores()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.fit"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.predict"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV.predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedClassifierCV.predict_proba"><code class="docutils literal notranslate"><span class="pre">CalibratedClassifierCV.predict_proba()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.CalibratedModel"><code class="docutils literal notranslate"><span class="pre">CalibratedModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedModel.fit"><code class="docutils literal notranslate"><span class="pre">CalibratedModel.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedModel.predict"><code class="docutils literal notranslate"><span class="pre">CalibratedModel.predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.CalibratedModel.predict_proba"><code class="docutils literal notranslate"><span class="pre">CalibratedModel.predict_proba()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.IsotonicCalibration"><code class="docutils literal notranslate"><span class="pre">IsotonicCalibration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.IsotonicCalibration.fit"><code class="docutils literal notranslate"><span class="pre">IsotonicCalibration.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.IsotonicCalibration.predict"><code class="docutils literal notranslate"><span class="pre">IsotonicCalibration.predict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.LogisticCalibration"><code class="docutils literal notranslate"><span class="pre">LogisticCalibration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.LogisticCalibration.fit"><code class="docutils literal notranslate"><span class="pre">LogisticCalibration.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.LogisticCalibration.predict"><code class="docutils literal notranslate"><span class="pre">LogisticCalibration.predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.LogisticCalibration.predict_proba"><code class="docutils literal notranslate"><span class="pre">LogisticCalibration.predict_proba()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pycalib.models.SigmoidCalibration"><code class="docutils literal notranslate"><span class="pre">SigmoidCalibration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.SigmoidCalibration.fit"><code class="docutils literal notranslate"><span class="pre">SigmoidCalibration.fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycalib.models.SigmoidCalibration.predict"><code class="docutils literal notranslate"><span class="pre">SigmoidCalibration.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualisations.html">Visualisations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics tools</a></li>
@@ -66,8 +104,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Calibration methods</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Calibration methods</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/models.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,12 +116,12 @@
            <div itemprop="articleBody">
              
   <section id="module-pycalib.models">
-<span id="calibration-methods"></span><span id="calibration"></span><h1>Calibration methods<a class="headerlink" href="#module-pycalib.models" title="Permalink to this headline"></a></h1>
+<span id="calibration-methods"></span><span id="calibration"></span><h1>Calibration methods<a class="headerlink" href="#module-pycalib.models" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycalib.models.BinningCalibration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">BinningCalibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.BinningCalibration" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -96,7 +134,7 @@
 <td><p>Get parameters for this estimator.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
-<td><p>Return the coefficient of determination of the prediction.</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
 <td><p>Set the parameters of this estimator.</p></td>
@@ -131,7 +169,10 @@ scores : array-like, shape = [n_samples,]</p>
 <dt>y<span class="classifier">array-like, shape = [n_samples, ]</span></dt><dd><p>Labels.</p>
 </dd>
 </dl>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
 <p>self</p>
+</section>
 </dd></dl>
 
 </dd></dl>
@@ -214,7 +255,7 @@ on the validation fold.</p>
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -338,7 +379,7 @@ according to each class on an array of test vectors X.</p>
 <dt class="sig sig-object py" id="pycalib.models.CalibratedModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">CalibratedModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibrator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.CalibratedModel" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -435,7 +476,7 @@ according to each class on an array of test vectors X.</p>
 <dt class="sig sig-object py" id="pycalib.models.IsotonicCalibration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">IsotonicCalibration</span></span><a class="headerlink" href="#pycalib.models.IsotonicCalibration" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -454,13 +495,13 @@ according to each class on an array of test vectors X.</p>
 <td><p>Predict new data by linear interpolation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
-<td><p>Return the coefficient of determination of the prediction.</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
 <td><p>Set the parameters of this estimator.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code>(T)</p></td>
-<td><p>Transform new data by linear interpolation.</p></td>
+<td><p>Transform new data by linear interpolation</p></td>
 </tr>
 </tbody>
 </table>
@@ -489,7 +530,10 @@ scores : array-like, shape = [n_samples,]</p>
 <dt>y<span class="classifier">array-like, shape = [n_samples, ]</span></dt><dd><p>Labels.</p>
 </dd>
 </dl>
+<section id="id5">
+<h2>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <p>self</p>
+</section>
 </dd></dl>
 
 <dl class="py method">
@@ -518,7 +562,7 @@ scores : array-like, shape = [n_samples,]</p>
 <dt class="sig sig-object py" id="pycalib.models.LogisticCalibration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">LogisticCalibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lbfgs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'multinomial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.models.LogisticCalibration" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -563,8 +607,8 @@ scores : array-like, shape = [n_samples,]</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>X</strong><span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where <cite>n_samples</cite> is the number of samples and
-<cite>n_features</cite> is the number of features.</p>
+<dt><strong>X</strong><span class="classifier">{array-like, sparse matrix} of shape (n_samples, n_features)</span></dt><dd><p>Training vector, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </dd>
 <dt><strong>y</strong><span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Target vector relative to X.</p>
 </dd>
@@ -643,7 +687,7 @@ where classes are ordered as they are in <code class="docutils literal notransla
 <dt class="sig sig-object py" id="pycalib.models.SigmoidCalibration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycalib.models.</span></span><span class="sig-name descname"><span class="pre">SigmoidCalibration</span></span><a class="headerlink" href="#pycalib.models.SigmoidCalibration" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -659,7 +703,7 @@ where classes are ordered as they are in <code class="docutils literal notransla
 <td><p>Predict new data by linear interpolation.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code>(X, y[, sample_weight])</p></td>
-<td><p>Return the coefficient of determination of the prediction.</p></td>
+<td><p>Return the coefficient of determination <span class="math notranslate nohighlight">\(R^2\)</span> of the prediction.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code>(**params)</p></td>
 <td><p>Set the parameters of this estimator.</p></td>

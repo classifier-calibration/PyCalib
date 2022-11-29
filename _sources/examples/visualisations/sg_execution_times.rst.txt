@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**00:06.826** total execution time for **examples_visualisations** files:
+**00:06.939** total execution time for **examples_visualisations** files:
 
 +-------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``) | 00:03.036 | 0.0 MB |
+| :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``) | 00:03.039 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_visualisations_xmpl_ternary_contours.py` (``xmpl_ternary_contours.py``)       | 00:02.562 | 0.0 MB |
+| :ref:`sphx_glr_examples_visualisations_xmpl_ternary_contours.py` (``xmpl_ternary_contours.py``)       | 00:02.704 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_visualisations_xmpl_ternary_samples.py` (``xmpl_ternary_samples.py``)         | 00:01.228 | 0.0 MB |
+| :ref:`sphx_glr_examples_visualisations_xmpl_ternary_samples.py` (``xmpl_ternary_samples.py``)         | 00:01.197 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------+-----------+--------+
