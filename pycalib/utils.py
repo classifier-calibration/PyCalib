@@ -18,7 +18,6 @@ def df_normalise(df, columns=True):
     return (df.T/df.sum(axis=1)).T
 
 
-
 def get_binned_scores(labels, scores, bins=10):
     '''
     Parameters

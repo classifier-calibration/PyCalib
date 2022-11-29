@@ -14,7 +14,7 @@ from statsmodels.stats.proportion import proportion_confint
 from matplotlib import gridspec
 
 from pycalib.utils import (df_normalise, multiindex_to_strings,
-                          get_binned_scores)
+                           get_binned_scores)
 
 
 def plot_reliability_diagram_precomputed(avg_true, avg_pred,

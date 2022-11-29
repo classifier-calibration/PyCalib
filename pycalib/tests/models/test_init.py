@@ -51,7 +51,7 @@ class TestSigmoidCalibration(unittest.TestCase):
 class TestCalibratedModel(unittest.TestCase):
     def test_fit_predict(self):
         X, Y = make_blobs(n_samples=10000, centers=5, n_features=2,
-                                    random_state=42)
+                          random_state=42)
         Y = (Y > 2).astype(int)
         cal = CalibratedModel(LogisticRegression(), IsotonicCalibration())
         cal.fit(X, Y)

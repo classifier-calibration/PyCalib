@@ -115,7 +115,7 @@ class LogisticCalibration(LogisticRegression):
                 cal.fit(scores, y)
                 losses[i] = log_loss(y_val, cal.predict_proba(X_val))
                 calibrators.append(cal)
-            best_idx = losses.argmin()
+            best_idx = int(losses.argmin())
             self.C = calibrators[best_idx].C
         return super(LogisticCalibration, self).fit(self.encode(scores), y,
                                                     *args, **kwargs)
@@ -138,7 +138,8 @@ class SigmoidCalibration(_SigmoidCalibration):
     def predict_proba(self, scores, *args, **kwargs):
         if len(scores.shape) > 1:
             scores = scores[:, 1]
-        transformed = super(SigmoidCalibration, self).predict(scores, *args, **kwargs)
+        transformed = super(SigmoidCalibration, self).predict(scores, *args,
+                                                              **kwargs)
         return np.vstack((1 - transformed, transformed)).T
 
     def predict(self, *args, **kwargs):
@@ -458,7 +459,8 @@ class CalibratedClassifierCV(BaseEstimator, ClassifierMixin):
 
         if self.cv == "prefit":
             calibrated_classifier = _CalibratedClassifier(
-                base_estimator, calibrator=self.method, score_type=self.score_type)
+                base_estimator, method=self.method,
+                score_type=self.score_type)
             if sample_weight is not None:
                 calibrated_classifier.fit(X, y, sample_weight)
             else:
@@ -486,7 +488,7 @@ class CalibratedClassifierCV(BaseEstimator, ClassifierMixin):
                     this_estimator.fit(X[train], y[train])
 
                 calibrated_classifier = _CalibratedClassifier(
-                    this_estimator, calibrator=self.method,
+                    this_estimator, method=self.method,
                     score_type=self.score_type)
                 if sample_weight is not None:
                     calibrated_classifier.fit(X[test], y[test],

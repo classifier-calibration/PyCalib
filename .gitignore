@@ -10,3 +10,4 @@ venv
 *.pdf
 *.svg
 *.png
+.ipynb_checkpoints/

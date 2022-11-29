@@ -110,7 +110,8 @@ def brier_score(y_true, y_pred):
 def conf_ECE(y_true, probs, bins=15):
     r"""Confidence Expected Calibration Error
 
-    Calculate ECE score based on model maximum output probabilities and true labels
+    Calculate ECE score based on model maximum output probabilities and true
+    labels
 
     .. math::
 
@@ -458,7 +459,8 @@ def binary_MCE(y_true, probs, power=1, bins=15):
 
     .. math::
 
-        \text{binary-MCE}  = \max_{i \in \{1, ..., M\}} |\bar{y}(B_{i}) - \bar{p}(B_{i})|
+        \text{binary-MCE}  = \max_{i \in \{1, ..., M\}} |\bar{y}(B_{i})
+        - \bar{p}(B_{i})|
 
     Parameters
     ----------

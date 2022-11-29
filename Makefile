@@ -24,7 +24,7 @@ doc: requirements-dev
 # From Scikit-learn
 code-analysis:
 	flake8 pycalib | grep -v external
-	pylint -E pycalib/ -d E1103,E0611,E1101
+	pylint -E pycalib/ -d E1103,E0611,E1101 --generated-members=Blues --ignored-modules=scipy.special
 
 clean:
 	rm -rf ./dist

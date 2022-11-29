@@ -63,12 +63,11 @@ class TestVisualisations(unittest.TestCase):
                                        show_histogram=True)
         self.assertIsInstance(fig, plt.Figure)
 
-
     def test_plot_reliability_diagram_full(self):
         n_c1 = n_c2 = 500
         p = np.concatenate((np.random.beta(2, 5, n_c1),
                             np.random.beta(4, 3, n_c2)
-                           ))
+                            ))
 
         y = np.concatenate((np.zeros(n_c1), np.ones(n_c2)))
 
@@ -78,24 +77,22 @@ class TestVisualisations(unittest.TestCase):
         s2 = np.vstack((1 - s2, s2)).T
 
         fig = plot_reliability_diagram(labels=y, scores=s1,
-                               legend=['Model 1'],
-                               show_histogram=True,
-                               bins=9, class_names=['Negative', 'Positive'],
-                               show_counts=True,
-                               show_correction=True,
-                               show_gaps=True,
-                               sample_proportion=0.5,
-                               errorbar_interval=0.95,
-                               hist_per_class=True)
+                                       legend=['Model 1'],
+                                       show_histogram=True, bins=9,
+                                       class_names=['Negative', 'Positive'],
+                                       show_counts=True, show_correction=True,
+                                       show_gaps=True, sample_proportion=0.5,
+                                       errorbar_interval=0.95,
+                                       hist_per_class=True)
         self.assertIsInstance(fig, plt.Figure)
 
         class_2_idx = range(int(len(y)/3), int(2*len(y)/3))
         y[class_2_idx] = 2
         s1 = np.hstack((s1, s1[:, 1].reshape(-1, 1)))
-        s1[class_2_idx,2] *= 3
+        s1[class_2_idx, 2] *= 3
         s1 /= s1.sum(axis=1)[:, None]
         s2 = np.hstack((s2, s2[:, 1].reshape(-1, 1)))
-        s2[class_2_idx,2] *= 2
+        s2[class_2_idx, 2] *= 2
         s2 /= s2.sum(axis=1)[:, None]
 
         bins = [0, .3, .5, .8, 1]
