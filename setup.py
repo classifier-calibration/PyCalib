@@ -25,7 +25,7 @@ setup(
   description = 'Python library with tools for classifier calibration.',
   author = 'Miquel Perello Nieto, Hao Song, Telmo de Menezes e Silva Filho',
   author_email = 'perello.nieto@gmail.com',
-  url = 'https://github.com/classifier-calibration/PyCalib/index.html',
+  url = 'https://classifier-calibration.github.io/PyCalib/',
   download_url = 'https://github.com/classifier-calibration/archive/{}.tar.gz'.format(main_ns['__version__']),
   keywords = ['classifier calibration', 'calibration', 'classification'],
   classifiers = [],
