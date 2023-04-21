@@ -114,7 +114,7 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=8, fig=None,
     refiner = tri.UniformTriRefiner(triangle)
     trimesh = refiner.refine_triangulation(subdiv=subdiv)
 
-    pvals = np.array([func(xy2bc(xy)) for xy in zip(trimesh.x, trimesh.y)])
+    z = np.array([func(xy2bc(xy)) for xy in zip(trimesh.x, trimesh.y)])
 
     if fig is None:
         fig = plt.figure()
@@ -125,19 +125,31 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=8, fig=None,
     # shown. I had to do create manually the levels and increase the max value
     # by an epsilon. This could be a major problem if the epsilon is not small
     # for the original range of values
-    # contour = ax.tricontourf(trimesh, pvals, nlevels, **kwargs)
-    # contour = ax.tricontourf(trimesh, pvals, nlevels, extend='both')
-    contour = ax.tricontourf(trimesh, pvals,
-                             levels=np.linspace(pvals.min(), pvals.max()+1e-9,
-                                                nlevels),
-                             **kwargs)
+    # contour = ax.tricontourf(trimesh, z, nlevels, **kwargs)
+    # contour = ax.tricontourf(trimesh, z, nlevels, extend='both')
+    is_nan = ~np.isfinite(z)
+    #z[is_nan] = 0
+    nan_id = np.where(is_nan)[0]
+    triangles_mask = np.zeros(trimesh.triangles.shape[0])
+    for ni in nan_id:
+        for i in range(trimesh.triangles.shape[0]):
+            if ni in trimesh.triangles[i]:
+                triangles_mask[i] = 1
+    trimesh.set_mask(triangles_mask)
+    if not np.all(triangles_mask):
+        contour = ax.tricontourf(trimesh, z,
+                                 levels=np.linspace(z[~is_nan].min(),
+                                                    z[~is_nan].max()+1e-9,
+                                                    nlevels),
+                                 **kwargs)
 
-    # Colorbar
-    cb = fig.colorbar(contour, ax=ax, fraction=0.1, orientation='horizontal')
-    tick_locator = ticker.MaxNLocator(nbins=5)
-    cb.locator = tick_locator
-    # cb.ax.xaxis.set_major_locator(ticker.AutoLocator())
-    cb.update_ticks()
+        # Colorbar
+        cb = fig.colorbar(contour, ax=ax, fraction=0.1,
+                          orientation='horizontal')
+        tick_locator = ticker.MaxNLocator(nbins=5)
+        cb.locator = tick_locator
+        # cb.ax.xaxis.set_major_locator(ticker.AutoLocator())
+        cb.update_ticks()
 
     if labels is not None:
         if labels == 'auto':
