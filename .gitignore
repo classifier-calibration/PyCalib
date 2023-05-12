@@ -6,8 +6,10 @@ pycalib/__pycache__/
 pycalib/tests/__pycache__/
 venv
 .coverage
+coverage.xml
 *.swp
 *.pdf
 *.svg
 *.png
 .ipynb_checkpoints/
+/docs/

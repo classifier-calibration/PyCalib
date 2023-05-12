@@ -15,11 +15,11 @@ setup(
   name = 'pycalib',
   packages = find_packages(exclude=['tests.*', 'tests', 'docs.*', 'docs']),
   install_requires=[
-    'numpy==1.22',
-    'scipy==1.6',
-    'scikit-learn==0.24',
-    'matplotlib==3.3',
-    'statsmodels==0.12'
+    'numpy>=1.22',
+    'scipy>=1.6',
+    'scikit-learn>=0.24',
+    'matplotlib>=3.3',
+    'statsmodels>=0.12'
   ],
   version=main_ns['__version__'],
   description = 'Python library with tools for classifier calibration.',

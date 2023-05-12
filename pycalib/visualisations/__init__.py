@@ -127,7 +127,7 @@ def plot_reliability_diagram_precomputed(avg_true, avg_pred,
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
-                    ygaps = avg_pred - avg_true
+                    ygaps = np.abs(avg_pred - avg_true)
                     ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
                     ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
                                  color=color_gaps, lw=4, capsize=5, capthick=1,
@@ -327,8 +327,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
                     intervals.fill(np.nan)
                     intervals[:, ~zero_idx] = nozero_intervals
 
-                    yerr = intervals - avg_true
-                    yerr = np.abs(yerr)
+                    yerr = np.abs(intervals - avg_true)
                     ax1.errorbar(avg_pred, avg_true, yerr=yerr, label=name,
                                  fmt=fmt, color=color_list[j])  # markersize=5)
 
@@ -348,7 +347,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
-                    ygaps = avg_pred - avg_true
+                    ygaps = np.abs(avg_pred - avg_true)
                     ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
                     ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
                                  color=color_gaps, lw=4, capsize=5, capthick=1,
