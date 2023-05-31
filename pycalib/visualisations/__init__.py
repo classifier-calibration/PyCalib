@@ -108,7 +108,7 @@ def plot_reliability_diagram_precomputed(avg_true, avg_pred,
         ax1 = fig.add_subplot(spec[i])
         # Perfect calibration
         ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
-                 zorder=0)
+                 zorder=10)
 
         for j in range(n_scores):
             # bin_total = bin_total_list[j][:, i]
@@ -127,8 +127,11 @@ def plot_reliability_diagram_precomputed(avg_true, avg_pred,
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
-                    ygaps = np.abs(avg_pred - avg_true)
-                    ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
+                    error = avg_pred - avg_true
+                    negative_values = error < 0
+                    ygaps = np.zeros(shape=(2, avg_true.shape[0]))
+                    ygaps[0, negative_values] = - error[negative_values]
+                    ygaps[1, ~negative_values] = error[~negative_values]
                     ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
                                  color=color_gaps, lw=4, capsize=5, capthick=1,
                                  zorder=10)
@@ -298,7 +301,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
         ax1 = fig.add_subplot(spec[i])
         # Perfect calibration
         ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
-                 zorder=0)
+                 zorder=10)
         for j, score in enumerate(scores_list):
             if labels_list:
                 labels = labels_list[j]
@@ -347,8 +350,11 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
             if show_gaps:
                 for ap, at in zip(avg_pred, avg_true):
-                    ygaps = np.abs(avg_pred - avg_true)
-                    ygaps = np.vstack((np.zeros_like(ygaps), ygaps))
+                    error = avg_pred - avg_true
+                    negative_values = error < 0
+                    ygaps = np.zeros(shape=(2, avg_true.shape[0]))
+                    ygaps[0, negative_values] = - error[negative_values]
+                    ygaps[1, ~negative_values] = error[~negative_values]
                     ax1.errorbar(avg_pred, avg_true, yerr=ygaps, fmt=" ",
                                  color=color_gaps, lw=4, capsize=5, capthick=1,
                                  zorder=10)
@@ -516,7 +522,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     if legend:
         ax.legend()
 
-    ax.plot([0, 1], [0, 1], linestyle="--", color='grey')
+    ax.plot([0, 1], [0, 1], linestyle="--", color='grey', zorder=10)
     ax.set_xlim([0, 1])
     ax.set_xlabel('Predicted probability')
     ax.set_ylim([0, 1])
