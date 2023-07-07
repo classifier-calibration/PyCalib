@@ -229,7 +229,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
     confidence : boolean
         If True shows only the confidence reliability diagram.
 
-    Regurns
+    Returns
     =======
     fig : matplotlib.pyplot.figure
         Figure with the reliability diagram
