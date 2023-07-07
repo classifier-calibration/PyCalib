@@ -1,3 +1,4 @@
+from collections import namedtuple
 import numpy as np
 import pandas as pd
 
@@ -7,8 +8,11 @@ from scipy.stats import mannwhitneyu
 from scipy.stats import friedmanchisquare
 
 
-def compute_friedmanchisquare(table):
-    '''
+TestResult = namedtuple("TestResult", ["statistic", "p_value"])
+
+
+def compute_friedmanchisquare(table: pd.DataFrame) -> TestResult:
+    """ Compute Friedman test for repeated samples
     Example:
         - n wine judges each rate k different wines. Are any of the k wines
         ranked consistently higher or lower than the others?
@@ -19,21 +23,17 @@ def compute_friedmanchisquare(table):
     This will output a statistic and a p-value
     SciPy does the following:
         - k: is the number of parameters passed to the function
-        - n: is the lenght of each array passed to the function
+        - n: is the length of each array passed to the function
     The two options for the given table are:
-        - k is the datasets: table['mean'].values).tolist()
-        - k is the calibration methods: table['mean'].T.values).tolist()
-    '''
+        - k is the datasets: table['mean'].values.tolist()
+        - k is the calibration methods: table['mean'].T.values.tolist()
+    """
     if table.shape[1] < 3:
-        print('Friedman test not appropiate for less than 3 methods')
+        print('Friedman test not appropriate for less than 3 methods')
+        return TestResult(np.nan, np.nan)
 
-        class Ftest():
-            def __init__(self, statistic, pvalue):
-                self.statistic = statistic
-                self.pvalue = pvalue
-        return Ftest(np.nan, np.nan)
-
-    return friedmanchisquare(*(table.T.values).tolist())
+    statistic, p = friedmanchisquare(*table.T.values)
+    return TestResult(statistic, p)
 
 
 def paired_test(table, stats_func=ranksums):
