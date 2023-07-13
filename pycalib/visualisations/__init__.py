@@ -172,7 +172,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
                              show_bars=False,
                              invert_histogram=False,
                              color_gaps='lightcoral',
-                             confidence=False):
+                             confidence=False,
+                             ax=None):
     """ Plots the reliability diagram of the given scores and true labels
 
     Parameters
@@ -264,7 +265,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
         class_names = ['Non winning', 'winning']
         n_columns = 1
     else:
-        n_columns = labels.shape[1]
+        n_columns = n_classes
 
     if class_names is None:
         class_names = [str(i+1) for i in range(n_classes)]
@@ -272,6 +273,7 @@ def plot_reliability_diagram(labels, scores, legend=None,
     if n_classes == 2:
         scores_list = [score[:, 1].reshape(-1, 1) for score in scores_list]
         class_names = [class_names[1], ]
+        n_columns = 1
 
     if fig is None:
         fig = plt.figure(figsize=(n_columns*4, 4))
@@ -298,7 +300,10 @@ def plot_reliability_diagram(labels, scores, legend=None,
             bins[-1] = 1 + 1e-8
 
     for i in range(n_columns):
-        ax1 = fig.add_subplot(spec[i])
+        if ax is not None:
+            ax1 = ax
+        else:
+            ax1 = fig.add_subplot(spec[i])
         # Perfect calibration
         ax1.plot([0, 1], [0, 1], "--", color='lightgrey',
                  zorder=10)
@@ -379,8 +384,12 @@ def plot_reliability_diagram(labels, scores, legend=None,
         ax1.set_axisbelow(True)
 
         if show_histogram:
-            ax2 = fig.add_subplot(spec[n_columns + i],
-                                  label='{}'.format(i))
+            divider = make_axes_locatable(ax1)
+            ax2 = divider.append_axes("bottom", size="20%", pad=0.1,
+                                            sharex=ax1)
+
+            #ax2 = fig.add_subplot(spec[n_columns + i],
+            #                      label='{}'.format(i))
             for j, score in enumerate(scores_list):
                 ax1.set_xticklabels([])
                 # lines = ax1.get_lines()
@@ -443,7 +452,8 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
 def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
                                          fig=None, ax=None, legend=False,
-                                         color_gaps='lightcoral'):
+                                         color_gaps='lightcoral',
+                                         show_histogram=False):
     """Plot binary reliability diagram gaps
 
     Parameters
@@ -473,7 +483,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     if fig is None and ax is None:
         fig = plt.figure()
     if ax is None:
-        ax = fig.add_subplot(111)
+        ax = fig.add_subplot()
 
     if title is not None:
         ax.set_title(title)
@@ -524,11 +534,32 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
 
     ax.plot([0, 1], [0, 1], linestyle="--", color='grey', zorder=10)
     ax.set_xlim([0, 1])
-    ax.set_xlabel('Predicted probability')
     ax.set_ylim([0, 1])
-    ax.set_ylabel('Proportion of positives')
+
+    ax.set_ylabel('Fraction of positives')
     ax.grid(True)
     ax.set_axisbelow(True)
+
+    if show_histogram:
+        ax.set_xticklabels([])
+
+        divider = make_axes_locatable(ax)
+        ax2 = divider.append_axes("bottom", size="20%", pad=0.1,
+                                        sharex=ax)
+
+        ax2.hist(p_pred, range=(0, 1),
+                 bins=n_bins,
+                 histtype="bar",
+                 lw=1,
+                 color="cornflowerblue",
+                 edgecolor='black')
+
+        ax2.set_ylabel('Count')
+        ax2.grid(True, which='both')
+        ax2.set_axisbelow(True)
+        ax2.set_xlabel('Predicted probability')
+    else:
+        ax.set_xlabel('Predicted probability')
 
     return fig, ax
 
@@ -749,3 +780,44 @@ def plot_df_to_heatmap(df, title=None, figsize=None, annotate=True,
                          color=color
                          )
     return fig
+
+
+
+def plot_calibration_map(scores_set, prob, legend_set, original_first=False,
+                         alpha=1, **kwargs):
+    fig_calibration_map = plt.figure('calibration_map')
+    fig_calibration_map.clf()
+    ax_calibration_map = plt.subplot(111)
+    ax = ax_calibration_map
+    # ax.set_title('calibration map')
+    ax.set_ylim([0, 1])
+    ax.set_xlim([0, 1])
+    n_lines = len(legend_set)
+    if original_first:
+        bins = np.linspace(0, 1, 11)
+        hist_tot = np.histogram(prob[0], bins=bins)
+        hist_pos = np.histogram(prob[0][prob[1] == 1], bins=bins)
+        edges = np.insert(bins, np.arange(len(bins)), bins)
+        empirical_p = np.true_divide(hist_pos[0]+alpha, hist_tot[0]+2*alpha)
+        empirical_p = np.insert(empirical_p, np.arange(len(empirical_p)),
+                                empirical_p)
+        ax.plot(edges[1:-1], empirical_p, label='empirical')
+
+    skip = original_first
+    for (scores, legend) in zip(scores_set, legend_set):
+        if skip and original_first:
+            skip = False
+        else:
+            if legend == 'uncalib':
+                ax.plot([np.nan], [np.nan], '-', linewidth=n_lines,
+                        **kwargs)
+            else:
+                ax.plot(prob[2], scores, '-', label=legend, linewidth=n_lines,
+                        **kwargs)
+            n_lines -= 1
+    if original_first:
+        ax.plot(prob[0], prob[1], 'kx',
+                label=legend_set[0], markersize=9, markeredgewidth=1)
+    ax.legend(loc='upper left')
+    ax.grid(True)
+    return fig_calibration_map
