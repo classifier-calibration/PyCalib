@@ -752,7 +752,7 @@ def _score_sampling(probs, samples=10000, ece_function=None):
 
     return np.array(
         [
-            ece_function(probs, _label_resampling_v2(probs)) for sample in
+            ece_function(_label_resampling_v2(probs), probs) for sample in
             range(samples)
         ]
     )
