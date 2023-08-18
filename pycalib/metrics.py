@@ -722,7 +722,7 @@ def full_ECE(y_true, probs, bins=15, power=1):
 
     return s
 
-
+# TODO: Speed up computation.
 def _label_resampling(probs):
     c = probs.cumsum(axis=1)
     u = np.random.rand(len(c), 1)
@@ -731,14 +731,28 @@ def _label_resampling(probs):
     y[range(len(probs)), choices] = 1
     return y
 
+# Speed up of the previous label_resampling function
+def get_one_hot(targets, nb_classes):
+    res = np.eye(nb_classes)[np.array(targets).reshape(-1)]
+    return res.reshape(list(targets.shape)+[nb_classes])
 
+def _label_resampling_v2(probs):
+    c = probs.cumsum(axis=1)
+    u = np.random.rand(len(c), 1)
+    choices = (u < c).argmax(axis=1)
+    y = get_one_hot(choices, probs.shape[1])
+    return y
+
+
+
+# TODO: Speed up computation.
 def _score_sampling(probs, samples=10000, ece_function=None):
 
     probs = np.array(probs)
 
     return np.array(
         [
-            ece_function(probs, _label_resampling(probs)) for sample in
+            ece_function(probs, _label_resampling_v2(probs)) for sample in
             range(samples)
         ]
     )
@@ -759,5 +773,5 @@ def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
                 ece_function=ece_function
             ),
             ece_function(y_true, probs)
-        ) / 100
+        ) / 100.0
     )
