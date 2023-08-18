@@ -3,6 +3,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import log_loss
 from sklearn.preprocessing import label_binarize
 from scipy.stats import percentileofscore
+import multiprocessing
 
 
 def accuracy(y_true, y_pred):
@@ -758,6 +759,20 @@ def _score_sampling(probs, samples=10000, ece_function=None):
     )
 
 
+# This uses all available CPUS reducing the time by this factor
+def _score_sampling_v2(probs, samples=10000, ece_function=None):
+
+    probs = np.array(probs)
+
+    pool = multiprocessing.Pool()
+
+    probs_list = [probs for i in range(samples)]
+    labels_sampled = pool.map(_label_resampling_v2, probs_list)
+
+    return np.array(pool.starmap(ece_function, zip(labels_sampled,
+                                                   probs_list)))
+
+
 def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
 
     probs = np.array(probs)
@@ -767,7 +782,7 @@ def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
 
     return 1 - (
         percentileofscore(
-            _score_sampling(
+            _score_sampling_v2(
                 probs,
                 samples=samples,
                 ece_function=ece_function

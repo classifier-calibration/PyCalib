@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 from pycalib.metrics import (accuracy, cross_entropy, brier_score,
                              binary_ECE, conf_ECE, classwise_ECE, full_ECE,
-                             MCE)
+                             MCE, pECE)
 
 from sklearn.preprocessing import label_binarize
 
@@ -137,6 +137,26 @@ class TestFunctions(unittest.TestCase):
                       ])
         mce = MCE(Y, S, bins=2)
         self.assertAlmostEqual(mce, 0.4 - 1/4)
+
+
+    def test_calibrated_p_ece(self):
+        p = np.random.rand(1000, 3).round(2)
+        p /= p.sum(axis=1)[:, None]
+        y = np.random.binomial(1, p)
+        calibrated_pECE = pECE(y, p, samples=100)
+        self.assertGreater(calibrated_pECE, 0.04)
+        calibrated_pECE = pECE(y, p, samples=100, ece_function=conf_ECE)
+        self.assertGreater(calibrated_pECE, 0.04)
+
+    def test_uncalibrated_p_ece(self):
+        p = np.random.rand(1000, 3).round(2)
+        p /= p.sum(axis=1)[:, None]
+        y = np.eye(3)[np.random.choice([0, 1, 2], size=p.shape[0])]
+        uncalibrated_pECE = pECE(y, p, samples=100)
+        self.assertLess(uncalibrated_pECE, 0.04)
+        uncalibrated_pECE = pECE(y, p, samples=100, ece_function=conf_ECE)
+        self.assertLess(uncalibrated_pECE, 0.04)
+
 
 
 def main():
