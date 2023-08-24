@@ -452,8 +452,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
 
 def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
                                          fig=None, ax=None, legend=False,
-                                         color_gaps='lightcoral',
-                                         show_histogram=False):
+                                         color_gaps="lightcoral",
+                                         show_histogram=False,
+                                         color="cornflowerblue"):
     """Plot binary reliability diagram gaps
 
     Parameters
@@ -522,7 +523,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
     not_nan = np.isfinite(true_proportion - centers)
     ax.bar(centers, true_proportion, width=bin_size, edgecolor="black",
            # color="blue", label='True class prop.')
-           color="cornflowerblue", label='True class prop.')
+           color=color, label='True class prop.')
     ax.bar(pred_mean[not_nan], (true_proportion - pred_mean)[not_nan],
            bottom=pred_mean[not_nan], width=0.01,
            edgecolor=color_gaps,
@@ -551,7 +552,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
                  bins=n_bins,
                  histtype="bar",
                  lw=1,
-                 color="cornflowerblue",
+                 color=color,
                  edgecolor='black')
 
         ax2.set_ylabel('Count')
