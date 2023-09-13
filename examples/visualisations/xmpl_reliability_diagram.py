@@ -83,7 +83,8 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_gaps=True, show_bars=True,
                                show_histogram=True)
 
-fig.savefig('pycalib_rd_bars.pdf')
+fig.tight_layout()
+fig.savefig('pycalib_rd_bars.svg')
 
 ##############################################################################
 # However, both previous illustrations do not include the number of samples
@@ -152,7 +153,8 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                errorbar_interval=0.95,
                                interval_method='beta')
 
-fig.savefig('pycalib_rd_lines.pdf')
+fig.tight_layout()
+fig.savefig('pycalib_rd_lines.svg')
 
 ##############################################################################
 # It is possible to draw reliability diagram for multiple classes as well. We
@@ -189,12 +191,23 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
 fig = plot_reliability_diagram(labels=y, scores=s1,
                                legend=['Model 3'],
                                show_histogram=True,
+                               show_bars=True,
+                               show_gaps=True)
+
+fig.tight_layout()
+fig.savefig('pycalib_rd_ternary.svg')
+
+##############################################################################
+# And change the colors.
+
+fig = plot_reliability_diagram(labels=y, scores=s1,
+                               legend=['Model 3'],
+                               show_histogram=True,
                                color_list=['darkgreen'],
                                show_bars=True,
                                show_gaps=True,
                                color_gaps='orange')
 
-fig.savefig('pycalib_rd_ternary.pdf')
 
 ##############################################################################
 # If we have precomputed the average proportion of true positives and

@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+from functools import partial
 from pycalib.metrics import (accuracy, cross_entropy, brier_score,
                              binary_ECE, conf_ECE, classwise_ECE, full_ECE,
                              MCE, pECE)
@@ -140,12 +141,13 @@ class TestFunctions(unittest.TestCase):
 
 
     def test_calibrated_p_ece(self):
-        p = np.random.rand(1000, 3)
+        p = np.random.rand(5000, 3)
         p /= p.sum(axis=1)[:, None]
-        y = np.random.binomial(1, p)
-        calibrated_pECE = pECE(y, p, samples=1000, ece_function=classwise_ECE)
+        multinomial = partial(np.random.multinomial, 1)
+        y = np.apply_along_axis(multinomial, 1, p)
+        calibrated_pECE = pECE(y, p, samples=2000, ece_function=classwise_ECE)
         self.assertGreater(calibrated_pECE, 0.04)
-        calibrated_pECE = pECE(y, p, samples=1000, ece_function=conf_ECE)
+        calibrated_pECE = pECE(y, p, samples=2000, ece_function=conf_ECE)
         self.assertGreater(calibrated_pECE, 0.04)
 
     def test_uncalibrated_p_ece(self):
