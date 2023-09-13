@@ -140,7 +140,7 @@ class TestFunctions(unittest.TestCase):
 
 
     def test_calibrated_p_ece(self):
-        p = np.random.rand(1000, 3).round(2)
+        p = np.random.rand(10000, 3).round(2)
         p /= p.sum(axis=1)[:, None]
         y = np.random.binomial(1, p)
         calibrated_pECE = pECE(y, p, samples=100)
