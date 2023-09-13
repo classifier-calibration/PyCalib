@@ -760,11 +760,11 @@ def _score_sampling(probs, samples=10000, ece_function=None):
 
 
 # This uses all available CPUS reducing the time by this factor
-def _score_sampling_v2(probs, samples=10000, ece_function=None):
+def _score_sampling_v2(probs, samples=10000, ece_function=None, processes=None):
 
     probs = np.array(probs)
 
-    pool = multiprocessing.Pool()
+    pool = multiprocessing.Pool(processes=processes)
 
     probs_list = [probs for i in range(samples)]
     labels_sampled = pool.map(_label_resampling_v2, probs_list)
@@ -773,7 +773,7 @@ def _score_sampling_v2(probs, samples=10000, ece_function=None):
                                                    probs_list)))
 
 
-def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
+def pECE(y_true, probs, samples=10000, ece_function=full_ECE, processes=None):
 
     probs = np.array(probs)
     if not np.array_equal(probs.shape, y_true.shape):
@@ -785,8 +785,8 @@ def pECE(y_true, probs, samples=10000, ece_function=full_ECE):
             _score_sampling_v2(
                 probs,
                 samples=samples,
-                ece_function=ece_function
-            ),
+                ece_function=ece_function,
+                processes=processes),
             ece_function(y_true, probs)
         ) / 100.0
     )
