@@ -140,21 +140,21 @@ class TestFunctions(unittest.TestCase):
 
 
     def test_calibrated_p_ece(self):
-        p = np.random.rand(10000, 3).round(2)
+        p = np.random.rand(1000, 3)
         p /= p.sum(axis=1)[:, None]
         y = np.random.binomial(1, p)
-        calibrated_pECE = pECE(y, p, samples=100)
+        calibrated_pECE = pECE(y, p, samples=1000, ece_function=classwise_ECE)
         self.assertGreater(calibrated_pECE, 0.04)
-        calibrated_pECE = pECE(y, p, samples=100, ece_function=conf_ECE)
+        calibrated_pECE = pECE(y, p, samples=1000, ece_function=conf_ECE)
         self.assertGreater(calibrated_pECE, 0.04)
 
     def test_uncalibrated_p_ece(self):
-        p = np.random.rand(1000, 3).round(2)
+        p = np.random.rand(1000, 3)
         p /= p.sum(axis=1)[:, None]
         y = np.eye(3)[np.random.choice([0, 1, 2], size=p.shape[0])]
-        uncalibrated_pECE = pECE(y, p, samples=100)
+        uncalibrated_pECE = pECE(y, p, samples=1000, ece_function=classwise_ECE)
         self.assertLess(uncalibrated_pECE, 0.04)
-        uncalibrated_pECE = pECE(y, p, samples=100, ece_function=conf_ECE)
+        uncalibrated_pECE = pECE(y, p, samples=1000, ece_function=conf_ECE)
         self.assertLess(uncalibrated_pECE, 0.04)
 
 
