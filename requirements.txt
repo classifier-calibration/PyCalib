@@ -4,3 +4,4 @@ scikit-learn>=0.24
 matplotlib>=3.3
 statsmodels>=0.12
 orange3>=3.28
+betacal>=1.1.0

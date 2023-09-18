@@ -19,10 +19,7 @@ from sklearn.isotonic import IsotonicRegression
 from sklearn.svm import LinearSVC
 from sklearn.model_selection import check_cv
 
-
-# TODO Remove BetaCalibration
-class BetaCalibration(object):
-    pass
+from betacal import BetaCalibration
 
 
 class _DummyCalibration(BaseEstimator, RegressorMixin):
