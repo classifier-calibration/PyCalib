@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visualisations &mdash; PyCalib 0.0.4.dev0 documentation</title>
@@ -15,12 +15,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=6f62007f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -33,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> PyCalib
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PyCalib
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -51,12 +54,6 @@
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Visualisations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_reliability_diagram"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_binary_reliability_diagram_gaps"><code class="docutils literal notranslate"><span class="pre">plot_binary_reliability_diagram_gaps()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_critical_difference"><code class="docutils literal notranslate"><span class="pre">plot_critical_difference()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_df_to_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_df_to_heatmap()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pycalib.visualisations.plot_reliability_diagram_precomputed"><code class="docutils literal notranslate"><span class="pre">plot_reliability_diagram_precomputed()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics tools</a></li>
@@ -77,7 +74,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Visualisations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/visualisations.rst.txt" rel="nofollow"> View page source</a>
@@ -93,10 +90,10 @@
 <p>Visualisations file describes all visualisations tools in PyCalib</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pycalib.visualisations.plot_reliability_diagram">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_reliability_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_reliability_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram" title="Permalink to this definition"></a></dt>
 <dd><p>Plots the reliability diagram of the given scores and true labels</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class.</p>
 </dd>
@@ -151,191 +148,16 @@ bin samples at the bottom.</p>
 </dd>
 </dl>
 </dd>
-</dl>
-</dd></dl>
-
-<span class="target" id="module-pycalib.visualisations"></span><dl class="py function">
-<dt class="sig sig-object py" id="pycalib.visualisations.plot_binary_reliability_diagram_gaps">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_binary_reliability_diagram_gaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_binary_reliability_diagram_gaps" title="Permalink to this definition"></a></dt>
-<dd><p>Plot binary reliability diagram gaps</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>y_true</strong><span class="classifier">np.array shape (n_samples, 2) or (n_samples, )</span></dt><dd><p>Labels corresponding to the scores as a binary indicator matrix or as a
-vector of integers indicating the class.</p>
-</dd>
-<dt><strong>p_pred</strong><span class="classifier">binary matrix shape (n_samples, 2) or (n_samples, )</span></dt><dd><p>Output probability scores for each class as a matrix, or for the
-positive class</p>
-</dd>
-<dt><strong>n_bins</strong><span class="classifier">integer</span></dt><dd><p>Number of bins to divide the scores</p>
-</dd>
-<dt><strong>title</strong><span class="classifier">string</span></dt><dd><p>Title for the plot</p>
-</dd>
-<dt><strong>fig</strong><span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Plots the axis in the given figure</p>
-</dd>
-<dt><strong>ax</strong><span class="classifier">matplotlib.pyplot.Axis</span></dt><dd><p>Axis where to draw the plot</p>
-</dd>
-<dt><strong>legend</strong><span class="classifier">boolean</span></dt><dd><p>If True the function will draw a legend</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>fig</strong><span class="classifier">matplotlib.pyplot.figure</span></dt><dd><p>Figure with the reliability diagram</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="pycalib.visualisations.plot_confusion_matrix">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_confusion_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title='Confusion</span> <span class="pre">matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap=&lt;matplotlib.colors.LinearSegmentedColormap</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_confusion_matrix" title="Permalink to this definition"></a></dt>
-<dd><p>This function prints and plots the confusion matrix.
-Normalization can be applied by setting <cite>normalize=True</cite>.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycalib.visualisations.plot_critical_difference">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_critical_difference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bonferroni-dunn'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_critical_difference" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>test: string in [‘nemenyi’, ‘bonferroni-dunn’]</dt><dd><ul class="simple">
-<li><p>nemenyi two-tailed test (up to 20 methods)</p></li>
-<li><p>bonferroni-dunn one-tailed test (only up to 10 methods)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycalib.visualisations.plot_df_to_heatmap">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_df_to_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_df_to_heatmap" title="Permalink to this definition"></a></dt>
-<dd><p>Exports a heatmap of the given pandas DataFrame</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>df:     pandas.DataFrame</strong></dt><dd><p>It should be a matrix, it can have multiple index and these will be
-flattened.</p>
-</dd>
-<dt><strong>title: string</strong></dt><dd><p>Title of the figure</p>
-</dd>
-<dt><strong>figsize:    tuple of ints (x, y)</strong></dt><dd><p>Figure size in inches</p>
-</dd>
-<dt><strong>annotate:   bool</strong></dt><dd><p>If true, adds numbers inside each box</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_reliability_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorbar_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'beta'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_per_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
-<dd><p>Plots the reliability diagram of the given scores and true labels</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>labels</strong><span class="classifier">array (n_samples, )</span></dt><dd><p>Labels indicating the true class.</p>
-</dd>
-<dt><strong>scores</strong><span class="classifier">matrix (n_samples, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods.</p>
-</dd>
-<dt><strong>legend</strong><span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend.</p>
-</dd>
-<dt><strong>show_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True, it generates an additional figure showing the number of
-samples in each bin.</p>
-</dd>
-<dt><strong>bins</strong><span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or list of bin
-boundaries.</p>
-</dd>
-<dt><strong>class_names</strong><span class="classifier">list of strings or None</span></dt><dd><p>Name of each class, if None it will assign integer numbers starting
-with 1.</p>
-</dd>
-<dt><strong>fig</strong><span class="classifier">matplotlib.pyplot.Figure or None</span></dt><dd><p>Figure to use for the plots, if None a new figure is created.</p>
-</dd>
-<dt><strong>show_counts</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the number of samples of each bin in its corresponding
-line marker.</p>
-</dd>
-<dt><strong>errorbar_interval</strong><span class="classifier">float or None</span></dt><dd><p>If a float between 0 and 1 is passed, it shows an errorbar
-corresponding to a confidence interval containing the specified
-percentile of the data.</p>
-</dd>
-<dt><strong>interval_method</strong><span class="classifier">string (default: ‘beta’)</span></dt><dd><p>Method to estimate the confidence interval which uses the function
-proportion_confint from statsmodels.stats.proportion</p>
-</dd>
-<dt><strong>fmt</strong><span class="classifier">string (default: ‘s-‘)</span></dt><dd><p>Format of the lines following the matplotlib.pyplot.plot standard.</p>
-</dd>
-<dt><strong>show_correction</strong><span class="classifier">boolean</span></dt><dd><p>If True shows an arrow for each bin indicating the necessary correction
-to the average scores in order to be perfectly calibrated.</p>
-</dd>
-<dt><strong>show_gaps</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the gap between the average predictions and the true
-proportion of positive samples.</p>
-</dd>
-<dt><strong>sample_proportion</strong><span class="classifier">float in the interval [0, 1] (default 0)</span></dt><dd><p>If bigger than 0, it shows the labels of the specified proportion of
-samples.</p>
-</dd>
-<dt><strong>hist_per_class</strong><span class="classifier">boolean</span></dt><dd><p>If True shows one histogram of the bins per class.</p>
-</dd>
-<dt><strong>color_list</strong><span class="classifier">list of strings or None</span></dt><dd><p>List of string colors indicating the color of each method.</p>
-</dd>
-<dt><strong>show_bars</strong><span class="classifier">boolean</span></dt><dd><p>If True shows bars instead of lines.</p>
-</dd>
-<dt><strong>invert_histogram</strong><span class="classifier">boolean</span></dt><dd><p>If True shows the histogram with the zero on top and highest number of
-bin samples at the bottom.</p>
-</dd>
-<dt><strong>color_gaps</strong><span class="classifier">string</span></dt><dd><p>Color of the gaps (if shown).</p>
-</dd>
-<dt><strong>confidence</strong><span class="classifier">boolean</span></dt><dd><p>If True shows only the confidence reliability diagram.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycalib.visualisations.plot_reliability_diagram_precomputed">
-<span class="sig-prename descclassname"><span class="pre">pycalib.visualisations.</span></span><span class="sig-name descname"><span class="pre">plot_reliability_diagram_precomputed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avg_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avg_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_gaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightcoral'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycalib.visualisations.plot_reliability_diagram_precomputed" title="Permalink to this definition"></a></dt>
-<dd><p>Plots the reliability diagram for precomputed averaged scores and labels</p>
-<p>NOTE: This function is currently a copy from plot_reliability_diagram and
-modified to accept average scores and true proportions. In the future both
-functions may be merged or share common private functions.
-Parameters
-==========
-avg_true : matrix (n_bins, n_classes) or list of matrices</p>
-<blockquote>
-<div><p>True proportions per class.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>avg_pred<span class="classifier">matrix (n_bins, n_classes) or list of matrices</span></dt><dd><p>Output probability scores for one or several methods.</p>
-</dd>
-<dt>legend<span class="classifier">list of strings or None</span></dt><dd><p>Text to use for the legend.</p>
-</dd>
-<dt>bins<span class="classifier">int or list of floats</span></dt><dd><p>Number of bins to create in the scores’ space, or list of bin
-boundaries.</p>
-</dd>
-<dt>class_names<span class="classifier">list of strings or None</span></dt><dd><p>Name of each class, if None it will assign integer numbers starting
-with 1.</p>
-</dd>
-<dt>fig<span class="classifier">matplotlib.pyplot.Figure or None</span></dt><dd><p>Figure to use for the plots, if None a new figure is created.</p>
-</dd>
-<dt>show_counts<span class="classifier">boolean</span></dt><dd><p>If True shows the number of samples of each bin in its corresponding
-line marker.</p>
-</dd>
-<dt>interval_method<span class="classifier">string (default: ‘beta’)</span></dt><dd><p>Method to estimate the confidence interval which uses the function
-proportion_confint from statsmodels.stats.proportion</p>
-</dd>
-<dt>fmt<span class="classifier">string (default: ‘s-‘)</span></dt><dd><p>Format of the lines following the matplotlib.pyplot.plot standard.</p>
-</dd>
-<dt>show_correction<span class="classifier">boolean</span></dt><dd><p>If True shows an arrow for each bin indicating the necessary correction
-to the average scores in order to be perfectly calibrated.</p>
-</dd>
-<dt>show_gaps<span class="classifier">boolean</span></dt><dd><p>If True shows the gap between the average predictions and the true
-proportion of positive samples.</p>
-</dd>
-<dt>sample_proportion<span class="classifier">float in the interval [0, 1] (default 0)</span></dt><dd><p>If bigger than 0, it shows the labels of the specified proportion of
-samples.</p>
-</dd>
-<dt>color_list<span class="classifier">list of strings or None</span></dt><dd><p>List of string colors indicating the color of each method.</p>
-</dd>
-<dt>color_gaps<span class="classifier">string</span></dt><dd><p>Color of the gaps (if shown).</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
+<span class="target" id="module-pycalib.visualisations"></span></section>
 
 
            </div>

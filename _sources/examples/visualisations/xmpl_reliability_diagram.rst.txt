@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py>`
+        :ref:`Go to the end <sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -133,7 +133,7 @@ scores
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f44ed6d7c10>
+    <matplotlib.legend.Legend object at 0x7fa69753d5e0>
 
 
 
@@ -169,7 +169,7 @@ predictions and the true proportion of positives.
 And showing bars instead of a lineplot, usually with errorbars showing the
 discrepancy with respect to a perfectly calibrated model (diagonal)
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-88
+.. GENERATED FROM PYTHON SOURCE LINES 80-89
 
 .. code-block:: default
 
@@ -179,7 +179,8 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
                                    show_gaps=True, show_bars=True,
                                    show_histogram=True)
 
-    fig.savefig('pycalib_rd_bars.pdf')
+    fig.tight_layout()
+    fig.savefig('pycalib_rd_bars.svg')
 
 
 
@@ -190,10 +191,17 @@ discrepancy with respect to a perfectly calibrated model (diagonal)
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/PyCalib/PyCalib/examples/visualisations/xmpl_reliability_diagram.py:86: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+      fig.tight_layout()
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-94
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-95
 
 However, both previous illustrations do not include the number of samples
 that fall into each bin. By default the parameter show_bars is set to True as
@@ -201,7 +209,7 @@ this information is crucial to understand how reliable is each estimation,
 and how this affects some of the calibration metrics.
 We also specify the bin boundaries and change the color of the gaps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-100
+.. GENERATED FROM PYTHON SOURCE LINES 95-101
 
 .. code-block:: default
 
@@ -223,13 +231,13 @@ We also specify the bin boundaries and change the color of the gaps.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-104
+.. GENERATED FROM PYTHON SOURCE LINES 102-105
 
 It is also common to plot only the confidence (considering the winning class
 only as positive class for each prediction). Notice that the class names is
 automatically set to *winning* class.
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-110
+.. GENERATED FROM PYTHON SOURCE LINES 105-111
 
 .. code-block:: default
 
@@ -251,7 +259,7 @@ automatically set to *winning* class.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-119
+.. GENERATED FROM PYTHON SOURCE LINES 112-120
 
 We can enable some parameters to show several aspects of the reliability
 diagram. For example, we can add a histogram indicating the number of samples
@@ -262,7 +270,7 @@ calibrated model). And even the true class of each sample at the y
 coordinates [0 and 1] for each scored instance (50% of the data in
 this example, but default is 100%).
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-128
+.. GENERATED FROM PYTHON SOURCE LINES 120-129
 
 .. code-block:: default
 
@@ -287,7 +295,7 @@ this example, but default is 100%).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-135
+.. GENERATED FROM PYTHON SOURCE LINES 130-136
 
 It can be also useful to have 95% confidence intervals for each bin by
 performing a binomial proportion confidence interval with various statistical
@@ -296,7 +304,7 @@ thus accepts the different tests available in the statsmodels library. In the
 following example we use the Clopper-Pearson interval based on Beta
 distribution and a confidence interval of 95%.
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-145
+.. GENERATED FROM PYTHON SOURCE LINES 136-146
 
 .. code-block:: default
 
@@ -322,11 +330,11 @@ distribution and a confidence interval of 95%.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-147
+.. GENERATED FROM PYTHON SOURCE LINES 147-148
 
 The function also allows the visualisation of multiple models for comparison.
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-157
+.. GENERATED FROM PYTHON SOURCE LINES 148-159
 
 .. code-block:: default
 
@@ -338,7 +346,8 @@ The function also allows the visualisation of multiple models for comparison.
                                    errorbar_interval=0.95,
                                    interval_method='beta')
 
-    fig.savefig('pycalib_rd_lines.pdf')
+    fig.tight_layout()
+    fig.savefig('pycalib_rd_lines.svg')
 
 
 
@@ -349,16 +358,23 @@ The function also allows the visualisation of multiple models for comparison.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/PyCalib/PyCalib/examples/visualisations/xmpl_reliability_diagram.py:156: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+      fig.tight_layout()
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-161
+
+.. GENERATED FROM PYTHON SOURCE LINES 160-163
 
 It is possible to draw reliability diagram for multiple classes as well. We
 will simulate 3 classes by changing some original labels to a 3rd class, and
 modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-176
+.. GENERATED FROM PYTHON SOURCE LINES 163-178
 
 .. code-block:: default
 
@@ -389,12 +405,12 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-179
+.. GENERATED FROM PYTHON SOURCE LINES 179-181
 
 If we are only interested in the confidence, the 3 classes can be visualised
 in a single reliability diagram
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-186
+.. GENERATED FROM PYTHON SOURCE LINES 181-188
 
 .. code-block:: default
 
@@ -417,11 +433,48 @@ in a single reliability diagram
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-188
+.. GENERATED FROM PYTHON SOURCE LINES 189-190
 
 The same can be done with the bars.
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-199
+.. GENERATED FROM PYTHON SOURCE LINES 190-200
+
+.. code-block:: default
+
+
+    fig = plot_reliability_diagram(labels=y, scores=s1,
+                                   legend=['Model 3'],
+                                   show_histogram=True,
+                                   show_bars=True,
+                                   show_gaps=True)
+
+    fig.tight_layout()
+    fig.savefig('pycalib_rd_ternary.svg')
+
+
+
+
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+   :alt: xmpl reliability diagram
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/PyCalib/PyCalib/examples/visualisations/xmpl_reliability_diagram.py:197: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+      fig.tight_layout()
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 201-202
+
+And change the colors.
+
+.. GENERATED FROM PYTHON SOURCE LINES 202-212
 
 .. code-block:: default
 
@@ -434,27 +487,26 @@ The same can be done with the bars.
                                    show_gaps=True,
                                    color_gaps='orange')
 
-    fig.savefig('pycalib_rd_ternary.pdf')
 
 
 
 
-.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
    :alt: xmpl reliability diagram
-   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_012.png
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 200-203
+.. GENERATED FROM PYTHON SOURCE LINES 213-216
 
 If we have precomputed the average proportion of true positives and
 predictions, or we have access to the ground truth, it is possible to plot
 the same reliability diagram using the following function
 
-.. GENERATED FROM PYTHON SOURCE LINES 203-212
+.. GENERATED FROM PYTHON SOURCE LINES 216-225
 
 .. code-block:: default
 
@@ -470,16 +522,16 @@ the same reliability diagram using the following function
 
 
 
-.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
    :alt: xmpl reliability diagram
-   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_013.png
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 213-218
+.. GENERATED FROM PYTHON SOURCE LINES 226-231
 
 Similarly for a multiclass problem we can provide full matrices of size
 (n_bins, n_classes) instead. Notice that the order of the predicted scores
@@ -487,7 +539,7 @@ doesn't need to be in order, and the probabilities doesn't need to sum to one
 among all classes, as the way they are computed may be from different
 instances.
 
-.. GENERATED FROM PYTHON SOURCE LINES 218-233
+.. GENERATED FROM PYTHON SOURCE LINES 231-246
 
 .. code-block:: default
 
@@ -509,9 +561,9 @@ instances.
 
 
 
-.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
+.. image-sg:: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_015.png
    :alt: xmpl reliability diagram
-   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_014.png
+   :srcset: /examples/visualisations/images/sphx_glr_xmpl_reliability_diagram_015.png
    :class: sphx-glr-single-img
 
 
@@ -521,7 +573,7 @@ instances.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.565 seconds)
+   **Total running time of the script:** (0 minutes 5.365 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_reliability_diagram.py:
@@ -537,6 +589,8 @@ instances.
         :target: https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_reliability_diagram.ipynb
         :alt: Launch binder
         :width: 150 px
+
+
 
     .. container:: sphx-glr-download sphx-glr-download-python
 

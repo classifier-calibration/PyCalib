@@ -39,7 +39,7 @@ calibrated.
 .. only:: html
 
   .. image:: /examples/visualisations/images/thumb/sphx_glr_xmpl_ternary_samples_thumb.png
-    :alt: Scatter plot of ternary problem in the simplex space
+    :alt:
 
   :ref:`sphx_glr_examples_visualisations_xmpl_ternary_samples.py`
 
@@ -56,7 +56,7 @@ calibrated.
 .. only:: html
 
   .. image:: /examples/visualisations/images/thumb/sphx_glr_xmpl_ternary_contours_thumb.png
-    :alt: Draw contour function of ternary simplex space
+    :alt:
 
   :ref:`sphx_glr_examples_visualisations_xmpl_ternary_contours.py`
 
@@ -73,7 +73,7 @@ calibrated.
 .. only:: html
 
   .. image:: /examples/visualisations/images/thumb/sphx_glr_xmpl_reliability_diagram_thumb.png
-    :alt: Plotting reliability diagrams
+    :alt:
 
   :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py`
 
@@ -91,6 +91,7 @@ calibrated.
 .. toctree::
    :hidden:
    :includehidden:
+
 
    /examples/visualisations/index.rst
 
