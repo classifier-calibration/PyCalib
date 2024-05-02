@@ -89,22 +89,25 @@
 <p>The simplest way to calibrate an existing probabilistic classifier is the
 following:</p>
 <p>First choose the calibration method you want to use</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">from</span> <span class="pre">pycalib.models</span> <span class="pre">import</span> <span class="pre">IsotonicCalibration</span>
-<span class="pre">cal</span> <span class="pre">=</span> <span class="pre">IsotonicCalibration()</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.models</span> <span class="kn">import</span> <span class="n">IsotonicCalibration</span>
+<span class="n">cal</span> <span class="o">=</span> <span class="n">IsotonicCalibration</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>Now we can put together a probabilistic classifier with the chosen calibration
 method</p>
-<p><a href="#id2"><span class="problematic" id="id3">``</span></a>`
-from pycalib.models import CalibratedModel</p>
-<p>cal_clf = CalibratedModel(base_estimator=clf, method=cal)
-<a href="#id4"><span class="problematic" id="id5">``</span></a><a href="#id6"><span class="problematic" id="id7">`</span></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.models</span> <span class="kn">import</span> <span class="n">CalibratedModel</span>
+
+<span class="n">cal_clf</span> <span class="o">=</span> <span class="n">CalibratedModel</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">calibrator</span><span class="o">=</span><span class="n">cal</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Now you can train both classifier and calibrator all together.</p>
-<p><a href="#id8"><span class="problematic" id="id9">``</span></a>`
-from sklearn.datasets import load_iris</p>
-<p>dataset = load_iris()
-cal_clf.fit(dataset.data, dataset.target)
-<a href="#id10"><span class="problematic" id="id11">``</span></a><a href="#id12"><span class="problematic" id="id13">`</span></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">cal_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a full example check the Section Examples quick start.</p>
 </section>
 
 
