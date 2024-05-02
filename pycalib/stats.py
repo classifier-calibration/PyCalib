@@ -13,13 +13,16 @@ TestResult = namedtuple("TestResult", ["statistic", "p_value"])
 
 def compute_friedmanchisquare(table: pd.DataFrame) -> TestResult:
     """ Compute Friedman test for repeated samples
+
     Example:
         - n wine judges each rate k different wines. Are any of the k wines
         ranked consistently higher or lower than the others?
+
     Our Calibration case:
         - n datasets each rate k different calibration methods. Are any of the
         k calibration methods ranked consistently higher or lower than the
         others?
+
     This will output a statistic and a p-value
     SciPy does the following:
         - k: is the number of parameters passed to the function

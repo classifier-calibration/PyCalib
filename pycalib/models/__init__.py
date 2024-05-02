@@ -3,5 +3,4 @@ from .calibrators import (BetaCalibration,
                           LogisticCalibration,
                           SigmoidCalibration,
                           BinningCalibration,
-                          CalibratedModel,
-                          CalibratedClassifierCV)
+                          CalibratedModel)

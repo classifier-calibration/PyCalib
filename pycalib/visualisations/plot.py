@@ -386,9 +386,9 @@ def plot_reliability_diagram(labels, scores, legend=None,
         if show_histogram:
             divider = make_axes_locatable(ax1)
             ax2 = divider.append_axes("bottom", size="20%", pad=0.1,
-                                            sharex=ax1)
+                                      sharex=ax1)
 
-            #ax2 = fig.add_subplot(spec[n_columns + i],
+            # ax2 = fig.add_subplot(spec[n_columns + i],
             #                      label='{}'.format(i))
             for j, score in enumerate(scores_list):
                 ax1.set_xticklabels([])
@@ -545,8 +545,7 @@ def plot_binary_reliability_diagram_gaps(y_true, p_pred, n_bins=15, title=None,
         ax.set_xticklabels([])
 
         divider = make_axes_locatable(ax)
-        ax2 = divider.append_axes("bottom", size="20%", pad=0.1,
-                                        sharex=ax)
+        ax2 = divider.append_axes("bottom", size="20%", pad=0.1, sharex=ax)
 
         ax2.hist(p_pred, range=(0, 1),
                  bins=n_bins,
@@ -781,7 +780,6 @@ def plot_df_to_heatmap(df, title=None, figsize=None, annotate=True,
                          color=color
                          )
     return fig
-
 
 
 def plot_calibration_map(scores_set, prob, legend_set, original_first=False,

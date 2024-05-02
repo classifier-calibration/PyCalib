@@ -723,6 +723,7 @@ def full_ECE(y_true, probs, bins=15, power=1):
 
     return s
 
+
 # TODO: Speed up computation.
 def _label_resampling(probs):
     c = probs.cumsum(axis=1)
@@ -732,10 +733,12 @@ def _label_resampling(probs):
     y[range(len(probs)), choices] = 1
     return y
 
+
 # Speed up of the previous label_resampling function
 def get_one_hot(targets, nb_classes):
     res = np.eye(nb_classes)[np.array(targets).reshape(-1)]
     return res.reshape(list(targets.shape)+[nb_classes])
+
 
 def _label_resampling_v2(probs):
     c = probs.cumsum(axis=1)
@@ -743,7 +746,6 @@ def _label_resampling_v2(probs):
     choices = (u < c).argmax(axis=1)
     y = get_one_hot(choices, probs.shape[1])
     return y
-
 
 
 # TODO: Speed up computation.
@@ -760,7 +762,8 @@ def _score_sampling(probs, samples=10000, ece_function=None):
 
 
 # This uses all available CPUS reducing the time by this factor
-def _score_sampling_v2(probs, samples=10000, ece_function=None, processes=None):
+def _score_sampling_v2(probs, samples=10000, ece_function=None,
+                       processes=None):
 
     probs = np.array(probs)
 

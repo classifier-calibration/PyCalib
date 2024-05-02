@@ -97,6 +97,7 @@ def draw_pdf_contours(dist, **kwargs):
     draw_func_contours(dist.pdf, **kwargs)
 
 
+# TODO Speed up function.
 def draw_func_contours(func, labels=None, nlevels=200, subdiv=8, fig=None,
                        ax=None, grid=True, **kwargs):
     '''
@@ -128,7 +129,7 @@ def draw_func_contours(func, labels=None, nlevels=200, subdiv=8, fig=None,
     # contour = ax.tricontourf(trimesh, z, nlevels, **kwargs)
     # contour = ax.tricontourf(trimesh, z, nlevels, extend='both')
     is_nan = ~np.isfinite(z)
-    #z[is_nan] = 0
+    # z[is_nan] = 0
     nan_id = np.where(is_nan)[0]
     triangles_mask = np.zeros(trimesh.triangles.shape[0])
     for ni in nan_id:
