@@ -114,7 +114,7 @@ We can see how calibrated it is after training
 
  .. code-block:: none
 
-    The classifier gets 17961 correct predictions out of 25000
+    The classifier gets 17923 correct predictions out of 25000
 
 
 
@@ -251,7 +251,7 @@ Now you can train both classifier and calibrator all together.
 
  .. code-block:: none
 
-    The calibrated classifier gets 18152 correct predictions out of 25000
+    The calibrated classifier gets 18091 correct predictions out of 25000
     The calibrated classifier gets a confidence expected calibration error of 0.01
 
 
