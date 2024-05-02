@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Draw contour function of ternary simplex space &mdash; PyCalib 0.0.4.dev0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -95,13 +97,13 @@
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-examples-visualisations-xmpl-ternary-contours-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code or to run this example in your browser via Binder</p>
+to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="draw-contour-function-of-ternary-simplex-space">
 <span id="sphx-glr-examples-visualisations-xmpl-ternary-contours-py"></span><h1>Draw contour function of ternary simplex space<a class="headerlink" href="#draw-contour-function-of-ternary-simplex-space" title="Permalink to this heading"></a></h1>
 <p>This example illustrates how to draw contourplots for functions with 3
 probability inputs and multiple outputs.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Miquel Perello Nieto &lt;miquel.perellonieto@bristol.ac.uk&gt;</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Miquel Perello Nieto &lt;miquel.perellonieto@bristol.ac.uk&gt;</span>
 <span class="c1"># License: new BSD</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -114,7 +116,7 @@ probability inputs and multiple outputs.</p>
 </div>
 <p>We show first how to draw a heatmap on a ternary probability simplex, in this
 case we will define a Dirichlet function and pass it with default parameters.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">dirichlet</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">dirichlet</span>
 
 <span class="kn">from</span> <span class="nn">pycalib.visualisations.ternary</span> <span class="kn">import</span> <span class="n">draw_func_contours</span>
 
@@ -128,7 +130,7 @@ case we will define a Dirichlet function and pass it with default parameters.</p
 <img src="../../_images/sphx_glr_xmpl_ternary_contours_001.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_001.png" alt="xmpl ternary contours" class = "sphx-glr-single-img"/><p>Next we show how do use a ternary calibration model that has 3 probability
 inputs and 3 ouputs. We will first simulate a calibrator by simulating 3
 Dirichlet distributions and applying Bayes rule with equal prior.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">calibrator</span><span class="p">():</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">calibrator</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">pred1</span> <span class="o">=</span> <span class="n">dirichlet</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="n">pred2</span> <span class="o">=</span> <span class="n">dirichlet</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
@@ -143,7 +145,7 @@ Dirichlet distributions and applying Bayes rule with equal prior.</p>
 <p>Then we will first draw a contourmap only for the first class. We do that by
 creating a lambda function and selecting the first column.
 We also select a colormap for the first class.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">draw_func_contours</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
@@ -153,7 +155,7 @@ We also select a colormap for the first class.</p>
 <img src="../../_images/sphx_glr_xmpl_ternary_contours_002.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_002.png" alt="xmpl ternary contours" class = "sphx-glr-single-img"/><p>We can look at the second class by creating a new lambda function and
 selecting the second column. We will also modify how many times to subdivide
 the simplex (subdiv=3). And the number of contour values (nlevels=10).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">draw_func_contours</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">nlevels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">subdiv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Oranges&#39;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">SAVEFIGS</span><span class="p">:</span>
@@ -162,7 +164,7 @@ the simplex (subdiv=3). And the number of contour values (nlevels=10).</p>
 </div>
 <img src="../../_images/sphx_glr_xmpl_ternary_contours_003.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_003.png" alt="xmpl ternary contours" class = "sphx-glr-single-img"/><p>Finally we show the 3rd class with other sets of parameters and specifying
 the names of each class.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">cal</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">draw_func_contours</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">nlevels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">subdiv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
                          <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;smurf&#39;</span><span class="p">])</span>
 
@@ -173,7 +175,7 @@ the names of each class.</p>
 <img src="../../_images/sphx_glr_xmpl_ternary_contours_004.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_004.png" alt="xmpl ternary contours" class = "sphx-glr-single-img"/><p>In order to plot the contours of all classes in the same figure it is
 necessary to loop over all subplots. We show an example that uses the
 previous functions.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;smurf&#39;</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;smurf&#39;</span><span class="p">]</span>
 <span class="n">cmap_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="s1">&#39;Oranges&#39;</span><span class="p">,</span> <span class="s1">&#39;Blues&#39;</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
@@ -187,16 +189,16 @@ previous functions.</p>
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;fig5.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_xmpl_ternary_contours_005.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_005.png" alt="strawberry $(C_1)$, orange $(C_2)$, smurf $(C_3)$" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.000 seconds)</p>
+<img src="../../_images/sphx_glr_xmpl_ternary_contours_005.png" srcset="../../_images/sphx_glr_xmpl_ternary_contours_005.png" alt="strawberry $(C_1)$, orange $(C_2)$, smurf $(C_3)$" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.507 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-ternary-contours-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_ternary_contours.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/644a8e64c3a444c65d1247fc18b5cc1f/xmpl_ternary_contours.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">xmpl_ternary_contours.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2aeb1c2e14e69c16b27a8115bcd5cad8/xmpl_ternary_contours.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">xmpl_ternary_contours.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/644a8e64c3a444c65d1247fc18b5cc1f/xmpl_ternary_contours.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">xmpl_ternary_contours.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>

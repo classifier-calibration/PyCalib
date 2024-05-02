@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_examples_visualisations_xmpl_ternary_contours.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -27,7 +27,7 @@ probability inputs and multiple outputs.
 
 .. GENERATED FROM PYTHON SOURCE LINES 9-19
 
-.. code-block:: default
+.. code-block:: Python
 
     # Author: Miquel Perello Nieto <miquel.perellonieto@bristol.ac.uk>
     # License: new BSD
@@ -53,7 +53,7 @@ case we will define a Dirichlet function and pass it with default parameters.
 
 .. GENERATED FROM PYTHON SOURCE LINES 22-33
 
-.. code-block:: default
+.. code-block:: Python
 
 
     from scipy.stats import dirichlet
@@ -86,7 +86,7 @@ Dirichlet distributions and applying Bayes rule with equal prior.
 
 .. GENERATED FROM PYTHON SOURCE LINES 37-49
 
-.. code-block:: default
+.. code-block:: Python
 
 
     class calibrator():
@@ -115,7 +115,7 @@ We also select a colormap for the first class.
 
 .. GENERATED FROM PYTHON SOURCE LINES 53-61
 
-.. code-block:: default
+.. code-block:: Python
 
 
     function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][0]
@@ -145,7 +145,7 @@ the simplex (subdiv=3). And the number of contour values (nlevels=10).
 
 .. GENERATED FROM PYTHON SOURCE LINES 65-72
 
-.. code-block:: default
+.. code-block:: Python
 
 
     function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][1]
@@ -173,7 +173,7 @@ the names of each class.
 
 .. GENERATED FROM PYTHON SOURCE LINES 75-84
 
-.. code-block:: default
+.. code-block:: Python
 
 
     function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][2]
@@ -204,7 +204,7 @@ previous functions.
 
 .. GENERATED FROM PYTHON SOURCE LINES 88-101
 
-.. code-block:: default
+.. code-block:: Python
 
 
     labels=['strawberry', 'orange', 'smurf']
@@ -234,7 +234,7 @@ previous functions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.000 seconds)
+   **Total running time of the script:** (0 minutes 1.507 seconds)
 
 
 .. _sphx_glr_download_examples_visualisations_xmpl_ternary_contours.py:
@@ -243,7 +243,6 @@ previous functions.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -251,15 +250,13 @@ previous functions.
         :alt: Launch binder
         :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
+      :download:`Download Jupyter notebook: xmpl_ternary_contours.ipynb <xmpl_ternary_contours.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: xmpl_ternary_contours.py <xmpl_ternary_contours.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: xmpl_ternary_contours.ipynb <xmpl_ternary_contours.ipynb>`
 
 
 .. only:: html

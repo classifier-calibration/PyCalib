@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plotting reliability diagrams &mdash; PyCalib 0.0.4.dev0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -94,13 +96,13 @@
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-examples-visualisations-xmpl-reliability-diagram-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code or to run this example in your browser via Binder</p>
+to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="plotting-reliability-diagrams">
 <span id="sphx-glr-examples-visualisations-xmpl-reliability-diagram-py"></span><h1>Plotting reliability diagrams<a class="headerlink" href="#plotting-reliability-diagrams" title="Permalink to this heading"></a></h1>
 <p>This example illustrates how to visualise the reliability diagram for a binary
 probabilistic classifier.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Miquel Perello Nieto &lt;miquel.perellonieto@bristol.ac.uk&gt;</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Miquel Perello Nieto &lt;miquel.perellonieto@bristol.ac.uk&gt;</span>
 <span class="c1"># License: new BSD</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">)</span>
@@ -110,7 +112,7 @@ probabilistic classifier.</p>
 binary classification problem.</p>
 <p>First we will generate two synthetic models and some synthetic scores and
 labels.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 
@@ -140,7 +142,7 @@ labels.</p>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_001.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_001.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>A perfect calibration should be as follows, compared with the generated
 scores</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
 
 <span class="n">p_g_p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">p_g_n</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
@@ -157,20 +159,20 @@ scores</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fa69753d5e0&gt;
+<img src="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_002.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fb2c5170970&gt;
 </pre></div>
 </div>
 <p>There are at least 2 very common ways to show a reliability diagram for a
 probabilistic binary classifier. Drawing a line between all the binned mean
 predictions and the true proportion of positives.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.visualisations</span> <span class="kn">import</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.visualisations</span> <span class="kn">import</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a>
 
 <span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span> <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_003.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_003.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>And showing bars instead of a lineplot, usually with errorbars showing the
 discrepancy with respect to a perfectly calibrated model (diagonal)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -188,7 +190,7 @@ that fall into each bin. By default the parameter show_bars is set to True as
 this information is crucial to understand how reliable is each estimation,
 and how this affects some of the calibration metrics.
 We also specify the bin boundaries and change the color of the gaps.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_gaps</span><span class="o">=</span><span class="s1">&#39;firebrick&#39;</span><span class="p">,</span>
                                <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.4</span><span class="p">,</span> <span class="mf">.45</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.55</span><span class="p">,</span> <span class="mf">.6</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
@@ -197,7 +199,7 @@ We also specify the bin boundaries and change the color of the gaps.</p>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_005.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_005.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>It is also common to plot only the confidence (considering the winning class
 only as positive class for each prediction). Notice that the class names is
 automatically set to <em>winning</em> class.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">show_gaps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">confidence</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -211,7 +213,7 @@ shown as red arrows pointing to the direction of the diagonal (perfectly
 calibrated model). And even the true class of each sample at the y
 coordinates [0 and 1] for each scored instance (50% of the data in
 this example, but default is 100%).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 1&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">bins</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
@@ -227,7 +229,7 @@ tests. This function uses <a class="reference external" href="https://www.statsm
 thus accepts the different tests available in the statsmodels library. In the
 following example we use the Clopper-Pearson interval based on Beta
 distribution and a confidence interval of 95%.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s2</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 2&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -239,7 +241,7 @@ distribution and a confidence interval of 95%.</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_008.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_008.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>The function also allows the visualisation of multiple models for comparison.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Model 2&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Positive&#39;</span><span class="p">],</span>
@@ -257,7 +259,7 @@ distribution and a confidence interval of 95%.</p>
 <p>It is possible to draw reliability diagram for multiple classes as well. We
 will simulate 3 classes by changing some original labels to a 3rd class, and
 modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">class_2_idx</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">class_2_idx</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">y</span><span class="p">[</span><span class="n">class_2_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">s1</span><span class="p">,</span> <span class="n">s1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
 <span class="n">s1</span><span class="p">[</span><span class="n">class_2_idx</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">3</span>
@@ -274,7 +276,7 @@ modifying the scores of Model 1 and 2 to create new models 3 and 4.</p>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_010.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_010.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>If we are only interested in the confidence, the 3 classes can be visualised
 in a single reliability diagram</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">],</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Model 4&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">color_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;chocolate&#39;</span><span class="p">],</span>
@@ -282,7 +284,7 @@ in a single reliability diagram</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_011.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_011.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>The same can be done with the bars.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 3&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">show_bars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -297,7 +299,7 @@ in a single reliability diagram</p>
 </pre></div>
 </div>
 <p>And change the colors.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../api/visualisations.html#pycalib.visualisations.plot_reliability_diagram" title="pycalib.visualisations.plot_reliability_diagram" class="sphx-glr-backref-module-pycalib-visualisations sphx-glr-backref-type-py-function"><span class="n">plot_reliability_diagram</span></a><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span>
                                <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Model 3&#39;</span><span class="p">],</span>
                                <span class="n">show_histogram</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">color_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">],</span>
@@ -309,7 +311,7 @@ in a single reliability diagram</p>
 <img src="../../_images/sphx_glr_xmpl_reliability_diagram_013.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_013.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p>If we have precomputed the average proportion of true positives and
 predictions, or we have access to the ground truth, it is possible to plot
 the same reliability diagram using the following function</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.visualisations</span> <span class="kn">import</span> <span class="n">plot_reliability_diagram_precomputed</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycalib.visualisations</span> <span class="kn">import</span> <span class="n">plot_reliability_diagram_precomputed</span>
 
 <span class="n">avg_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.6</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.2</span><span class="p">,</span> <span class="mf">.4</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
@@ -324,7 +326,7 @@ the same reliability diagram using the following function</p>
 doesn’t need to be in order, and the probabilities doesn’t need to sum to one
 among all classes, as the way they are computed may be from different
 instances.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avg_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.6</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.6</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
                       <span class="p">[</span><span class="mf">.0</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.4</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">],</span>
                       <span class="p">[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.6</span><span class="p">,</span> <span class="mf">.8</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.4</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.9</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
@@ -340,16 +342,16 @@ instances.</p>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_reliability_diagram_precomputed</span><span class="p">(</span><span class="n">avg_true</span><span class="p">,</span> <span class="n">avg_pred</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_xmpl_reliability_diagram_015.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_015.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.365 seconds)</p>
+<img src="../../_images/sphx_glr_xmpl_reliability_diagram_015.png" srcset="../../_images/sphx_glr_xmpl_reliability_diagram_015.png" alt="xmpl reliability diagram" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.291 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-visualisations-xmpl-reliability-diagram-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/perellonieto/pycalib/gh-pages?filepath=notebooks/examples/visualisations/xmpl_reliability_diagram.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/2aafd28605d1465f35babdbb5c4355aa/xmpl_reliability_diagram.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">xmpl_reliability_diagram.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/1a8ea18b96d8f8952724c97a3ce69cb2/xmpl_reliability_diagram.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">xmpl_reliability_diagram.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2aafd28605d1465f35babdbb5c4355aa/xmpl_reliability_diagram.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">xmpl_reliability_diagram.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>

@@ -13,10 +13,36 @@ Here you can find various examples of using PyCalib.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows a simple comparison of the expected calibration error of a non-calibrated me...">
+
+.. only:: html
+
+  .. image:: /examples/images/thumb/sphx_glr_xmpl_quickstart_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_xmpl_quickstart.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Quickstart</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
     </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/xmpl_quickstart
 
 
 Visualisation Examples
@@ -31,6 +57,7 @@ calibrated.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -82,6 +109,8 @@ calibrated.
       <div class="sphx-glr-thumbnail-title">Plotting reliability diagrams</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
