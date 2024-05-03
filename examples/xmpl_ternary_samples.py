@@ -10,7 +10,6 @@ their true label.
 # License: new BSD
 
 print(__doc__)
-SAVEFIGS=False
 
 ##############################################################################
 # We generate 3 scores as comming from 3 Dirichlet distributions simulating the
@@ -33,8 +32,6 @@ from pycalib.visualisations.ternary import draw_tri_samples
 
 fig, ax = draw_tri_samples(p, classes=y, alpha=0.6)
 
-if SAVEFIGS:
-    fig.savefig('fig1.png')
 
 ##############################################################################
 # Here we specify the names of each class and change their colors.
@@ -42,6 +39,3 @@ if SAVEFIGS:
 fig, ax = draw_tri_samples(p, classes=y, alpha=0.6,
                            labels=['dogs', 'cats', 'fox'],
                            color_list=['saddlebrown', 'black', 'darkorange'])
-
-if SAVEFIGS:
-    fig.savefig('fig2.png')

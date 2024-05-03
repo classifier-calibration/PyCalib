@@ -5,6 +5,10 @@
 Quickstart
 ==========
 
+This is a simple description of how to calibrate a classifier using this
+library. For an extended example check the Section Examples
+:ref:`sphx_glr_examples_xmpl_quickstart.py`.
+
 The simplest way to calibrate an existing probabilistic classifier is the
 following:
 
@@ -33,4 +37,3 @@ Now you can train both classifier and calibrator all together.
     dataset = load_iris()
     cal_clf.fit(dataset.data, dataset.target)
 
-For a full example check the Section Examples quick start.
