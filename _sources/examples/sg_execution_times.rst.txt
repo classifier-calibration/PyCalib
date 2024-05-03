@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:01.486** total execution time for 1 file **from examples**:
+**00:05.687** total execution time for 4 files **from examples**:
 
 .. container::
 
@@ -32,6 +32,15 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_examples_xmpl_reliability_diagram.py` (``xmpl_reliability_diagram.py``)
+     - 00:02.688
+     - 0.0
+   * - :ref:`sphx_glr_examples_xmpl_ternary_contours.py` (``xmpl_ternary_contours.py``)
+     - 00:01.537
+     - 0.0
+   * - :ref:`sphx_glr_examples_xmpl_ternary_samples.py` (``xmpl_ternary_samples.py``)
+     - 00:00.749
+     - 0.0
    * - :ref:`sphx_glr_examples_xmpl_quickstart.py` (``xmpl_quickstart.py``)
-     - 00:01.486
+     - 00:00.712
      - 0.0

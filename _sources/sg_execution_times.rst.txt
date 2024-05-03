@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:06.437** total execution time for 4 files **from all galleries**:
+**00:05.687** total execution time for 4 files **from all galleries**:
 
 .. container::
 
@@ -32,15 +32,15 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_visualisations_xmpl_reliability_diagram.py` (``../../examples/visualisations/xmpl_reliability_diagram.py``)
-     - 00:03.236
+   * - :ref:`sphx_glr_examples_xmpl_reliability_diagram.py` (``../../examples/xmpl_reliability_diagram.py``)
+     - 00:02.688
      - 0.0
-   * - :ref:`sphx_glr_examples_visualisations_xmpl_ternary_contours.py` (``../../examples/visualisations/xmpl_ternary_contours.py``)
-     - 00:01.526
+   * - :ref:`sphx_glr_examples_xmpl_ternary_contours.py` (``../../examples/xmpl_ternary_contours.py``)
+     - 00:01.537
+     - 0.0
+   * - :ref:`sphx_glr_examples_xmpl_ternary_samples.py` (``../../examples/xmpl_ternary_samples.py``)
+     - 00:00.749
      - 0.0
    * - :ref:`sphx_glr_examples_xmpl_quickstart.py` (``../../examples/xmpl_quickstart.py``)
-     - 00:01.486
-     - 0.0
-   * - :ref:`sphx_glr_examples_visualisations_xmpl_ternary_samples.py` (``../../examples/visualisations/xmpl_ternary_samples.py``)
-     - 00:00.188
+     - 00:00.712
      - 0.0

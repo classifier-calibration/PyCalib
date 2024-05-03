@@ -83,8 +83,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_gaps=True, show_bars=True,
                                show_histogram=True)
 
-fig.tight_layout()
-fig.savefig('pycalib_rd_bars.svg')
 
 ##############################################################################
 # However, both previous illustrations do not include the number of samples
@@ -153,8 +151,6 @@ fig = plot_reliability_diagram(labels=y, scores=[s1, s2],
                                errorbar_interval=0.95,
                                interval_method='beta')
 
-fig.tight_layout()
-fig.savefig('pycalib_rd_lines.svg')
 
 ##############################################################################
 # It is possible to draw reliability diagram for multiple classes as well. We
@@ -194,8 +190,6 @@ fig = plot_reliability_diagram(labels=y, scores=s1,
                                show_bars=True,
                                show_gaps=True)
 
-fig.tight_layout()
-fig.savefig('pycalib_rd_ternary.svg')
 
 ##############################################################################
 # And change the colors.

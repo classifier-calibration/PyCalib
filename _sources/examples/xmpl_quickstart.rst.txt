@@ -114,7 +114,7 @@ We can see how calibrated it is after training
 
  .. code-block:: none
 
-    The classifier gets 17968 correct predictions out of 25000
+    The classifier gets 17938 correct predictions out of 25000
 
 
 
@@ -251,7 +251,7 @@ Now you can train both classifier and calibrator all together.
 
  .. code-block:: none
 
-    The calibrated classifier gets 18225 correct predictions out of 25000
+    The calibrated classifier gets 18213 correct predictions out of 25000
     The calibrated classifier gets a confidence expected calibration error of 0.01
 
 
@@ -291,7 +291,7 @@ Now you can train both classifier and calibrator all together.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.486 seconds)
+   **Total running time of the script:** (0 minutes 0.712 seconds)
 
 
 .. _sphx_glr_download_examples_xmpl_quickstart.py:

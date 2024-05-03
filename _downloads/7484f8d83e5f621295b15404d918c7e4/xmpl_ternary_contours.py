@@ -14,7 +14,6 @@ import numpy as np
 np.random.seed(42)
 
 print(__doc__)
-SAVEFIGS=False
 
 ##############################################################################
 # We show first how to draw a heatmap on a ternary probability simplex, in this
@@ -26,9 +25,6 @@ from pycalib.visualisations.ternary import draw_func_contours
 
 function = lambda x: dirichlet.pdf(x, alpha=[5, 3, 2])
 fig = draw_func_contours(function)
-
-if SAVEFIGS:
-    fig.savefig('fig1.png')
 
 ##############################################################################
 # Next we show how do use a ternary calibration model that has 3 probability
@@ -54,9 +50,6 @@ cal = calibrator()
 function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][0]
 fig = draw_func_contours(function, cmap='Reds')
 
-if SAVEFIGS:
-    fig.savefig('fig2.png')
-
 
 ##############################################################################
 # We can look at the second class by creating a new lambda function and
@@ -66,9 +59,6 @@ if SAVEFIGS:
 function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][1]
 fig = draw_func_contours(function, nlevels=10, subdiv=3, cmap='Oranges')
 
-if SAVEFIGS:
-    fig.savefig('fig3.png')
-
 ##############################################################################
 # Finally we show the 3rd class with other sets of parameters and specifying
 # the names of each class.
@@ -76,9 +66,6 @@ if SAVEFIGS:
 function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][2]
 fig = draw_func_contours(function, nlevels=10, subdiv=5, cmap='Blues',
                          labels=['strawberry', 'orange', 'smurf'])
-
-if SAVEFIGS:
-    fig.savefig('fig4.png')
 
 
 ##############################################################################
@@ -95,6 +82,3 @@ for c in [0, 1, 2]:
     function = lambda x: cal.predict_proba(x.reshape(-1, 1))[0][c]
     fig = draw_func_contours(function, nlevels=30, subdiv=5, cmap=cmap_list[c],
                              ax=ax, fig=fig)
-
-if SAVEFIGS:
-    fig.savefig('fig5.png')
